@@ -1,0 +1,377 @@
+@import "tailwindcss";
+
+/* Theme is toggled by adding/removing the `dark` class on <html>.
+   An inline script in layout.tsx applies it before first paint. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — "Engineered Clarity"                               */
+/* ------------------------------------------------------------------ */
+
+:root {
+  /* Surfaces */
+  --background: #faf9f6;
+  --background-subtle: #f3f1ec;
+  --surface: #ffffff;
+  --surface-hover: #f5f3ee;
+
+  /* Ink */
+  --foreground: #1c1c21;
+  --foreground-muted: #585862;
+
+  /* Lines */
+  --border: rgba(28, 28, 33, 0.12);
+  --border-strong: rgba(28, 28, 33, 0.26);
+  --grid-line: rgba(28, 28, 33, 0.055);
+
+  /* Signal orange accent */
+  --accent: #c2410c;
+  --accent-hover: #9a3412;
+  --accent-foreground: #fff7ed;
+  --accent-soft: rgba(194, 65, 12, 0.09);
+
+  /* Status */
+  --success: #15803d;
+  --error: #b91c1c;
+  --focus-ring: #c2410c;
+
+  /* Motion — strong custom curves; built-in easings are too weak */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-fast: 160ms;
+  --duration-base: 220ms;
+  --duration-slow: 320ms;
+
+  /* Fluid type scale */
+  --text-display: clamp(2.375rem, 1.05rem + 5vw, 4.375rem);
+  --text-page-title: clamp(2rem, 1.2rem + 3vw, 3.25rem);
+  --text-section-title: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --text-card-title: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+}
+
+.dark {
+  --background: #131316;
+  --background-subtle: #18181d;
+  --surface: #1c1c22;
+  --surface-hover: #24242b;
+
+  --foreground: #f0efec;
+  --foreground-muted: #a3a3ad;
+
+  --border: rgba(240, 239, 236, 0.14);
+  --border-strong: rgba(240, 239, 236, 0.3);
+  --grid-line: rgba(240, 239, 236, 0.06);
+
+  --accent: #fb923c;
+  --accent-hover: #fdba74;
+  --accent-foreground: #431407;
+  --accent-soft: rgba(251, 146, 60, 0.12);
+
+  --success: #4ade80;
+  --error: #f87171;
+  --focus-ring: #fb923c;
+}
+
+/* Map tokens to Tailwind utilities (bg-background, text-accent, …) */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-subtle: var(--background-subtle);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-focus-ring: var(--focus-ring);
+
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+
+  --ease-out-strong: var(--ease-out-strong);
+  --ease-in-out-strong: var(--ease-in-out-strong);
+
+  --breakpoint-2xl: 96rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* One consistent, visible keyboard focus treatment everywhere */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Typography helpers                                                  */
+/* ------------------------------------------------------------------ */
+
+.type-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: var(--text-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.type-page-title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: var(--text-page-title);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.type-section-title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: var(--text-section-title);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.type-card-title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: var(--text-card-title);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.type-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.type-meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Technical background details (kept quiet on purpose)                */
+/* ------------------------------------------------------------------ */
+
+/* Fine coordinate grid, fades out toward the bottom */
+.grid-bg {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
+/* Oscilloscope trace in the hero: the path draws itself once on load.
+   Decorative, runs a single time, and is removed under reduced motion. */
+.signal-trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: trace-draw 1.6s var(--ease-out-strong) 250ms forwards;
+}
+
+@keyframes trace-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-trace {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrances                                                           */
+/* ------------------------------------------------------------------ */
+
+/* Route-level transition: template.tsx remounts per navigation, so a
+   mount animation doubles as the page transition. Opacity + small rise. */
+.page-enter {
+  animation: page-enter 360ms var(--ease-out-strong) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero content reveal: staggered rise, used only on first paint of home */
+.hero-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: hero-rise 600ms var(--ease-out-strong) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid/list entrance used when filters change (interruption-tolerant:
+   items are keyed by filter so a rapid change simply restarts cleanly) */
+.filter-enter {
+  animation: filter-enter var(--duration-base) var(--ease-out-strong) both;
+  animation-delay: min(calc(var(--enter-index, 0) * 40ms), 240ms);
+}
+
+@keyframes filter-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Availability indicator: gentle pulse, decorative and ambient */
+.status-dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--success);
+  animation: status-pulse 2.4s var(--ease-in-out-strong) infinite;
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.9);
+  }
+}
+
+/* Contact success check: single stroke draw, once */
+.check-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: trace-draw 500ms var(--ease-out-strong) 120ms forwards;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion: gentler, not broken                                 */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Keep entrance content visible instead of frozen at opacity: 0 */
+  .hero-rise,
+  .filter-enter,
+  .page-enter {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Print — used by the Resume page                                     */
+/* ------------------------------------------------------------------ */
+
+@media print {
+  :root,
+  .dark {
+    --background: #ffffff;
+    --background-subtle: #ffffff;
+    --surface: #ffffff;
+    --foreground: #111111;
+    --foreground-muted: #444444;
+    --border: rgba(0, 0, 0, 0.25);
+    --accent: #111111;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: #111111;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  section,
+  li {
+    break-inside: avoid;
+  }
+}
