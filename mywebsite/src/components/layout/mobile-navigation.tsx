@@ -6,11 +6,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { navigation } from "@/data/navigation";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { contactNavItem, navigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { exitTransition, sheetVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
+/**
+ * Mobile navigation sheet, opened from the pill header. Keeps the original
+ * accessibility behaviour: focus trap, Escape to close, body scroll lock,
+ * focus returned to the trigger, and large touch targets.
+ */
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -74,7 +80,7 @@ export function MobileNavigation() {
         aria-controls="mobile-navigation"
         aria-label={open ? "Close navigation menu" : "Open navigation menu"}
         onClick={() => (open ? close() : setOpen(true))}
-        className="inline-flex size-10 items-center justify-center rounded-sm text-foreground transition-colors duration-160 ease-out-strong active:scale-[0.96]"
+        className="inline-flex size-10 items-center justify-center rounded-full bg-control text-control-foreground transition-transform duration-160 ease-out-strong active:scale-[0.94]"
       >
         {open ? (
           <X aria-hidden="true" className="size-5" />
@@ -97,10 +103,10 @@ export function MobileNavigation() {
             exit={
               reduceMotion ? { opacity: 0, transition: exitTransition } : "exit"
             }
-            className="fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col overflow-y-auto border-t border-border bg-background px-5 pt-6 pb-10"
+            className="fixed inset-x-0 top-0 bottom-0 z-40 flex flex-col overflow-y-auto bg-background px-6 pt-24 pb-10"
           >
             <ul className="flex flex-col">
-              {navigation.map((item) => {
+              {navigation.map((item, index) => {
                 const active =
                   item.href === "/"
                     ? pathname === "/"
@@ -112,7 +118,7 @@ export function MobileNavigation() {
                       onClick={() => setOpen(false)}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex min-h-14 items-center justify-between py-3 text-lg font-medium transition-colors duration-160 ease-out-strong",
+                        "flex min-h-16 items-center justify-between py-3 font-display text-3xl font-medium tracking-wide uppercase transition-colors duration-160 ease-out-strong",
                         active ? "text-accent" : "text-foreground",
                       )}
                     >
@@ -121,7 +127,7 @@ export function MobileNavigation() {
                         aria-hidden="true"
                         className="type-meta text-foreground-muted"
                       >
-                        {active ? "●" : ""}
+                        0{index + 1}
                       </span>
                     </Link>
                   </li>
@@ -129,20 +135,23 @@ export function MobileNavigation() {
               })}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-4">
+            <div className="mt-8 flex flex-col gap-5">
               <Link
-                href="/contact"
+                href={contactNavItem.href}
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-12 items-center justify-center rounded-sm bg-accent px-5 text-sm font-medium text-accent-foreground transition-transform duration-160 ease-out-strong active:scale-[0.98]"
+                className="inline-flex min-h-13 items-center justify-center rounded-full bg-control px-6 text-base font-semibold text-control-foreground transition-transform duration-160 ease-out-strong active:scale-[0.98]"
               >
-                Get in touch
+                {contactNavItem.label}
               </Link>
-              {profile.availability.available && (
-                <p className="type-meta flex items-center gap-2 text-foreground-muted">
-                  <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
-                  {profile.availability.label}
-                </p>
-              )}
+              <div className="flex items-center justify-between">
+                {profile.availability.available && (
+                  <p className="type-meta flex items-center gap-2 text-foreground-muted">
+                    <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
+                    {profile.availability.label}
+                  </p>
+                )}
+                <ThemeToggle />
+              </div>
             </div>
           </motion.div>
         )}

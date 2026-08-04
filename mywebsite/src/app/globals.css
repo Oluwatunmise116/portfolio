@@ -5,78 +5,105 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ------------------------------------------------------------------ */
-/* Design tokens — "Engineered Clarity"                               */
+/* Design tokens — Portavia-inspired editorial system                  */
 /* ------------------------------------------------------------------ */
 
 :root {
   /* Surfaces */
-  --background: #faf9f6;
-  --background-subtle: #f3f1ec;
+  --background: #f8f8f6;
   --surface: #ffffff;
-  --surface-hover: #f5f3ee;
+  --surface-muted: #eeeeea;
+  --surface-hover: #f1f1ed;
 
   /* Ink */
-  --foreground: #1c1c21;
-  --foreground-muted: #585862;
+  --foreground: #202020;
+  --foreground-muted: #686868;
 
   /* Lines */
-  --border: rgba(28, 28, 33, 0.12);
-  --border-strong: rgba(28, 28, 33, 0.26);
-  --grid-line: rgba(28, 28, 33, 0.055);
+  --border: rgba(25, 25, 25, 0.13);
+  --border-strong: rgba(25, 25, 25, 0.24);
 
-  /* Signal orange accent */
-  --accent: #c2410c;
-  --accent-hover: #9a3412;
-  --accent-foreground: #fff7ed;
-  --accent-soft: rgba(194, 65, 12, 0.09);
+  /* Electric-indigo accent.
+     Darkened from the reference periwinkle so it clears WCAG AA both as
+     text on --background (5.2:1) and as a fill behind white text
+     (5.4:1). Lightening it will reintroduce contrast failures. */
+  --accent: #5459de;
+  --accent-hover: #474cd0;
+  --accent-soft: #e8e9ff;
+  --accent-foreground: #ffffff;
+
+  /* Filled dark controls (Contact pill button, etc.) */
+  --control: #202020;
+  --control-foreground: #f8f8f6;
 
   /* Status */
   --success: #15803d;
   --error: #b91c1c;
-  --focus-ring: #c2410c;
+  --focus-ring: #6267e8;
 
-  /* Motion — strong custom curves; built-in easings are too weak */
+  /* Nav pill shadow — restrained */
+  --shadow-pill: 0 1px 2px rgba(20, 20, 20, 0.05), 0 8px 24px -12px rgba(20, 20, 20, 0.18);
+  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px -18px rgba(20, 20, 20, 0.16);
+
+  /* Motion */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  /* Approximates a zero-bounce spring: fast start, long smooth settle, no
+     overshoot. Used only for the big one-shot hero entrance. */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 160ms;
   --duration-base: 220ms;
-  --duration-slow: 320ms;
+  --duration-slow: 280ms;
+  /* Hero entrance only — deliberately long; every repeated interaction
+     stays in the 160–280ms band above. */
+  --duration-entrance: 1000ms;
 
   /* Fluid type scale */
-  --text-display: clamp(2.375rem, 1.05rem + 5vw, 4.375rem);
-  --text-page-title: clamp(2rem, 1.2rem + 3vw, 3.25rem);
-  --text-section-title: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-  --text-card-title: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  /* Sized so a hero word never overflows its grid column. "EMBEDDED" in
+     Oswald 600 measures ~4.14em wide; the side columns are ~36% of the
+     container. Verified at 1024/1280/1440/1600/1920 — raising these
+     values without re-measuring will clip the headline. */
+  --text-hero: clamp(3.2rem, 7.6vw, 7.25rem);
+  --text-hero-mobile: clamp(3.2rem, 18vw, 5.5rem);
+  --text-page-title: clamp(2.75rem, 1.6rem + 4.5vw, 5.5rem);
+  --text-section-title: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-card-title: clamp(1.25rem, 1.1rem + 0.5vw, 1.625rem);
 }
 
 .dark {
-  --background: #131316;
-  --background-subtle: #18181d;
-  --surface: #1c1c22;
-  --surface-hover: #24242b;
+  --background: #151515;
+  --surface: #1d1d1d;
+  --surface-muted: #242424;
+  --surface-hover: #262626;
 
-  --foreground: #f0efec;
-  --foreground-muted: #a3a3ad;
+  --foreground: #f5f5f2;
+  --foreground-muted: #aaaaa5;
 
-  --border: rgba(240, 239, 236, 0.14);
-  --border-strong: rgba(240, 239, 236, 0.3);
-  --grid-line: rgba(240, 239, 236, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.22);
 
-  --accent: #fb923c;
-  --accent-hover: #fdba74;
-  --accent-foreground: #431407;
-  --accent-soft: rgba(251, 146, 60, 0.12);
+  --accent: #9a9ef5;
+  --accent-hover: #b0b3f8;
+  --accent-soft: rgba(98, 103, 232, 0.24);
+  /* Dark ink on the light accent — white would fail contrast here. */
+  --accent-foreground: #151515;
+
+  --control: #f5f5f2;
+  --control-foreground: #151515;
 
   --success: #4ade80;
   --error: #f87171;
-  --focus-ring: #fb923c;
+  --focus-ring: #8f93f4;
+
+  --shadow-pill: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -18px rgba(0, 0, 0, 0.55);
 }
 
 /* Map tokens to Tailwind utilities (bg-background, text-accent, …) */
 @theme inline {
   --color-background: var(--background);
-  --color-background-subtle: var(--background-subtle);
   --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
@@ -86,16 +113,21 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-soft: var(--accent-soft);
+  --color-control: var(--control);
+  --color-control-foreground: var(--control-foreground);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-focus-ring: var(--focus-ring);
 
-  --font-display: var(--font-sora);
-  --font-sans: var(--font-inter);
+  --font-display: var(--font-oswald);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-plex-mono);
 
   --ease-out-strong: var(--ease-out-strong);
   --ease-in-out-strong: var(--ease-in-out-strong);
+
+  --shadow-pill: var(--shadow-pill);
+  --shadow-card: var(--shadow-card);
 
   --breakpoint-2xl: 96rem;
 }
@@ -106,13 +138,20 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 6.5rem;
 }
+
+/* NOTE: hand-written rules must reference the next/font variables
+   (--font-oswald / --font-manrope / --font-plex-mono) directly. The
+   `@theme inline` block above maps them onto Tailwind utilities, but
+   `inline` means --font-display/--font-sans/--font-mono are NOT emitted
+   as usable custom properties — referencing them here would silently
+   fall back to the system font stack. */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-manrope), system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -135,42 +174,53 @@ body {
 /* Typography helpers                                                  */
 /* ------------------------------------------------------------------ */
 
-.type-display {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-size: var(--text-display);
+/* Oversized split hero word — desktop */
+.type-hero {
+  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-size: var(--text-hero);
   font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  text-wrap: balance;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .type-hero {
+    font-size: var(--text-hero-mobile);
+  }
 }
 
 .type-page-title {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-oswald), system-ui, sans-serif;
   font-size: var(--text-page-title);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 
 .type-section-title {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-oswald), system-ui, sans-serif;
   font-size: var(--text-section-title);
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .type-card-title {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-oswald), system-ui, sans-serif;
   font-size: var(--text-card-title);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .type-label {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -178,54 +228,30 @@ body {
 }
 
 .type-meta {
-  font-family: var(--font-mono), monospace;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
 
-/* ------------------------------------------------------------------ */
-/* Technical background details (kept quiet on purpose)                */
-/* ------------------------------------------------------------------ */
-
-/* Fine coordinate grid, fades out toward the bottom */
-.grid-bg {
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-}
-
-/* Oscilloscope trace in the hero: the path draws itself once on load.
-   Decorative, runs a single time, and is removed under reduced motion. */
-.signal-trace {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: trace-draw 1.6s var(--ease-out-strong) 250ms forwards;
-}
-
-@keyframes trace-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .signal-trace {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
+/* Oversized numbered index used in the services section */
+.type-index {
+  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-size: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--foreground-muted);
+  /* 0.75 is the lightest this can go and still clear the 3:1 large-text
+     contrast threshold in both themes. */
+  opacity: 0.75;
 }
 
 /* ------------------------------------------------------------------ */
 /* Entrances                                                           */
 /* ------------------------------------------------------------------ */
 
-/* Route-level transition: template.tsx remounts per navigation, so a
-   mount animation doubles as the page transition. Opacity + small rise. */
+/* Route-level transition: template.tsx remounts per navigation. */
 .page-enter {
   animation: page-enter 360ms var(--ease-out-strong) both;
 }
@@ -244,8 +270,8 @@ body {
 /* Hero content reveal: staggered rise, used only on first paint of home */
 .hero-rise {
   opacity: 0;
-  transform: translateY(14px);
-  animation: hero-rise 600ms var(--ease-out-strong) forwards;
+  transform: translateY(16px);
+  animation: hero-rise 640ms var(--ease-out-strong) forwards;
   animation-delay: var(--rise-delay, 0ms);
 }
 
@@ -256,8 +282,94 @@ body {
   }
 }
 
-/* Grid/list entrance used when filters change (interruption-tolerant:
-   items are keyed by filter so a rapid change simply restarts cleanly) */
+/* ---- Home hero signature entrance -------------------------------- */
+/* The two headline halves converge on the portrait: the left word
+   travels in from the right, the right word from the left. Set
+   `--slide-dir: 1 | -1` per element; the distance shrinks on small
+   screens, where the words stack and a long slide would read as drift. */
+.hero-slide {
+  --slide-distance: 150px;
+  opacity: 0;
+  transform: translateX(calc(var(--slide-dir, 1) * var(--slide-distance)));
+  animation: hero-slide var(--duration-entrance) var(--ease-spring) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+@media (max-width: 1023px) {
+  .hero-slide {
+    --slide-distance: 28px;
+  }
+}
+
+@keyframes hero-slide {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Portrait settles in behind the converging words. */
+.hero-zoom {
+  opacity: 0;
+  transform: scale(0.94);
+  animation: hero-zoom var(--duration-entrance) var(--ease-spring) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+@keyframes hero-zoom {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Circular badge pops in last. Starts at 0.6, not 0 — nothing in the
+   real world appears from nothing, and a true scale(0) reads as a glitch
+   at this size. */
+.hero-pop {
+  opacity: 0;
+  transform: scale(0.6);
+  animation: hero-pop 620ms var(--ease-spring) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+@keyframes hero-pop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll-triggered section reveal (driven by a tiny IntersectionObserver
+   in reveal.tsx; falls back to visible without JS via the `no-js` default) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 480ms var(--ease-out-strong),
+    transform 480ms var(--ease-out-strong);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Content must never be hidden when JavaScript is unavailable */
+@media (scripting: none) {
+  .reveal,
+  .hero-rise,
+  .hero-slide,
+  .hero-zoom,
+  .hero-pop {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Grid/list entrance used when filters change */
 .filter-enter {
   animation: filter-enter var(--duration-base) var(--ease-out-strong) both;
   animation-delay: min(calc(var(--enter-index, 0) * 40ms), 240ms);
@@ -274,33 +386,45 @@ body {
   }
 }
 
-/* Availability indicator: gentle pulse, decorative and ambient */
+/* Availability indicator.
+   Deliberately static: this sits on screen continuously, and a permanent
+   looping animation is visual noise the user cannot dismiss. The adjacent
+   text label carries the meaning, so nothing is conveyed by colour alone. */
 .status-dot::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 9999px;
   background: var(--success);
-  animation: status-pulse 2.4s var(--ease-in-out-strong) infinite;
-}
-
-@keyframes status-pulse {
-  0%,
-  100% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(1.9);
-  }
 }
 
 /* Contact success check: single stroke draw, once */
 .check-draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: trace-draw 500ms var(--ease-out-strong) 120ms forwards;
+  animation: check-draw 500ms var(--ease-out-strong) 120ms forwards;
+}
+
+@keyframes check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Optional second portrait: cross-fades in on hover, but only on devices
+   with a real pointer — touch devices always show the primary portrait. */
+.portrait-hover {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portrait-hover {
+    transition: opacity var(--duration-slow) var(--ease-out-strong);
+  }
+
+  .group:hover .portrait-hover {
+    opacity: 1;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -322,8 +446,12 @@ body {
 
   /* Keep entrance content visible instead of frozen at opacity: 0 */
   .hero-rise,
+  .hero-slide,
+  .hero-zoom,
+  .hero-pop,
   .filter-enter,
-  .page-enter {
+  .page-enter,
+  .reveal {
     animation: none !important;
     opacity: 1;
     transform: none;
@@ -338,8 +466,8 @@ body {
   :root,
   .dark {
     --background: #ffffff;
-    --background-subtle: #ffffff;
     --surface: #ffffff;
+    --surface-muted: #ffffff;
     --foreground: #111111;
     --foreground-muted: #444444;
     --border: rgba(0, 0, 0, 0.25);

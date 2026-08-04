@@ -7,61 +7,53 @@ import { SkillsInventory } from "@/components/about/skills-inventory";
 import { ToolsList } from "@/components/about/tools-list";
 import { Container } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/link-button";
+import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
   title: "About",
   description:
-    "Engineer first, integrator always — background, career timeline, skills inventory, and the engineering principles behind the work.",
+    "Engineer first, integrator always — background, career timeline, skills, tools, and the engineering principles behind the work.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
-    <Container className="py-16 md:py-24">
+    <Container className="pt-32 pb-16 md:pt-40 md:pb-24">
       <Biography />
 
-      <section aria-label="Career timeline" className="mt-20 md:mt-28">
-        <SectionHeading
-          index="01"
-          eyebrow="Timeline"
-          title="Where the years went"
-        />
+      <Reveal as="section" aria-label="Career timeline" className="mt-24 md:mt-32">
+        <SectionHeading eyebrow="Timeline" title="Where the years went" />
         <CareerTimeline />
-      </section>
+      </Reveal>
 
-      <section aria-label="Skills inventory" className="mt-20 md:mt-28">
+      <Reveal as="section" aria-label="Skills and capabilities" className="mt-24 md:mt-32">
         <SectionHeading
-          index="02"
           eyebrow="Skills"
-          title="Skills inventory"
+          title="Skills & capabilities"
           description="Grouped by discipline. Everything here is editable from src/data/skills.ts."
         />
         <SkillsInventory />
-      </section>
+      </Reveal>
 
-      <section aria-label="Engineering principles" className="mt-20 md:mt-28">
-        <SectionHeading
-          index="03"
-          eyebrow="Principles"
-          title="How I engineer"
-        />
+      <Reveal as="section" aria-label="Engineering principles" className="mt-24 md:mt-32">
+        <SectionHeading eyebrow="Principles" title="How I engineer" />
         <EngineeringPrinciples />
-      </section>
+      </Reveal>
 
-      <section aria-label="Tools and technologies" className="mt-20 md:mt-28">
-        <SectionHeading index="04" eyebrow="Tools" title="On the bench" />
+      <Reveal as="section" aria-label="Tools and technologies" className="mt-24 md:mt-32">
+        <SectionHeading eyebrow="Tools" title="On the bench" />
         <ToolsList />
-      </section>
+      </Reveal>
 
-      <aside className="mt-20 flex flex-col items-center gap-4 border-t border-border pt-12 text-center md:mt-28">
-        <p className="max-w-md text-foreground-muted">
-          The longer version lives on the resume page — or just say hello.
+      <aside className="mt-24 flex flex-col items-center gap-4 border-t border-border pt-14 text-center md:mt-32">
+        <p className="max-w-md text-lg text-foreground-muted">
+          The longer version lives on the résumé page — or just say hello.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <LinkButton href="/resume" variant="secondary">
-            View resume
+            View résumé
           </LinkButton>
           <LinkButton href="/contact" variant="primary">
             Get in touch

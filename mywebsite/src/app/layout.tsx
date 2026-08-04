@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SITE_TITLE_SUFFIX, SITE_URL } from "@/lib/constants";
-import { inter, plexMono, sora } from "@/lib/fonts";
+import { manrope, oswald, plexMono } from "@/lib/fonts";
 
 import "./globals.css";
 
@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_TITLE_SUFFIX}`,
   },
   description:
-    "Portfolio of an embedded systems engineer working across firmware, automotive communication, IoT, and hardware integration.",
+    "Embedded Systems and IoT Engineer specialising in automotive diagnostics, firmware, CAN, OBD-II, PCB design, connected devices, and vehicle communication.",
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#131316" },
+    { media: "(prefers-color-scheme: light)", color: "#f8f8f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#151515" },
   ],
 };
 
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body
-        className={`${sora.variable} ${inter.variable} ${plexMono.variable} flex min-h-svh flex-col antialiased`}
+        className={`${oswald.variable} ${manrope.variable} ${plexMono.variable} flex min-h-svh flex-col antialiased`}
       >
         <a
           href="#main-content"

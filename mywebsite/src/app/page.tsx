@@ -1,18 +1,16 @@
-import { ContactCta } from "@/components/home/contact-cta";
-import { ExpertiseStrip } from "@/components/home/expertise-strip";
+import { AboutPreview } from "@/components/home/about-preview";
+import { ContactSection } from "@/components/home/contact-section";
+import { Faq } from "@/components/home/faq";
+import { FeaturedProjects } from "@/components/home/featured-projects";
 import { Hero } from "@/components/home/hero";
-import { LatestWriting } from "@/components/home/latest-writing";
-import { SelectedWork } from "@/components/home/selected-work";
-import { ShortAbout } from "@/components/home/short-about";
-import { FeaturedProject } from "@/components/projects/featured-project";
-import { Container } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { featuredProject } from "@/data/projects";
+import { HowIWork } from "@/components/home/how-i-work";
+import { LatestArticles } from "@/components/home/latest-articles";
+import { Services } from "@/components/home/services";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
   description:
-    "Embedded systems engineer building firmware, automotive communication systems, and connected hardware — from schematic to the real world.",
+    "Embedded Systems and IoT Engineer specialising in automotive diagnostics, firmware, CAN, OBD-II, PCB design, connected devices, and vehicle communication.",
   path: "/",
 });
 
@@ -20,24 +18,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <ExpertiseStrip />
-      <SelectedWork />
-      <ShortAbout />
-
-      <section aria-label="Featured project">
-        <Container className="py-20 md:py-28">
-          <SectionHeading
-            index="03"
-            eyebrow="Featured"
-            title="Currently on the bench"
-            description="The project getting most of my attention right now."
-          />
-          <FeaturedProject project={featuredProject} headingLevel="h3" />
-        </Container>
-      </section>
-
-      <LatestWriting />
-      <ContactCta />
+      <Services />
+      <AboutPreview />
+      <FeaturedProjects />
+      <HowIWork />
+      <Faq />
+      <LatestArticles />
+      <ContactSection />
     </>
   );
 }

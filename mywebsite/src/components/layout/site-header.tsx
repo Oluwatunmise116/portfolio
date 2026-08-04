@@ -1,90 +1,108 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { MobileNavigation } from "@/components/layout/mobile-navigation";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { navigation } from "@/data/navigation";
+import { Avatar } from "@/components/ui/avatar";
+import { contactNavItem, navigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
+function isActive(pathname: string, href: string): boolean {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
+/**
+ * Floating pill navigation: centered near the top of the viewport, avatar
+ * at the left, filled Contact button at the right. The active-page pill
+ * slides between items via a shared layout animation. Shrinks slightly
+ * once the page is scrolled.
+ */
 export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header
-      className={cn(
-        "print-hidden sticky top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-220 ease-out-strong",
-        scrolled
-          ? "border-b border-border bg-background/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
-      )}
-    >
-      <div className="mx-auto flex h-16 w-full max-w-320 items-center justify-between px-5 sm:px-8 lg:px-12">
+    <header className="print-hidden pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4">
+      <div
+        className={cn(
+          "pointer-events-auto mt-4 flex w-full max-w-fit items-center gap-1 rounded-full border border-border bg-surface/90 shadow-pill backdrop-blur-md transition-[padding,margin] duration-220 ease-out-strong",
+          scrolled ? "mt-2.5 py-1 pr-1 pl-1.5" : "py-1.5 pr-1.5 pl-2",
+        )}
+      >
+        {/* Avatar / wordmark */}
         <Link
           href="/"
-          className="flex items-baseline gap-2 font-display text-base font-semibold tracking-tight"
+          aria-label={`${profile.name} — home`}
+          className="mr-1 flex shrink-0 items-center gap-2 rounded-full"
         >
-          {profile.name}
-          <span aria-hidden="true" className="type-meta text-accent">
-            /eng
-          </span>
+          <Avatar size={36} />
         </Link>
 
+        {/* Desktop items */}
         <nav aria-label="Main navigation" className="hidden md:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center">
             {navigation.map((item) => {
-              const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
+              const active = isActive(pathname, item.href);
               return (
-                <li key={item.href}>
+                <li key={item.href} className="relative">
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative px-3 py-2 text-sm transition-colors duration-160 ease-out-strong",
+                      "relative z-10 inline-flex min-h-10 items-center rounded-full px-4 text-sm font-medium transition-colors duration-160 ease-out-strong",
                       active
-                        ? "font-medium text-foreground"
+                        ? "text-foreground"
                         : "text-foreground-muted hover:text-foreground",
                     )}
                   >
                     {item.label}
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        "absolute inset-x-3 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-220 ease-out-strong",
-                        active ? "scale-x-100" : "scale-x-0",
-                      )}
-                    />
                   </Link>
+                  {active && (
+                    <motion.span
+                      aria-hidden="true"
+                      layoutId="nav-active-pill"
+                      transition={
+                        reduceMotion
+                          ? { duration: 0 }
+                          : { type: "spring", stiffness: 500, damping: 40 }
+                      }
+                      className="absolute inset-0 rounded-full bg-surface-muted"
+                    />
+                  )}
                 </li>
               );
             })}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-1">
-          {profile.availability.available && (
-            <p className="type-meta mr-2 hidden items-center gap-2 text-foreground-muted lg:flex">
-              <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
-              {profile.availability.label}
-            </p>
+        {/* Filled Contact button (desktop) */}
+        <Link
+          href={contactNavItem.href}
+          className={cn(
+            "ml-1 hidden min-h-10 items-center rounded-full bg-control px-5 text-sm font-semibold text-control-foreground transition-[transform,opacity] duration-160 ease-out-strong hover:opacity-85 active:scale-[0.97] md:inline-flex",
+            isActive(pathname, contactNavItem.href) && "opacity-85",
           )}
-          <ThemeToggle />
-          <MobileNavigation />
-        </div>
+        >
+          {contactNavItem.label}
+        </Link>
+
+        {/* Mobile: name + menu button */}
+        <span className="px-1 font-display text-sm font-semibold tracking-wide uppercase md:hidden">
+          {profile.name}
+        </span>
+        <MobileNavigation />
       </div>
     </header>
   );

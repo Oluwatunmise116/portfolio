@@ -39,9 +39,11 @@ export function ResumeHeader() {
           </dd>
         </div>
         {socialLinks.map((link) => (
-          <div key={link.label} className="flex gap-2">
-            <dt>{link.label}</dt>
-            <dd>
+          <div key={link.label} className="flex min-w-0 max-w-full gap-2">
+            <dt className="shrink-0">{link.label}</dt>
+            {/* break-all so a long profile URL wraps rather than pushing
+                the page wider than the viewport on small screens. */}
+            <dd className="min-w-0 break-all">
               <a
                 href={link.href}
                 target="_blank"

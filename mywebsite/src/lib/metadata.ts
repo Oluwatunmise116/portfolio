@@ -10,6 +10,11 @@ type PageMetadataInput = {
   image?: string;
   type?: "website" | "article";
   publishedTime?: string;
+  /**
+   * Override the canonical URL — used by blog previews whose canonical
+   * source is the Medium article, not the internal route.
+   */
+  canonical?: string;
 };
 
 /**
@@ -25,6 +30,7 @@ export function createMetadata({
   image = "/images/og-card.svg",
   type = "website",
   publishedTime,
+  canonical,
 }: PageMetadataInput): Metadata {
   const fullTitle = title
     ? `${title} | ${SITE_TITLE_SUFFIX}`
@@ -34,7 +40,7 @@ export function createMetadata({
   return {
     title: fullTitle,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: canonical ?? url },
     openGraph: {
       title: fullTitle,
       description,

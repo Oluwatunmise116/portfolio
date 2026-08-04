@@ -1,37 +1,33 @@
-export const articleTopics = [
-  "Embedded Systems",
+export const articleCategories = [
   "Automotive Diagnostics",
-  "OBD-II",
-  "Firmware",
-  "Hardware",
-  "IoT",
-  "Engineering Notes",
+  "Vehicle Communication",
+  "Vehicle Systems",
+  "Standards",
 ] as const;
 
-export type ArticleTopic = (typeof articleTopics)[number];
+export type ArticleCategory = (typeof articleCategories)[number];
 
 /**
- * Structured article body. The shape deliberately mirrors what MDX would
- * produce (headings, paragraphs, code, callouts, figures) so migrating a
- * post to an .mdx file later is a copy-paste job, not a rewrite.
+ * Articles are published on Medium; the site stores curated metadata and a
+ * short original excerpt only. Internal /blog/[slug] routes render a
+ * preview page whose primary action is "Continue reading on Medium", and
+ * the Medium URL is the canonical source.
  */
-export type ArticleSection =
-  | { kind: "heading"; id: string; text: string }
-  | { kind: "paragraph"; text: string }
-  | { kind: "list"; items: string[] }
-  | { kind: "code"; language: string; code: string }
-  | { kind: "callout"; title: string; text: string }
-  | { kind: "figure"; src: string; alt: string; caption: string };
-
 export type Article = {
   slug: string;
   title: string;
-  summary: string;
-  topic: ArticleTopic;
-  /** ISO date, yyyy-mm-dd. */
+  /** Short original excerpt written for this site (not copied from Medium). */
+  excerpt: string;
+  category: ArticleCategory;
+  /** ISO date, yyyy-mm-dd (Medium publication date). */
   date: string;
-  readingTime: string;
+  /**
+   * Known reading time, e.g. "11 min read". Omitted when not confirmed —
+   * never fabricated.
+   */
+  readingTime?: string;
   cover: string;
+  /** Canonical Medium URL. */
+  mediumUrl: string;
   featured: boolean;
-  sections: ArticleSection[];
 };

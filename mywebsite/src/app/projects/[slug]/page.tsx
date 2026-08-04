@@ -72,7 +72,7 @@ export default async function ProjectDetailPage(
   const { previous, next } = adjacentProjects(project.slug);
 
   return (
-    <Container className="py-16 md:py-24">
+    <Container className="pt-32 pb-16 md:pt-40 md:pb-24">
       <Link
         href="/projects"
         className="group inline-flex min-h-11 items-center gap-2 text-sm text-foreground-muted transition-colors duration-160 ease-out-strong hover:text-accent"
@@ -98,7 +98,7 @@ export default async function ProjectDetailPage(
         </p>
       </header>
 
-      <div className="relative mt-10 aspect-video overflow-hidden rounded-sm border border-border md:mt-14">
+      <div className="relative mt-10 aspect-video overflow-hidden rounded-2xl border border-border md:mt-14">
         <Image
           src={project.image}
           alt={`Placeholder hero artwork for ${project.title}`}
@@ -111,8 +111,8 @@ export default async function ProjectDetailPage(
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)] lg:gap-16">
         {/* Fact sheet — sticky on desktop */}
-        <aside className="h-fit lg:sticky lg:top-24">
-          <dl className="flex flex-col gap-5 rounded-sm border border-border bg-surface p-6">
+        <aside className="h-fit lg:sticky lg:top-28">
+          <dl className="flex flex-col gap-5 rounded-2xl border border-border bg-surface p-6">
             <div>
               <dt className="type-label text-foreground-muted">Role</dt>
               <dd className="mt-1 text-sm">{project.role}</dd>

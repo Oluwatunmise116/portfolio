@@ -1,28 +1,36 @@
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactOptions } from "@/components/contact/contact-options";
+import { Avatar } from "@/components/ui/avatar";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
   title: "Contact",
   description:
-    "Start a conversation about a project, an embedded systems opportunity, or a technical problem.",
+    "Start a conversation about an embedded system, automotive diagnostics, firmware, PCB, or connected device project.",
   path: "/contact",
 });
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-16 sm:px-8 md:py-24">
-      <header className="text-center">
-        <p className="type-label text-foreground-muted">
-          <span aria-hidden="true" className="text-accent">
-            /contact
-          </span>
-        </p>
-        <h1 className="type-page-title mt-4 text-balance">
-          Have a project, opportunity, or technical problem to discuss?
+    <div className="mx-auto w-full max-w-2xl px-5 pt-32 pb-16 sm:px-8 md:pt-40 md:pb-24">
+      <header className="flex flex-col items-center text-center">
+        <Avatar
+          size={80}
+          className="hero-rise"
+          style={{ "--rise-delay": "0ms" } as React.CSSProperties}
+        />
+        <h1
+          className="type-page-title hero-rise mt-6"
+          style={{ "--rise-delay": "60ms" } as React.CSSProperties}
+        >
+          Let&rsquo;s build something reliable
         </h1>
-        <p className="mx-auto mt-5 max-w-md text-foreground-muted">
-          Share a few details and I&rsquo;ll respond as soon as possible.
+        <p
+          className="hero-rise mx-auto mt-5 max-w-md text-lg text-foreground-muted"
+          style={{ "--rise-delay": "140ms" } as React.CSSProperties}
+        >
+          Have an embedded system, automotive diagnostics, firmware, PCB, or
+          connected device project to discuss?
         </p>
       </header>
 

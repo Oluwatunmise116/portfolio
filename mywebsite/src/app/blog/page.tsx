@@ -1,53 +1,62 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-import { FeaturedPost } from "@/components/blog/featured-post";
-import { TopicFilter } from "@/components/blog/topic-filter";
+import { ArticleCard } from "@/components/blog/article-card";
 import { Container } from "@/components/ui/container";
-import { LinkButton } from "@/components/ui/link-button";
-import { articles, featuredArticle } from "@/data/articles";
+import { PageHero } from "@/components/ui/page-hero";
+import { Reveal } from "@/components/ui/reveal";
+import { articles, MEDIUM_PROFILE_URL } from "@/data/articles";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
-  title: "Writing",
+  title: "Blog",
   description:
-    "Field notes on embedded systems, automotive diagnostics, OBD-II, firmware reliability, hardware, and IoT.",
+    "Automotive insights and engineering notes — CAN bus, OBD-II, ISO standards, vehicle systems, and embedded engineering, published on Medium.",
   path: "/blog",
 });
 
 export default function BlogPage() {
   return (
-    <Container className="py-16 md:py-24">
-      <header className="max-w-2xl">
-        <p className="type-label text-foreground-muted">
-          <span aria-hidden="true" className="text-accent">
-            /writing
-          </span>
-        </p>
-        <h1 className="type-page-title mt-4">Writing</h1>
-        <p className="mt-5 text-foreground-muted md:text-lg">
-          Field notes from the bench — vehicle diagnostics, firmware
-          reliability, and the practical side of building connected hardware.
-        </p>
-      </header>
+    <>
+      <PageHero
+        eyebrow="Automotive insights & engineering notes"
+        title="Blog"
+        lead="Field notes on how vehicles communicate — CAN bus, OBD-II, diagnostics standards, and the systems behind every drive. Articles are published on Medium."
+      />
 
-      <section aria-label="Featured article" className="mt-12 md:mt-16">
-        <FeaturedPost article={featuredArticle} />
-      </section>
+      <Container className="pb-16 md:pb-24">
+        <section aria-label="All articles">
+          <ul className="grid list-none gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {articles.map((article, index) => (
+              <Reveal
+                as="li"
+                key={article.slug}
+                delay={Math.min((index % 3) * 60, 180)}
+              >
+                <ArticleCard article={article} headingLevel="h2" />
+              </Reveal>
+            ))}
+          </ul>
+        </section>
 
-      <section aria-label="All articles" className="mt-16 md:mt-20">
-        <TopicFilter articles={articles} />
-      </section>
-
-      <aside className="mt-20 flex flex-col items-center gap-4 border-t border-border pt-12 text-center">
-        <p className="max-w-md text-foreground-muted">
-          No newsletter yet — if something here is useful, the contact page is
-          the best way to continue the conversation.
-        </p>
-        <LinkButton href="/contact" variant="secondary">
-          Get in touch
-          <ArrowRight aria-hidden="true" className="size-4" />
-        </LinkButton>
-      </aside>
-    </Container>
+        <aside className="mt-24 flex flex-col items-center gap-4 border-t border-border pt-14 text-center">
+          <p className="max-w-md text-lg text-foreground-muted">
+            New articles land on Medium first — follow there to catch the next
+            one.
+          </p>
+          <a
+            href={MEDIUM_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-control px-6 text-sm font-semibold text-control-foreground transition-transform duration-160 ease-out-strong hover:opacity-90 active:scale-[0.98]"
+          >
+            View all on Medium
+            <ArrowUpRight
+              aria-hidden="true"
+              className="size-4 transition-transform duration-160 ease-out-strong group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
+        </aside>
+      </Container>
+    </>
   );
 }

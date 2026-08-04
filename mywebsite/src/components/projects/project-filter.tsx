@@ -42,9 +42,9 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
               aria-pressed={selected}
               onClick={() => setActive(filter)}
               className={cn(
-                "min-h-10 rounded-sm border px-4 text-sm transition-[background-color,border-color,color] duration-160 ease-out-strong active:scale-[0.98]",
+                "min-h-11 rounded-full border px-5 text-sm transition-[background-color,border-color,color] duration-160 ease-out-strong active:scale-[0.98]",
                 selected
-                  ? "border-accent bg-accent-soft font-medium text-accent"
+                  ? "border-transparent bg-control font-semibold text-control-foreground"
                   : "border-border text-foreground-muted hover:border-border-strong hover:text-foreground",
               )}
             >
@@ -61,7 +61,7 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
       {visible.length > 0 ? (
         <ul
           key={active}
-          className="mt-8 grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-10 grid list-none gap-x-8 gap-y-14 sm:grid-cols-2"
         >
           {visible.map((project, i) => (
             <li

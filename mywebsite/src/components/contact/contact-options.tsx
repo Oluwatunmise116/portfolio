@@ -46,10 +46,16 @@ export function ContactOptions() {
       {rows.map((row) => (
         <div
           key={row.label}
-          className="flex items-baseline justify-between gap-4 border-b border-border pb-3"
+          className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-border pb-3"
         >
-          <dt className="type-label text-foreground-muted">{row.label}</dt>
-          <dd className="text-right text-sm">{row.value}</dd>
+          <dt className="type-label shrink-0 text-foreground-muted">
+            {row.label}
+          </dt>
+          {/* min-w-0 + break-all so a long profile URL wraps instead of
+              forcing the page to scroll horizontally on small screens. */}
+          <dd className="min-w-0 text-left text-sm break-all sm:text-right">
+            {row.value}
+          </dd>
         </div>
       ))}
     </dl>

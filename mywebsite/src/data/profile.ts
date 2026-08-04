@@ -4,19 +4,27 @@
  * updates across the whole site.
  */
 export const profile = {
-  // TODO: replace with your full name (used in the header wordmark,
-  // footer, resume and metadata).
+  // TODO: replace with your full name (used in the header, footer, resume
+  // and metadata).
   name: "Tunmise",
-  initials: "T.",
+  initials: "T",
   title: "Embedded Systems & IoT Engineer",
+  credentials: "B.Eng Computer Engineering · GMNSE",
   tagline:
-    "I build embedded systems that move from schematic to the real world.",
+    "I build intelligent hardware and firmware for vehicles and connected devices.",
+  taglineSupport:
+    "From PCB and firmware to diagnostics, connectivity, testing, and deployment.",
   intro:
-    "I work across embedded firmware, vehicle communication, connected devices, hardware integration, testing, and product deployment.",
+    "Embedded Systems & IoT Engineer specialising in automotive diagnostics, firmware, PCB design, connected devices, and vehicle communication.",
   eyebrow: "Embedded Systems · Firmware · Automotive · IoT",
 
+  /** Split hero headline words: [NAME] / EMBEDDED [portrait] ENGINEER. */
+  heroWords: { left: "Embedded", right: "Engineer" },
+  /** One-word circular badge overlapping the portrait. */
+  heroBadge: "Hi",
+
   // TODO: confirm or replace contact details.
-  email: "zubiiot1@gmail.com",
+  email: "olabanjitunmise234@gmail.com",
   location: "[City, Country]",
   timezone: "WAT · UTC+1",
 
@@ -26,24 +34,63 @@ export const profile = {
   },
 
   /**
-   * TODO: replace the placeholder portrait.
-   * Drop your photo at public/images/profile/portrait.jpg (portrait
-   * orientation, roughly 4:5) and change `src` below — nothing else in the
-   * codebase references the portrait directly.
+   * TODO: replace the stand-in portrait.
+   * Overwrite public/images/profile/portrait.jpg with your own photo —
+   * nothing else in the codebase references the portrait directly.
+   * Any portrait-orientation photo works; it does not need to be 4:5.
+   *
+   * `hoverSrc` is optional: when provided, the hero cross-fades to it on
+   * hover (pointer devices only).
    */
   portrait: {
-    src: "/images/profile/portrait-placeholder.svg",
-    alt: "Placeholder portrait illustration of an embedded systems engineer at a workbench",
-    width: 960,
-    height: 1200,
+    src: "/images/profile/portrait.jpg",
+    hoverSrc: undefined as string | undefined,
+    alt: "Tunmise, embedded systems and IoT engineer",
+    width: 2419,
+    height: 3225,
+
+    /**
+     * Where the subject sits in the frame, as a CSS object-position.
+     * Used for the large 4:5 crops (hero, About, About preview) so the
+     * subject stays centred when the photo is taller than the frame.
+     */
+    focus: "58% 42%",
+
+    /**
+     * Small circular avatars (nav, contact) crop to 1:1 at 36–80px. A
+     * full-body photo centre-cropped into a 36px circle leaves the face a
+     * few pixels wide, so those circles zoom to the face instead.
+     * `avatarFocus` is the face centre; `avatarZoom` is the scale factor.
+     */
+    avatarFocus: "58% 47%",
+    avatarZoom: 2.6,
   },
 
   /** Short professional summary used on the resume page. */
   summary:
     "Embedded systems engineer working across firmware, vehicle communication, and connected hardware. Comfortable owning a product from schematic review and board bring-up through firmware, testing, and deployment. [Replace with your own 2–3 sentence summary.]",
 
+  /** Opening statement on the About page. */
+  aboutStatement: "Engineer first. Integrator always.",
+
   shortAbout: [
-    "Engineer first. Integrator always. I like the seam where hardware meets software — where a schematic decision shows up months later as a firmware constraint.",
-    "Most of my work lives in vehicles and connected devices: CAN networks, diagnostics, telemetry, and the unglamorous reliability work that keeps devices alive in the field.",
+    "I'm an embedded systems engineer who enjoys working at the point where hardware, firmware, vehicles, and connectivity meet.",
+    "My work focuses on developing practical systems that can survive testing, deployment, unreliable networks, electrical noise, and real-world use.",
+  ],
+
+  biography: [
+    "I build embedded systems at the intersection of hardware, firmware, automotive communication, and connectivity. My work includes vehicle diagnostics, CAN and OBD-II research, PCB development, cellular devices, OTA firmware, hardware testing, and field deployment.",
+    "I like the seam where hardware meets software — where a schematic decision shows up months later as a firmware constraint. Most of my work lives in vehicles and connected devices: CAN networks, diagnostics, telemetry, and the unglamorous reliability work that keeps devices alive in the field.",
+  ],
+
+  /**
+   * Selected statistics for the About preview. Bracketed values are
+   * deliberate placeholders — replace them with confirmed numbers only.
+   * Do not publish unverified claims.
+   */
+  stats: [
+    { value: "[X]+", label: "Years of experience" },
+    { value: "[X]", label: "Completed engineering projects" },
+    { value: "[X]", label: "Vehicle platforms tested" },
   ],
 } as const;

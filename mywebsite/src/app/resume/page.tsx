@@ -37,7 +37,7 @@ export default function ResumePage() {
   const selected = projects.slice(0, 4);
 
   return (
-    <Container className="py-16 md:py-24">
+    <Container className="pt-32 pb-16 md:pt-40 md:pb-24 print:pt-0">
       <ResumeHeader />
 
       <div className="mt-12 grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,3fr)] lg:gap-20">
@@ -84,7 +84,7 @@ export default function ResumePage() {
 
         {/* Side column */}
         <div className="flex flex-col gap-12">
-          <div className="print-hidden lg:sticky lg:top-24 lg:z-10 lg:-mt-2 lg:border-b lg:border-border lg:bg-background lg:pb-4">
+          <div className="print-hidden lg:sticky lg:top-28 lg:z-10 lg:-mt-2 lg:border-b lg:border-border lg:bg-background lg:pb-4">
             <ResumeDownload compact />
           </div>
 

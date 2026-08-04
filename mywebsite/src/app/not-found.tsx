@@ -5,8 +5,7 @@ import { LinkButton } from "@/components/ui/link-button";
 export default function NotFound() {
   return (
     <div className="relative overflow-hidden">
-      <div aria-hidden="true" className="grid-bg absolute inset-0" />
-      <div className="relative mx-auto flex min-h-[60svh] w-full max-w-320 flex-col items-center justify-center px-5 py-24 text-center">
+      <div className="relative mx-auto flex min-h-[70svh] w-full max-w-320 flex-col items-center justify-center px-5 pt-32 pb-24 text-center">
         <p className="type-meta text-accent">ERR 404 — NO ROUTE</p>
         <h1 className="type-page-title mt-4">
           This route seems to be disconnected.

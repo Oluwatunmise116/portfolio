@@ -13,13 +13,13 @@ export function buttonClasses(
   className?: string,
 ): string {
   return cn(
-    "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-sm font-medium",
-    "rounded-sm transition-[transform,background-color,border-color,color] duration-160 ease-out-strong",
+    "inline-flex min-h-12 items-center justify-center gap-2 px-6 text-sm font-semibold",
+    "rounded-full transition-[transform,background-color,border-color,color] duration-160 ease-out-strong",
     "active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
     variant === "primary" &&
       "bg-accent text-accent-foreground hover:bg-accent-hover",
     variant === "secondary" &&
-      "border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent",
+      "border border-border-strong bg-transparent text-foreground hover:bg-control hover:border-transparent hover:text-control-foreground",
     variant === "ghost" && "px-2 text-foreground-muted hover:text-accent",
     className,
   );

@@ -1,11 +1,14 @@
 import { z } from "zod";
 
 export const contactReasons = [
-  "Project collaboration",
-  "Embedded systems opportunity",
-  "Automotive research",
-  "Firmware consultation",
-  "Speaking or writing",
+  "Embedded firmware project",
+  "Automotive diagnostics",
+  "CAN or OBD-II research",
+  "PCB and hardware design",
+  "IoT product development",
+  "OTA firmware system",
+  "Engineering opportunity",
+  "Technical writing",
   "General enquiry",
 ] as const;
 
