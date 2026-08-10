@@ -35,10 +35,13 @@ export function SiteHeader() {
 
   return (
     <header className="print-hidden pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4">
+      {/* The shrink-on-scroll is a transform, not a padding/margin change:
+          this is the one animation triggered by scrolling, and animating
+          layout properties here forces layout on every frame of it. */}
       <div
         className={cn(
-          "pointer-events-auto mt-4 flex w-full max-w-fit items-center gap-1 rounded-full border border-border bg-surface/90 shadow-pill backdrop-blur-md transition-[padding,margin] duration-220 ease-out-strong",
-          scrolled ? "mt-2.5 py-1 pr-1 pl-1.5" : "py-1.5 pr-1.5 pl-2",
+          "pointer-events-auto mt-4 flex w-full max-w-fit items-center gap-1 rounded-full border border-border bg-surface/90 py-1.5 pr-1.5 pl-2 shadow-pill backdrop-blur-md transition-transform duration-220 ease-out-strong",
+          scrolled ? "-translate-y-1.5 scale-[0.94]" : "translate-y-0 scale-100",
         )}
       >
         {/* Avatar / wordmark */}

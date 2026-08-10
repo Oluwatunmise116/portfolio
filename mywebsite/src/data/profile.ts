@@ -25,7 +25,7 @@ export const profile = {
 
   // TODO: confirm or replace contact details.
   email: "olabanjitunmise234@gmail.com",
-  location: "[City, Country]",
+  location: "Lagos, Nigeria",
   timezone: "WAT · UTC+1",
 
   availability: {
@@ -84,13 +84,14 @@ export const profile = {
   ],
 
   /**
-   * Selected statistics for the About preview. Bracketed values are
-   * deliberate placeholders — replace them with confirmed numbers only.
-   * Do not publish unverified claims.
+   * Selected statistics for the About preview. These are owner-confirmed
+   * figures — do not change them without confirmation, and never publish
+   * an unverified claim here. The leading number counts up on scroll
+   * (see components/ui/count-up.tsx); any suffix is preserved verbatim.
    */
   stats: [
-    { value: "[X]+", label: "Years of experience" },
-    { value: "[X]", label: "Completed engineering projects" },
-    { value: "[X]", label: "Vehicle platforms tested" },
+    { value: "5", label: "Years of experience" },
+    { value: "20+", label: "Completed engineering projects" },
+    { value: "10+", label: "Vehicle platforms tested" },
   ],
 } as const;

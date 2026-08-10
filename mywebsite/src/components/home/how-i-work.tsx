@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { CountUp } from "@/components/ui/count-up";
 import { Reveal } from "@/components/ui/reveal";
+import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { skillGroups } from "@/data/skills";
 
@@ -48,16 +49,20 @@ export function HowIWork() {
   const activeProjects = projects.filter(
     (p) => p.status === "Active" || p.status === "Research",
   ).length;
+  // Read from profile.stats rather than restated, so this section and the
+  // About preview can never quote different numbers for the same fact.
+  const vehiclePlatforms =
+    profile.stats.find((s) => s.label === "Vehicle platforms tested")?.value ??
+    "[X]";
 
   const indicators = [
     { value: String(protocolCount), label: "Communication protocols used" },
     { value: String(activeProjects), label: "Active engineering projects" },
-    // TODO: replace with confirmed values (or remove) before publishing.
+    // Owner-confirmed; kept in sync with profile.stats so the two sections
+    // never disagree about the same fact.
+    { value: vehiclePlatforms, label: "Vehicle platforms tested" },
+    // TODO: replace with a confirmed value, or delete this entry.
     { value: "[X]", label: "Boards tested — replace with confirmed value" },
-    {
-      value: "[X]",
-      label: "Vehicle platforms tested — replace with confirmed value",
-    },
   ];
 
   return (

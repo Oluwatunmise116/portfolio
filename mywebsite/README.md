@@ -294,13 +294,15 @@ Search the repo for `TODO:` and `[Replace` / `[Your` / `[Organisation` /
 
 - `public/images/profile/portrait.jpg` — **generated stand-in**; overwrite
   with the real photo, then check `avatarFocus`/`avatarZoom`
-- `src/data/profile.ts` — location, summary, **statistics**
+- `src/data/profile.ts` — summary (location and statistics are confirmed)
 - `src/data/experience.ts` / `education.ts` — real history
 - `src/data/projects.ts` — roles, durations, constraints, and **all
   results/metrics**
 - `src/data/social-links.ts` — the **GitHub URL** is still a placeholder;
   LinkedIn, Upwork, Medium, X, and Instagram are real
-- `src/components/home/how-i-work.tsx` — the two bracketed indicators
+- `src/components/home/how-i-work.tsx` — the "Boards tested" indicator is
+  the last bracketed value on the home page; give it a number or delete the
+  entry
 - `src/lib/metadata.ts` — social handle + real OG image
 - `public/images/projects/**` — still generated SVG placeholders → real
   photos/diagrams. Blog covers are already the real Medium artwork; once no

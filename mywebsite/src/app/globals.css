@@ -251,19 +251,19 @@ body {
 /* Entrances                                                           */
 /* ------------------------------------------------------------------ */
 
-/* Route-level transition: template.tsx remounts per navigation. */
+/* Route-level transition: template.tsx remounts per navigation.
+   Deliberately short and opacity-only — this runs on every navigation, so
+   it must smooth the change without adding felt latency. */
 .page-enter {
-  animation: page-enter 360ms var(--ease-out-strong) both;
+  animation: page-enter 200ms var(--ease-out-strong) both;
 }
 
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -369,10 +369,12 @@ body {
   }
 }
 
-/* Grid/list entrance used when filters change */
+/* Grid/list entrance used when filters change. Filtering is a repeated,
+   exploratory action, so the stagger is kept short enough that the full
+   grid reads as settled in ~256ms even at the cap. */
 .filter-enter {
-  animation: filter-enter var(--duration-base) var(--ease-out-strong) both;
-  animation-delay: min(calc(var(--enter-index, 0) * 40ms), 240ms);
+  animation: filter-enter var(--duration-fast) var(--ease-out-strong) both;
+  animation-delay: min(calc(var(--enter-index, 0) * 24ms), 96ms);
 }
 
 @keyframes filter-enter {
