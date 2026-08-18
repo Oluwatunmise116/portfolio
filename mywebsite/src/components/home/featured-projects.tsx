@@ -6,18 +6,11 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { projects } from "@/data/projects";
 
-/** Home featured-project order: most representative work first. */
-const FEATURED_SLUGS = [
-  "vescan-vehicle-can-analyzer",
-  "evade-crash-detection-device",
-  "automotive-diagnostics-research",
-  "ota-firmware-platform",
-];
-
 export function FeaturedProjects() {
-  const featured = FEATURED_SLUGS.map((slug) =>
-    projects.find((p) => p.slug === slug),
-  ).filter((p): p is (typeof projects)[number] => p !== undefined);
+  // Driven by the `featured` flag in src/data/projects.ts rather than a
+  // hard-coded slug list, so removing or renaming a project can never
+  // leave a dangling reference here.
+  const featured = projects.filter((p) => p.featured).slice(0, 4);
 
   return (
     <section aria-labelledby="featured-projects-title" className="bg-surface">

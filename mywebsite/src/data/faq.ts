@@ -3,37 +3,40 @@ export type FaqItem = {
   answer: string;
 };
 
-/** Home-page FAQ accordion. Keep answers concise and honest. */
+/**
+ * Home-page FAQ accordion. Broad automotive/IoT language only — no
+ * employer product names or confidential system details.
+ */
 export const faqItems: FaqItem[] = [
   {
     question: "What types of embedded systems projects do you work on?",
     answer:
-      "Mostly vehicle-connected and IoT devices: CAN/OBD-II tools, telemetry and tracking hardware, crash-detection devices, and connected products that need firmware, hardware, and cloud communication to work together reliably.",
+      "I work mainly on automotive and IoT systems, including vehicle communication, diagnostics, telemetry, tracking, sensor-based devices, embedded firmware, PCB development, and connected products that combine hardware, firmware, and cloud communication.",
   },
   {
     question: "Do you work on both hardware and firmware?",
     answer:
-      "Yes. I design schematics and PCBs, bring boards up on the bench, and write the firmware that runs on them. Owning both sides is the point — most real problems live at the seam between hardware and software.",
+      "Yes. My work covers schematic and PCB development, board bring-up, firmware development, peripheral integration, debugging, and system testing. I am most effective on projects where the hardware and firmware need to be developed and validated together.",
   },
   {
-    question: "What vehicle communication protocols do you support?",
+    question: "What vehicle communication protocols do you work with?",
     answer:
-      "CAN and CAN FD, OBD-II with ISO-TP transport, UDS diagnostics, and K-Line/KWP2000 on older platforms. I also work with MQTT, GNSS/NMEA, and the usual board-level buses (UART, SPI, I²C, RS485).",
+      "CAN, CAN-FD, OBD-II, ISO-TP, UDS, K-Line, and KWP2000, together with common embedded interfaces including UART, SPI, I²C, RS485, and Modbus.",
   },
   {
     question: "Can you help with automotive diagnostic research?",
     answer:
-      "Yes — capturing and documenting how production vehicles implement diagnostics, from standard OBD-II services to UDS sessions and manufacturer-specific behaviour. All research is strictly read-only on the vehicle bus.",
+      "Yes. I work on understanding vehicle communication, analyzing CAN traffic, documenting diagnostic behaviour, and working with standard and manufacturer-specific diagnostic services in a controlled, read-only research context.",
   },
   {
-    question: "Do you develop OTA update systems?",
+    question: "Do you work with connected embedded devices?",
     answer:
-      "Yes. Signed images, dual-bank flashing, health-check-gated rollouts, and automatic rollback — designed so that a failed update or a power cut never bricks a device in the field.",
+      "Yes. I have experience integrating cellular communication, GNSS, MQTT, Wi-Fi, BLE, telemetry, sensors, and remote firmware-update concepts into embedded systems.",
   },
   {
     question:
       "Are you available for collaboration or engineering opportunities?",
     answer:
-      "I'm open to selected projects and engineering opportunities. The fastest way to reach me is the contact form or email — a short description of the system you're building is the ideal starting point.",
+      "Yes. I am open to selected embedded systems, automotive, IoT, firmware, hardware, and technical collaboration opportunities. A short description of the system, current stage, and required outcome is the best starting point.",
   },
 ];

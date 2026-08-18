@@ -1,80 +1,79 @@
 import type { SkillGroup } from "@/types/resume";
 
+/** Grouped so the site reads as focused rather than overloaded. */
 export const skillGroups: SkillGroup[] = [
   {
-    discipline: "Embedded Development",
+    discipline: "Embedded Firmware",
     skills: [
       "C",
       "C++",
       "Python",
-      "ESP-IDF",
       "STM32",
       "ESP32",
+      "Raspberry Pi",
       "FreeRTOS",
       "Zephyr RTOS",
+      "Drivers",
+      "Peripheral integration",
+      "Debugging",
     ],
   },
   {
-    discipline: "Vehicle Communication",
+    discipline: "Automotive Communication",
     skills: [
       "CAN",
-      "CAN FD",
+      "CAN-FD",
       "OBD-II",
+      "ISO-TP",
       "UDS",
       "K-Line",
+      "KWP2000",
+      "ECU communication",
       "Automotive diagnostics",
     ],
   },
   {
-    discipline: "Connectivity",
+    discipline: "IoT and Connectivity",
     skills: [
+      "HTTP",
       "MQTT",
-      "Cellular communication",
+      "Cellular / 4G",
       "GNSS",
       "Wi-Fi",
-      "Bluetooth",
-      "OTA updates",
+      "Bluetooth / BLE",
+      "Device-to-cloud communication",
+      "OTA firmware concepts",
     ],
   },
   {
-    discipline: "Hardware",
+    discipline: "Hardware and PCB",
     skills: [
       "Schematic design",
       "PCB development",
+      "Board bring-up",
       "Sensor integration",
-      "Hardware debugging",
       "Power systems",
+      "Hardware debugging",
       "Prototype testing",
     ],
   },
   {
-    discipline: "Interfaces & Protocols",
+    discipline: "Interfaces and Protocols",
     skills: ["UART", "SPI", "I²C", "RS485", "Modbus"],
   },
   {
     discipline: "Tools",
     skills: [
+      "KiCad / EasyEDA",
       "Git",
+      "VS Code",
+      "PlatformIO",
+      "ESP-IDF",
       "Oscilloscope",
       "Logic analyzer",
       "CAN analyzer",
-      "Altium Designer",
-      "PlatformIO",
-      "VS Code",
     ],
   },
-];
-
-/** Compact strip shown under the home hero. */
-export const expertiseStrip = [
-  "Embedded Firmware",
-  "Automotive Communication",
-  "IoT Systems",
-  "PCB & Hardware Integration",
-  "OTA Firmware",
-  "Device Testing",
-  "CAN & CAN FD",
-  "OBD-II & UDS",
 ];
 
 export const engineeringPrinciples = [
@@ -106,7 +105,7 @@ export const engineeringPrinciples = [
 ];
 
 export const toolsList = [
-  { name: "Altium Designer", use: "Schematic capture & PCB layout" },
+  { name: "KiCad / EasyEDA", use: "Schematic capture & PCB layout" },
   { name: "PlatformIO / ESP-IDF", use: "Firmware build systems" },
   { name: "Oscilloscope & logic analyzer", use: "Signal-level debugging" },
   { name: "CAN analyzer", use: "Bus capture & diagnostics" },

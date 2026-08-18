@@ -3,16 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
-import { CountUp } from "@/components/ui/count-up";
 import { Reveal } from "@/components/ui/reveal";
+import { portraitFor } from "@/data/portraits";
 import { profile } from "@/data/profile";
 
 /**
- * Home "About me" preview: portrait beside a short biography, selected
- * statistics (bracketed placeholders until confirmed), contact facts, and
- * a "My story" CTA into /about.
+ * Home "About me" preview: portrait beside a short biography, capability
+ * areas, contact facts, and a "My story" CTA into /about.
  */
 export function AboutPreview() {
+  const previewPortrait = portraitFor("aboutPreview");
+
   return (
     <section aria-labelledby="about-preview-title">
       <Container className="py-20 md:py-28">
@@ -26,12 +27,12 @@ export function AboutPreview() {
           <Reveal className="mx-auto w-full max-w-sm lg:mx-0">
             <div className="relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-muted">
               <Image
-                src={profile.portrait.src}
-                alt={profile.portrait.alt}
+                src={previewPortrait.src}
+                alt={previewPortrait.alt}
                 fill
                 sizes="(min-width: 1024px) 32rem, 88vw"
                 className="object-cover"
-                style={{ objectPosition: profile.portrait.focus }}
+                style={{ objectPosition: previewPortrait.focus }}
               />
             </div>
           </Reveal>
@@ -46,19 +47,17 @@ export function AboutPreview() {
               </p>
             </Reveal>
 
-            {/* Selected statistics — bracketed placeholders until the owner
-                confirms real numbers; never publish invented metrics. */}
+            {/* Capability areas, not counters. No numeric claim appears on
+                this site unless it can be independently verified. */}
             <Reveal
               delay={120}
               className="mt-10 grid grid-cols-1 gap-6 border-t border-border pt-8 sm:grid-cols-3"
             >
-              {profile.stats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-display text-4xl font-medium uppercase sm:text-5xl">
-                    <CountUp value={stat.value} />
-                  </p>
-                  <p className="mt-2 text-sm text-foreground-muted">
-                    {stat.label}
+              {profile.focusAreas.map((area) => (
+                <div key={area.title}>
+                  <h3 className="type-card-title">{area.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                    {area.detail}
                   </p>
                 </div>
               ))}

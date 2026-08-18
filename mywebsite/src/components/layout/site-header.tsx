@@ -47,10 +47,10 @@ export function SiteHeader() {
         {/* Avatar / wordmark */}
         <Link
           href="/"
-          aria-label={`${profile.name} — home`}
+          aria-label={`${profile.shortName} — home`}
           className="mr-1 flex shrink-0 items-center gap-2 rounded-full"
         >
-          <Avatar size={36} />
+          <Avatar size={36} slot="navLogo" />
         </Link>
 
         {/* Desktop items */}
@@ -103,7 +103,7 @@ export function SiteHeader() {
 
         {/* Mobile: name + menu button */}
         <span className="px-1 font-display text-sm font-semibold tracking-wide uppercase md:hidden">
-          {profile.name}
+          {profile.shortName}
         </span>
         <MobileNavigation />
       </div>

@@ -8,11 +8,7 @@ import { LatestArticles } from "@/components/home/latest-articles";
 import { Services } from "@/components/home/services";
 import { createMetadata } from "@/lib/metadata";
 
-export const metadata = createMetadata({
-  description:
-    "Embedded Systems and IoT Engineer specialising in automotive diagnostics, firmware, CAN, OBD-II, PCB design, connected devices, and vehicle communication.",
-  path: "/",
-});
+export const metadata = createMetadata({ path: "/" });
 
 export default function HomePage() {
   return (

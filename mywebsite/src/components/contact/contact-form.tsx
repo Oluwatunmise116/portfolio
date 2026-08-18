@@ -12,10 +12,11 @@ import { LoadingState } from "@/components/ui/loading-state";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  contactReasons,
+  contactReasonGroups,
   contactSchema,
   projectTypes,
   submitContactForm,
+  type ContactDelivery,
   type ContactFormValues,
 } from "@/lib/validation";
 
@@ -23,6 +24,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const [delivery, setDelivery] = useState<ContactDelivery>("email-client");
 
   const {
     register,
@@ -39,7 +41,8 @@ export function ContactForm() {
     if (isSubmitting || status === "submitting") return; // no double submits
     setStatus("submitting");
     try {
-      await submitContactForm(values);
+      const result = await submitContactForm(values);
+      setDelivery(result.delivery);
       setStatus("success");
       reset();
     } catch {
@@ -48,7 +51,9 @@ export function ContactForm() {
   });
 
   if (status === "success") {
-    return <ContactSuccess onReset={() => setStatus("idle")} />;
+    return (
+      <ContactSuccess delivery={delivery} onReset={() => setStatus("idle")} />
+    );
   }
 
   return (
@@ -62,6 +67,7 @@ export function ContactForm() {
         >
           <Input
             id="name"
+            placeholder="Enter your name"
             autoComplete="name"
             aria-invalid={errors.name ? true : undefined}
             aria-describedby={errors.name ? "name-error" : undefined}
@@ -78,6 +84,7 @@ export function ContactForm() {
           <Input
             id="email"
             type="email"
+            placeholder="Enter your email"
             autoComplete="email"
             aria-invalid={errors.email ? true : undefined}
             aria-describedby={errors.email ? "email-error" : undefined}
@@ -93,6 +100,7 @@ export function ContactForm() {
       >
         <Input
           id="company"
+          placeholder="Where you work"
           autoComplete="organization"
           aria-invalid={errors.company ? true : undefined}
           aria-describedby={errors.company ? "company-error" : undefined}
@@ -117,10 +125,14 @@ export function ContactForm() {
             <option value="" disabled>
               Select a reason…
             </option>
-            {contactReasons.map((reason) => (
-              <option key={reason} value={reason}>
-                {reason}
-              </option>
+            {contactReasonGroups.map((group) => (
+              <optgroup key={group.label} label={group.label}>
+                {group.reasons.map((reason) => (
+                  <option key={reason} value={reason}>
+                    {reason}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </Select>
         </FormField>
@@ -150,6 +162,7 @@ export function ContactForm() {
       >
         <Textarea
           id="message"
+          placeholder="Tell me about the project, system, or problem"
           rows={7}
           aria-invalid={errors.message ? true : undefined}
           aria-describedby={errors.message ? "message-error" : "message-hint"}
@@ -174,16 +187,14 @@ export function ContactForm() {
         </div>
       )}
 
-      <div>
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isSubmitting}
-          className="w-full sm:w-auto"
-        >
-          {isSubmitting ? <LoadingState label="Sending…" /> : "Send message"}
-        </Button>
-      </div>
+      <Button
+        type="submit"
+        variant="primary"
+        disabled={isSubmitting}
+        className="w-full"
+      >
+        {isSubmitting ? <LoadingState label="Sending…" /> : "Send message"}
+      </Button>
     </form>
   );
 }

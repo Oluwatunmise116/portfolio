@@ -139,6 +139,16 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6.5rem;
+  /* Tells the browser which palette to render native UI in: the <select>
+     dropdown list, scrollbars, autofill, and focus rings. Without it a
+     dark-theme visitor gets a white dropdown panel with black options,
+     because that chrome is drawn by the OS and cannot be reached with
+     ordinary CSS. Set per theme below. */
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 /* NOTE: hand-written rules must reference the next/font variables
@@ -168,6 +178,36 @@ body {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Native select options                                               */
+/* ------------------------------------------------------------------ */
+
+/* How much of an <option> can actually be styled is decided by the
+   platform: Chrome and Firefox on Windows/Linux honour these colours,
+   while macOS and iOS draw the list entirely themselves and ignore them.
+   `color-scheme` above is what covers those platforms, so the two work
+   together — this sets the palette where it is allowed, and color-scheme
+   picks the right native one where it is not. */
+select option {
+  background-color: var(--surface);
+  color: var(--foreground);
+}
+
+select optgroup {
+  background-color: var(--surface);
+  color: var(--foreground-muted);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The unselectable prompt ("Select a reason…") reads as placeholder text
+   rather than a real choice. */
+select option[value=""] {
+  color: var(--foreground-muted);
 }
 
 /* ------------------------------------------------------------------ */

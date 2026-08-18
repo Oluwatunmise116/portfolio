@@ -83,7 +83,7 @@ export function ProjectCard({
               <span aria-hidden="true" className="mx-2 opacity-50">
                 /
               </span>
-              {project.year}
+              {project.year ?? project.status}
             </p>
             <Heading className="type-card-title mt-2 transition-colors duration-160 ease-out-strong group-hover:text-accent">
               {project.title}

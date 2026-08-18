@@ -3,9 +3,9 @@ export type SocialLink = {
   href: string;
 };
 
+/** All verified, publicly reachable profiles. */
 export const socialLinks: SocialLink[] = [
-  // TODO: replace with your real GitHub profile URL.
-  { label: "GitHub", href: "https://github.com/your-handle" },
+  { label: "GitHub", href: "https://github.com/Oluwatunmise116" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/oluwatunmise116/" },
   {
     label: "Upwork",
@@ -18,3 +18,6 @@ export const socialLinks: SocialLink[] = [
 
 /** The Medium profile that hosts all published articles. */
 export const MEDIUM_PROFILE_URL = "https://medium.com/@olabanjitunmise234";
+
+/** X handle used for Twitter card metadata. */
+export const X_HANDLE = "@Oluwatunmise116";

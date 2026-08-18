@@ -3,7 +3,11 @@ import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { SITE_TITLE_SUFFIX, SITE_URL } from "@/lib/constants";
+import {
+  SITE_DESCRIPTION,
+  SITE_TITLE_SUFFIX,
+  SITE_URL,
+} from "@/lib/constants";
 import { manrope, oswald, plexMono } from "@/lib/fonts";
 
 import "./globals.css";
@@ -14,8 +18,7 @@ export const metadata: Metadata = {
     default: SITE_TITLE_SUFFIX,
     template: `%s | ${SITE_TITLE_SUFFIX}`,
   },
-  description:
-    "Embedded Systems and IoT Engineer specialising in automotive diagnostics, firmware, CAN, OBD-II, PCB design, connected devices, and vehicle communication.",
+  description: SITE_DESCRIPTION,
 };
 
 export const viewport: Viewport = {

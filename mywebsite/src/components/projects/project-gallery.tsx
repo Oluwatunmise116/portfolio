@@ -3,13 +3,14 @@ import Image from "next/image";
 import type { Project } from "@/types/project";
 
 export function ProjectGallery({ project }: { project: Project }) {
-  if (project.gallery.length === 0) return null;
+  const gallery = project.gallery ?? [];
+  if (gallery.length === 0) return null;
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {project.gallery.map((item) => (
+      {gallery.map((item) => (
         <figure key={item.src}>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-border">
+          <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border">
             <Image
               src={item.src}
               alt={item.caption}

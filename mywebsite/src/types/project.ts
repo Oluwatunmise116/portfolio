@@ -1,10 +1,7 @@
 export const projectCategories = [
-  "Embedded",
   "Automotive",
-  "Firmware",
+  "Embedded",
   "IoT",
-  "Hardware",
-  "Research",
 ] as const;
 
 export type ProjectCategory = (typeof projectCategories)[number];
@@ -24,6 +21,15 @@ export type ArchitectureDiagram = {
   blocks: ArchitectureBlock[];
 };
 
+/**
+ * Only `slug`, `number`, `title`, `summary`, `category`, `status`,
+ * `technologies`, `role` and `image` are required.
+ *
+ * Every narrative field below is OPTIONAL by design: the detail page
+ * renders a section only when its data exists. This exists so a project
+ * can be published with exactly what is true about it, rather than
+ * padded out with invented context, metrics, or architecture.
+ */
 export type Project = {
   slug: string;
   /** Editorial index, e.g. "01". */
@@ -31,27 +37,30 @@ export type Project = {
   title: string;
   /** One-sentence summary used in lists and cards. */
   summary: string;
-  /** Longer paragraph used on the detail page. */
-  description: string;
   category: ProjectCategory;
-  year: string;
   status: ProjectStatus;
-  featured: boolean;
-  image: string;
-  gallery: { src: string; caption: string }[];
   technologies: string[];
   role: string;
+  image: string;
+  featured?: boolean;
+
+  /** Longer paragraph used on the detail page. */
+  description?: string;
+  year?: string;
   duration?: string;
-  context: string;
-  problem: string;
-  constraints: string[];
-  responsibilities: string[];
-  hardware: ArchitectureDiagram;
-  firmware: ArchitectureDiagram;
-  protocols: string[];
-  process: string[];
-  testing: string[];
-  challenges: string[];
-  results: string[];
-  lessons: string[];
+  gallery?: { src: string; caption: string }[];
+  context?: string;
+  problem?: string;
+  constraints?: string[];
+  responsibilities?: string[];
+  hardware?: ArchitectureDiagram;
+  firmware?: ArchitectureDiagram;
+  protocols?: string[];
+  process?: string[];
+  testing?: string[];
+  challenges?: string[];
+  results?: string[];
+  lessons?: string[];
+  /** Only set when a real, public repository or demo exists. */
+  link?: { label: string; href: string };
 };

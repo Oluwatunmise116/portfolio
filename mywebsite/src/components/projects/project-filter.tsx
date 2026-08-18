@@ -5,11 +5,7 @@ import { useState } from "react";
 import { ProjectCard } from "@/components/projects/project-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
-import {
-  projectCategories,
-  type Project,
-  type ProjectCategory,
-} from "@/types/project";
+import { type Project, type ProjectCategory } from "@/types/project";
 import { cn } from "@/lib/utils";
 
 type Filter = "All" | ProjectCategory;
@@ -22,7 +18,12 @@ type Filter = "All" | ProjectCategory;
 export function ProjectFilter({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<Filter>("All");
 
-  const filters: Filter[] = ["All", ...projectCategories];
+  // Derived from the projects actually published, so a category filter is
+  // never offered that would return an empty grid.
+  const filters: Filter[] = [
+    "All",
+    ...Array.from(new Set(projects.map((p) => p.category))),
+  ];
   const visible =
     active === "All" ? projects : projects.filter((p) => p.category === active);
 

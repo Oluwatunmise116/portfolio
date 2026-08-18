@@ -1,12 +1,17 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
-import { profile } from "@/data/profile";
+import { portraitFor, type PortraitSlot } from "@/data/portraits";
 import { cn } from "@/lib/utils";
 
 type AvatarProps = {
   /** Rendered pixel size of the circle — also used as the `sizes` hint. */
   size: number;
+  /**
+   * Which image to draw. Defaults to the shared `avatar` photo; the header
+   * passes `navLogo` so the brand mark can differ from the portrait.
+   */
+  slot?: Extract<PortraitSlot, "avatar" | "navLogo">;
   className?: string;
   style?: CSSProperties;
 };
@@ -23,8 +28,13 @@ type AvatarProps = {
  * a visible label, so `alt` is empty and the image is skipped by screen
  * readers rather than announced twice.
  */
-export function Avatar({ size, className, style }: AvatarProps) {
-  const { portrait } = profile;
+export function Avatar({
+  size,
+  slot = "avatar",
+  className,
+  style,
+}: AvatarProps) {
+  const portrait = portraitFor(slot);
 
   return (
     <span
@@ -42,7 +52,7 @@ export function Avatar({ size, className, style }: AvatarProps) {
         className="object-cover"
         style={{
           objectPosition: portrait.avatarFocus,
-          scale: portrait.avatarZoom,
+          scale: portrait.zoom,
         }}
       />
     </span>

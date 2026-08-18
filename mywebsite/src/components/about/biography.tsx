@@ -2,6 +2,7 @@ import { FileDown, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { portraitFor } from "@/data/portraits";
 import { profile } from "@/data/profile";
 
 /**
@@ -9,6 +10,8 @@ import { profile } from "@/data/profile";
  * narrative pulled from src/data/profile.ts.
  */
 export function Biography() {
+  const aboutPortrait = portraitFor("about");
+
   return (
     <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-20">
       <div>
@@ -17,7 +20,7 @@ export function Biography() {
         </h1>
 
         <div className="mt-10 flex max-w-prose flex-col gap-5 text-lg leading-relaxed text-foreground-muted">
-          {profile.biography.map((paragraph) => (
+          {profile.aboutNarrative.map((paragraph) => (
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}
         </div>
@@ -47,13 +50,13 @@ export function Biography() {
       <div className="mx-auto w-full max-w-sm lg:sticky lg:top-28">
         <div className="relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-muted shadow-card">
           <Image
-            src={profile.portrait.src}
-            alt={profile.portrait.alt}
+            src={aboutPortrait.src}
+            alt={aboutPortrait.alt}
             fill
             priority
             sizes="(min-width: 1024px) 24rem, 88vw"
             className="object-cover"
-            style={{ objectPosition: profile.portrait.focus }}
+            style={{ objectPosition: aboutPortrait.focus }}
           />
         </div>
         <p className="type-meta mt-4 text-foreground-muted">

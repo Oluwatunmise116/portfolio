@@ -6,11 +6,41 @@ export const contactReasons = [
   "CAN or OBD-II research",
   "PCB and hardware design",
   "IoT product development",
-  "OTA firmware system",
+  "Firmware architecture / OTA",
   "Engineering opportunity",
   "Technical writing",
   "General enquiry",
 ] as const;
+
+/**
+ * The same reasons, grouped for the dropdown so a nine-item list is
+ * scannable instead of one flat run.
+ *
+ * `contactReasons` above stays the single source of truth for validation —
+ * these groups only decide presentation. Every reason must appear exactly
+ * once here; the type below enforces that each entry is a real reason, and
+ * the contact-form test asserts the two lists cover each other.
+ */
+export const contactReasonGroups: ReadonlyArray<{
+  label: string;
+  reasons: ReadonlyArray<(typeof contactReasons)[number]>;
+}> = [
+  {
+    label: "Project work",
+    reasons: [
+      "Embedded firmware project",
+      "Automotive diagnostics",
+      "CAN or OBD-II research",
+      "PCB and hardware design",
+      "IoT product development",
+      "Firmware architecture / OTA",
+    ],
+  },
+  {
+    label: "Something else",
+    reasons: ["Engineering opportunity", "Technical writing", "General enquiry"],
+  },
+];
 
 export const projectTypes = [
   "Embedded firmware",
@@ -42,25 +72,66 @@ export const contactSchema = z.object({
 
 export type ContactFormValues = z.infer<typeof contactSchema>;
 
+/** How the message actually reached its destination. */
+export type ContactDelivery = "sent" | "email-client";
+
+/** Set this to a form endpoint (e.g. Formspree) to enable real delivery. */
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+
+/** Destination address for the email-client fallback. */
+export const CONTACT_EMAIL = "olabanjitunmise234@gmail.com";
+
+function buildMailto(values: ContactFormValues): string {
+  const lines = [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.company ? `Company: ${values.company}` : null,
+    `Reason: ${values.reason}`,
+    values.projectType ? `Project type: ${values.projectType}` : null,
+    "",
+    values.message,
+  ].filter(Boolean);
+
+  const subject = `Portfolio enquiry — ${values.reason}`;
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(lines.join("\n"))}`;
+}
+
 /**
- * Simulated async submission — this site is frontend-only for now.
+ * Submits the contact form.
  *
- * TODO: connect a real backend here. Options:
- *  - A Next.js route handler (src/app/api/contact/route.ts) that relays to
- *    Resend / Nodemailer.
- *  - Formspree: POST to https://formspree.io/f/<form-id>.
- *  - Any serverless function.
- * Keep secrets in server-side env vars — never expose API keys to the client.
+ * There is deliberately NO simulated success path. Until
+ * NEXT_PUBLIC_CONTACT_ENDPOINT is configured, nothing on this site can
+ * actually deliver a message, so the form hands the composed enquiry to
+ * the visitor's own email client and reports `"email-client"` — the UI
+ * then tells them exactly what happened. Showing a "message received"
+ * confirmation for a message that was never sent would be a lie to the
+ * visitor and lose real enquiries.
+ *
+ * To enable real delivery, set NEXT_PUBLIC_CONTACT_ENDPOINT to a form
+ * endpoint (Formspree or similar), or replace the fetch below with a call
+ * to a Next.js route handler that relays via Resend/Nodemailer. Keep any
+ * API key server-side — never prefix a secret with NEXT_PUBLIC_.
  */
 export async function submitContactForm(
   values: ContactFormValues,
-): Promise<{ ok: true }> {
-  // Artificial network delay so loading states are visible during development.
-  await new Promise((resolve) => setTimeout(resolve, 900));
-
-  if (process.env.NODE_ENV === "development") {
-    console.info("[contact] simulated submission", values);
+): Promise<{ ok: true; delivery: ContactDelivery }> {
+  if (CONTACT_ENDPOINT) {
+    const response = await fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(values),
+    });
+    if (!response.ok) {
+      throw new Error(`Contact endpoint responded ${response.status}`);
+    }
+    return { ok: true, delivery: "sent" };
   }
 
-  return { ok: true };
+  // No backend configured — hand off to the visitor's email client.
+  if (typeof window !== "undefined") {
+    window.location.href = buildMailto(values);
+  }
+  return { ok: true, delivery: "email-client" };
 }

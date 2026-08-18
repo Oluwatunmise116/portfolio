@@ -1,46 +1,52 @@
 import type { Certification, ExperienceEntry } from "@/types/resume";
 
 /**
- * PLACEHOLDER CONTENT — every organisation and date range below must be
- * replaced with your real history. Bracketed values are deliberate so
- * nothing here can be mistaken for a factual claim.
+ * VERIFIED EXPERIENCE ONLY.
+ *
+ * The current role is described at the level of engineering
+ * responsibility. Employer name, products, client details, system names,
+ * proprietary architecture, and internal outcomes are deliberately kept
+ * off the public portfolio — they belong on LinkedIn or a private CV.
  */
 export const experience: ExperienceEntry[] = [
   {
-    period: "[2024 — Present]",
+    period: "Oct. 2024 — Present",
     role: "Embedded Systems Engineer",
-    organisation: "[Organisation — replace]",
-    location: "[Location]",
+    organisation: "Embedded systems & connected products",
+    location: "Lagos, Nigeria",
     description:
-      "Firmware and hardware integration for connected vehicle devices. [Replace with a one-line description of what the team builds.]",
+      "Embedded firmware, automotive communication, IoT connectivity, PCB and hardware integration, debugging, testing, and product validation.",
     highlights: [
-      "[Replace with a real responsibility, e.g. led firmware for a CAN telemetry unit from bring-up to field deployment.]",
-      "[Replace with a measured outcome — avoid unverifiable claims.]",
-      "[Replace with a collaboration or process highlight.]",
+      "Firmware development for microcontroller-based products, including drivers, peripheral integration, and debugging.",
+      "Automotive communication and diagnostics work across CAN, CAN-FD, OBD-II, ISO-TP, UDS, and ECU communication.",
+      "PCB and hardware integration: schematic review, board bring-up, sensor integration, and hardware debugging.",
+      "Connectivity and telemetry using cellular, GNSS, and MQTT, together with testing and real-world validation.",
     ],
   },
   {
-    period: "[2022 — 2024]",
-    role: "IoT Firmware Engineer",
-    organisation: "[Organisation — replace]",
-    location: "[Location]",
+    period: "Aug. 2023 — Oct. 2023",
+    role: "Networking Intern",
+    organisation: "Petroleum Training Institute",
+    location: "Effurun, Delta State",
     description:
-      "Connected-device firmware: provisioning, OTA updates, and low-power operation. [Replace with real scope.]",
+      "IT support and computer-networking tasks within the institute's technical team.",
     highlights: [
-      "[Replace with a real project or system you owned.]",
-      "[Replace with a measured outcome.]",
+      "Provided basic IT support and assisted with computer-networking tasks.",
+      "Supported team operations with Microsoft productivity tools.",
+      "Gained exposure to project coordination.",
     ],
   },
   {
-    period: "[2020 — 2022]",
-    role: "Hardware Engineer",
-    organisation: "[Organisation — replace]",
-    location: "[Location]",
+    period: "Mar. 2022 — May 2022",
+    role: "Embedded Systems and IoT Intern",
+    organisation: "Autokontrol Technology",
+    location: "Ilorin, Kwara State",
     description:
-      "Schematic design, PCB layout, and prototype bring-up for sensor products. [Replace with real scope.]",
+      "Practical training in microcontroller control, sensor interfacing, and embedded firmware.",
     highlights: [
-      "[Replace with a real board or subsystem you designed.]",
-      "[Replace with a testing or validation highlight.]",
+      "Completed practical training in microcontroller control and sensor interfacing.",
+      "Wrote and tested firmware for hardware control.",
+      "Troubleshot embedded hardware and software issues, escalating larger technical problems when required.",
     ],
   },
 ];
@@ -48,55 +54,58 @@ export const experience: ExperienceEntry[] = [
 /** Career timeline shown on the About page. */
 export const timeline = [
   {
-    period: "[2024 — Present]",
+    period: "Oct. 2024 — Present",
     role: "Embedded Systems Engineer",
-    organisation: "[Organisation — replace]",
+    organisation: "Embedded systems & connected products",
     description:
-      "Vehicle communication and connected-device firmware. [Replace with one sentence about this chapter.]",
+      "Embedded firmware, automotive communication, IoT connectivity, PCB and hardware integration, debugging, testing, and product validation.",
   },
   {
-    period: "[2022 — 2024]",
-    role: "IoT Firmware Engineer",
-    organisation: "[Organisation — replace]",
+    period: "Aug. 2023 — Oct. 2023",
+    role: "Networking Intern",
+    organisation: "Petroleum Training Institute",
     description:
-      "Device connectivity, OTA updates, and field reliability. [Replace with one sentence about this chapter.]",
+      "IT support, computer networking, and project-coordination exposure in Effurun, Delta State.",
   },
   {
-    period: "[2020 — 2022]",
-    role: "Hardware Engineer",
-    organisation: "[Organisation — replace]",
+    period: "Mar. 2022 — May 2022",
+    role: "Embedded Systems and IoT Intern",
+    organisation: "Autokontrol Technology",
     description:
-      "PCB design and prototype bring-up. [Replace with one sentence about this chapter.]",
+      "Microcontroller control, sensor interfacing, firmware development, and embedded troubleshooting.",
   },
   {
-    period: "[2016 — 2020]",
-    role: "Engineering Degree",
-    organisation: "[University — replace]",
+    period: "2018 — 2024",
+    role: "B.Eng. Computer Engineering",
+    organisation: "University of Ilorin",
     description:
-      "[Replace with your programme and focus, e.g. B.Eng. Electrical & Electronics Engineering.]",
+      "Second Class Honours (Upper Division). Final-year project: an IoT biometric attendance system.",
   },
 ];
 
 /**
- * PLACEHOLDER — replace with certifications you actually hold, or set to an
- * empty array to hide the section.
+ * Verified certification. No issuer is listed because the issuer on the
+ * certificate has not been confirmed — do not add one speculatively.
  */
 export const certifications: Certification[] = [
   {
-    year: "[Year]",
-    name: "[Certification name — replace or remove]",
-    issuer: "[Issuer]",
-  },
-  {
-    year: "[Year]",
-    name: "[Certification name — replace or remove]",
-    issuer: "[Issuer]",
+    year: "June 2024",
+    name: "Occupational and Environmental Safety, Security & Health — HSE Level 1–3",
+    issuer: "",
   },
 ];
 
-/** PLACEHOLDER — courses and workshops for the resume page. */
+/** Verified courses. */
 export const courses = [
-  "[Course or workshop — replace or remove]",
-  "[Course or workshop — replace or remove]",
-  "[Course or workshop — replace or remove]",
+  "How Things Work: An Introduction to Physics — University of Virginia, May 2020",
+  "Data Science Math Skills — Duke University, May 2020",
+  "Introduction to Calculus — University of Sydney, May 2020",
+  "Mechanics of Materials — Georgia Institute of Technology, May 2020",
+  "Supervised Machine Learning: Regression and Classification — Stanford University / Coursera",
+];
+
+/** Professional memberships. */
+export const memberships = [
+  { period: "Sept. 2024 — Present", name: "Nigerian Society of Engineers" },
+  { period: "Jan. 2024 — Present", name: "National Society of Black Engineers" },
 ];

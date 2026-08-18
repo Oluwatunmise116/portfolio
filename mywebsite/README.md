@@ -1,4 +1,4 @@
-# Tunmise — Embedded Systems & Automotive Diagnostics Engineer
+# Oluwatunmise John Olabanji — Embedded Systems Engineer
 
 A personal portfolio for an embedded systems / firmware / automotive / IoT
 engineer, built with the Next.js App Router.
@@ -57,7 +57,7 @@ src/
   types/                # Project, Article, resume types
 public/
   images/               # generated SVG placeholders (replace with real art)
-  resume/               # resume-placeholder.pdf (replace with your PDF)
+                        # blog covers are the real Medium artwork
 ```
 
 ## Home page sections
@@ -66,12 +66,12 @@ public/
    circular accent badge.
 2. **What I can build** — four numbered capability groups
    (`src/data/services.ts`).
-3. **About me** — portrait, short bio, selected statistics, résumé link.
+3. **About me** — portrait, short bio, capability areas, résumé link.
 4. **Featured projects** — image-heavy cards from `src/data/projects.ts`.
-5. **How I work** — four engineering principles plus indicators. There are
-   **no testimonials and no invented metrics**; two indicators are computed
-   from real data (protocol count, active project count) and the rest are
-   bracketed placeholders.
+5. **How I work** — four engineering principles plus capability areas.
+   There are **no testimonials, no counters, and no numeric claims**: no
+   figure appears anywhere on this site unless it can be independently
+   verified.
 6. **FAQ** — accessible accordion (`src/data/faq.ts`).
 7. **Automotive insights & engineering notes** — latest Medium articles.
 8. **Contact** — the shared validated form, centered.
@@ -86,7 +86,7 @@ content.
 | Name, title, email, bio  | `src/data/profile.ts`                     |
 | Profile image            | `src/data/profile.ts` → `portrait.src`    |
 | Hero words / badge       | `src/data/profile.ts` → `heroWords`, `heroBadge` |
-| Statistics               | `src/data/profile.ts` → `stats`           |
+| Capability areas         | `src/data/profile.ts` → `focusAreas`      |
 | Capability groups        | `src/data/services.ts`                    |
 | FAQ                      | `src/data/faq.ts`                         |
 | Projects                 | `src/data/projects.ts`                    |
@@ -141,8 +141,20 @@ Append an object to `src/data/projects.ts` (the `Project` type in
 `/projects/<slug>` is generated automatically, and previous/next links
 follow array order.
 
-To change which projects appear on the home page, edit `FEATURED_SLUGS` in
-`src/components/home/featured-projects.tsx`.
+**Only publish projects that are personal, academic, or otherwise publicly
+shareable.** Employer-owned products, internal system names, proprietary
+architecture, and confidential outcomes stay off this site — the expertise
+behind them is communicated through About, Skills, Services, FAQ, and the
+writing instead.
+
+To feature a project on the home page, set `featured: true` on it. The home
+grid reads that flag, so there is no slug list to keep in sync.
+
+Only `slug`, `number`, `title`, `summary`, `category`, `status`,
+`technologies`, `role` and `image` are required. Every narrative field
+(context, problem, testing, results, gallery…) is optional, and its section
+renders only when present — add one when the content is true rather than
+padding a project out with invented material.
 
 ## How the Medium integration works
 
@@ -189,16 +201,27 @@ Downloading the image straight from the Medium post gives the right ratio.
 
 ### Replace the résumé PDF
 
-Overwrite `public/resume/resume-placeholder.pdf` (keeping the name), or
-change `RESUME_PDF_PATH` in `src/components/resume/resume-download.tsx`.
+No résumé PDF ships with the site, and the Download button is hidden until
+one exists — handing a visitor a placeholder file is worse than offering
+no download at all. Drop the real PDF into `public/resume/` and set
+`RESUME_PDF_PATH` in `src/components/resume/resume-download.tsx`; the
+button then appears automatically.
+
 `/resume` is reachable from the hero, the About page, and the footer — it
 is deliberately **not** a main navigation item. The page has a print
-stylesheet, so "Print résumé" produces a clean, navigation-free document.
+stylesheet, so "Print / save as PDF" produces a clean, navigation-free
+document from the live content regardless.
 
 ### Connect the contact form to a backend
 
-The form calls `submitContactForm` in `src/lib/validation.ts`, which is
-currently a simulated submitter. Replace its body with a real call — a
+The form calls `submitContactForm` in `src/lib/validation.ts`. There is
+**no simulated success path**: until `NEXT_PUBLIC_CONTACT_ENDPOINT` is set,
+the form composes the enquiry into the visitor's own email client and the
+confirmation says so explicitly. Showing "message received" for a message
+that was never sent would lose real enquiries.
+
+Set `NEXT_PUBLIC_CONTACT_ENDPOINT` to a form endpoint (Formspree or
+similar) for real delivery, or replace the fetch with a
 Next.js route handler, Formspree, or Resend — and keep API keys in
 server-side env vars (see `.env.example`). Validation, loading, error, and
 success states already work and need no changes. Submission logic is
@@ -287,25 +310,26 @@ Motion is deliberately sparse and tokenised (`src/lib/motion.ts` +
   visible, and a `@media (scripting: none)` rule keeps scroll-reveal
   content visible without JavaScript. Both are verified by test.
 
-## Placeholder content to replace
+## Outstanding items
 
-Search the repo for `TODO:` and `[Replace` / `[Your` / `[Organisation` /
-`[Duration` / `[X]` — every placeholder is bracketed on purpose:
+All placeholder copy, dummy organisations, unverified statistics, and
+proprietary product names have been removed. What remains needs an asset or
+a confirmation only the owner can supply:
 
-- `public/images/profile/portrait.jpg` — **generated stand-in**; overwrite
-  with the real photo, then check `avatarFocus`/`avatarZoom`
-- `src/data/profile.ts` — summary (location and statistics are confirmed)
-- `src/data/experience.ts` / `education.ts` — real history
-- `src/data/projects.ts` — roles, durations, constraints, and **all
-  results/metrics**
-- `src/data/social-links.ts` — the **GitHub URL** is still a placeholder;
-  LinkedIn, Upwork, Medium, X, and Instagram are real
-- `src/components/home/how-i-work.tsx` — the "Boards tested" indicator is
-  the last bracketed value on the home page; give it a number or delete the
-  entry
-- `src/lib/metadata.ts` — social handle + real OG image
-- `public/images/projects/**` — still generated SVG placeholders → real
-  photos/diagrams. Blog covers are already the real Medium artwork; once no
-  SVGs remain anywhere, remove `dangerouslyAllowSVG` from `next.config.ts`
-- `public/resume/resume-placeholder.pdf` — real résumé
-- `.env` — `NEXT_PUBLIC_SITE_URL`
+- **Portrait** —  is a generated
+  stand-in. Overwrite it with the real photo, then check
+  / in .
+- **Project imagery** —  are generated
+  placeholders. Replace with real photos or diagrams using the same file
+  names. Once no SVGs remain anywhere, drop  from
+  .
+- **Résumé PDF** — no PDF ships. Drop one into  and set
+   in ; the
+  Download button then appears on its own. Printing already works.
+- **Contact delivery** — the form hands off to the visitor's email client
+  until  is set. See .
+- **Production domain** — set  in .
+- **Open Graph card** —  should become a real
+  1200x630 branded raster image.
+- **Certification issuer** — the HSE certification lists no issuer because
+  the one printed on the certificate has not been confirmed.

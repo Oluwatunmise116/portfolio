@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { heroHoverPortrait, portraitFor } from "@/data/portraits";
 import { profile } from "@/data/profile";
 
 function rise(delay: number): CSSProperties {
@@ -38,7 +39,8 @@ function slide(delay: number, direction: 1 | -1): CSSProperties {
  * component and the content is visible without JavaScript.
  */
 export function Hero() {
-  const { portrait } = profile;
+  const portrait = portraitFor("hero");
+  const hoverPortrait = heroHoverPortrait();
 
   return (
     // overflow-x-clip: the headline halves start 150px outside their
@@ -53,7 +55,7 @@ export function Hero() {
             className="hero-rise col-start-1 row-start-1 text-center text-xs font-semibold tracking-[0.2em] text-foreground-muted uppercase sm:text-sm lg:pr-3 lg:text-right"
             style={rise(320)}
           >
-            {profile.name}
+            {profile.shortName}
           </p>
 
           {/* The two halves converge on the portrait: the left word travels
@@ -89,14 +91,16 @@ export function Hero() {
                 style={{ objectPosition: portrait.focus }}
               />
               {/* Optional second portrait: cross-fades in on hover, pointer
-                  devices only. Absent (and harmless) when hoverSrc is unset. */}
-              {portrait.hoverSrc && (
+                  devices only. Absent (and harmless) when no heroHover
+                  slot is configured in src/data/portraits.ts. */}
+              {hoverPortrait && (
                 <Image
-                  src={portrait.hoverSrc}
+                  src={hoverPortrait.src}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 21vw, 68vw"
                   className="portrait-hover object-cover"
+                  style={{ objectPosition: hoverPortrait.focus }}
                 />
               )}
             </div>
@@ -130,7 +134,7 @@ export function Hero() {
           {profile.availability.available && (
             <p className="type-meta flex items-center gap-2 text-foreground-muted">
               <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
-              {profile.availability.label}
+              {profile.availability.shortLabel}
             </p>
           )}
           <a

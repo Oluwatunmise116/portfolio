@@ -10,7 +10,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "Projects",
   description:
-    "Embedded, automotive, firmware, IoT, and hardware projects — CAN analyzers, crash detection, vehicle access, GPS tracking, and OTA infrastructure.",
+    "Personal and academic embedded projects: a custom OBD-II interface board, a BLE reminder wearable, an IoT biometric attendance system, and Raspberry Pi object detection.",
   path: "/projects",
 });
 
@@ -20,7 +20,7 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Selected work"
         title="Projects"
-        lead="Devices, vehicle systems, and infrastructure I have designed, built, and tested — each one taken from a schematic (or a standard) to something that works in the real world."
+        lead="Personal, academic, and independent builds across automotive interfaces, embedded devices, and IoT systems. Client and employer work is covered on the About page rather than published here."
       />
 
       <Container className="pb-16 md:pb-24">

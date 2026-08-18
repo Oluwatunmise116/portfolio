@@ -1,7 +1,7 @@
 /**
  * "What I can build" — the four numbered capability groups shown on the
- * home page. Mirrors the numbered-service rhythm of the design reference,
- * adapted to embedded/automotive engineering.
+ * home page. Generic capability wording only: no employer products,
+ * client names, or proprietary system descriptions.
  */
 export type ServiceGroup = {
   number: string;
@@ -10,7 +10,7 @@ export type ServiceGroup = {
 };
 
 export const servicesIntro =
-  "I work across hardware and software to develop reliable automotive and connected systems—from early architecture to firmware, testing, and field deployment.";
+  "I work across hardware and software to develop reliable embedded, automotive, and connected systems, from early architecture and prototyping to firmware, testing, and validation.";
 
 export const services: ServiceGroup[] = [
   {
@@ -21,18 +21,18 @@ export const services: ServiceGroup[] = [
       "C and C++",
       "RTOS-based firmware",
       "Drivers and peripheral integration",
-      "Bootloaders and OTA updates",
+      "Debugging and firmware architecture",
     ],
   },
   {
     number: "02",
     title: "Automotive Communication",
     items: [
-      "CAN and CAN FD",
+      "CAN and CAN-FD",
       "OBD-II and ISO-TP",
       "UDS diagnostics",
       "K-Line and KWP2000",
-      "OEM command research",
+      "ECU communication analysis",
     ],
   },
   {
@@ -53,8 +53,9 @@ export const services: ServiceGroup[] = [
       "Cellular communication",
       "MQTT telemetry",
       "GNSS integration",
+      "BLE and Wi-Fi connectivity",
       "Device-to-cloud communication",
-      "Remote monitoring and firmware updates",
+      "Remote firmware-update architecture",
     ],
   },
 ];

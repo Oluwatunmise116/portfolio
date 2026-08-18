@@ -5,22 +5,33 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { Avatar } from "@/components/ui/avatar";
 import { contactNavItem, navigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 import { exitTransition, sheetVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Mobile navigation sheet, opened from the pill header. Keeps the original
- * accessibility behaviour: focus trap, Escape to close, body scroll lock,
- * focus returned to the trigger, and large touch targets.
+ * Mobile navigation: a floating rounded panel, matching the design
+ * reference — not a full-bleed sheet.
+ *
+ * The panel is rendered through a PORTAL to <body> on purpose. The header
+ * pill carries both `backdrop-blur` and a `transform`, and either one makes
+ * that pill the containing block for `position: fixed` descendants — which
+ * silently collapsed this panel to the size of the pill. Portalling out
+ * keeps the panel anchored to the viewport no matter what styles the
+ * header grows later.
+ *
+ * Accessibility is unchanged: focus trap, Escape to close, body scroll
+ * lock, focus returned to the trigger, and closes on navigation.
  */
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const sheetRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -36,7 +47,7 @@ export function MobileNavigation() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const firstLink = sheetRef.current?.querySelector<HTMLElement>("a, button");
+    const firstLink = panelRef.current?.querySelector<HTMLElement>("a, button");
     firstLink?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -44,11 +55,11 @@ export function MobileNavigation() {
         close();
         return;
       }
-      if (event.key !== "Tab" || !sheetRef.current) return;
+      if (event.key !== "Tab" || !panelRef.current) return;
 
-      // Simple focus trap: keep Tab cycling inside the sheet.
+      // Simple focus trap: keep Tab cycling inside the panel.
       const focusable = Array.from(
-        sheetRef.current.querySelectorAll<HTMLElement>(
+        panelRef.current.querySelectorAll<HTMLElement>(
           "a[href], button:not([disabled])",
         ),
       );
@@ -71,6 +82,99 @@ export function MobileNavigation() {
     };
   }, [open, close]);
 
+  const panel = (
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-100 md:hidden">
+          {/* Transparent click-catcher: tapping outside closes the panel
+              without dimming the page, as in the reference. */}
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-hidden="true"
+            onClick={close}
+            className="absolute inset-0 h-full w-full cursor-default"
+          />
+
+          <motion.div
+            ref={panelRef}
+            id="mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+            variants={reduceMotion ? undefined : sheetVariants}
+            initial={reduceMotion ? { opacity: 0 } : "hidden"}
+            animate={reduceMotion ? { opacity: 1 } : "visible"}
+            exit={
+              reduceMotion ? { opacity: 0, transition: exitTransition } : "exit"
+            }
+            // Grows from the hamburger that opened it (top-right of the
+            // header pill) rather than from its own centre.
+            style={{ transformOrigin: "top right" }}
+            className="absolute inset-x-3 top-3 rounded-[1.75rem] border border-border bg-surface p-4 shadow-card"
+          >
+            {/* Top row mirrors the closed pill: avatar left, close right */}
+            <div className="flex items-center justify-between">
+              <Avatar size={44} />
+              <button
+                type="button"
+                onClick={close}
+                aria-label="Close navigation menu"
+                className="inline-flex size-11 items-center justify-center rounded-full bg-accent text-accent-foreground transition-transform duration-160 ease-out-strong active:scale-[0.94]"
+              >
+                <X aria-hidden="true" className="size-5" />
+              </button>
+            </div>
+
+            <ul className="mt-6 flex flex-col items-center gap-1">
+              {navigation.map((item) => {
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+                return (
+                  <li key={item.href} className="w-full">
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-13 items-center justify-center rounded-2xl text-base font-medium transition-colors duration-160 ease-out-strong",
+                        active
+                          ? "bg-surface-muted text-foreground"
+                          : "text-foreground-muted",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <Link
+              href={contactNavItem.href}
+              onClick={() => setOpen(false)}
+              className="mt-4 flex min-h-13 items-center justify-center rounded-full bg-accent px-6 text-base font-semibold text-accent-foreground transition-transform duration-160 ease-out-strong active:scale-[0.98]"
+            >
+              {contactNavItem.label}
+            </Link>
+
+            <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+              {profile.availability.available && (
+                <p className="type-meta flex items-center gap-2 text-foreground-muted">
+                  <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
+                  {profile.availability.shortLabel}
+                </p>
+              )}
+              <ThemeToggle />
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
     <div className="md:hidden">
       <button
@@ -89,73 +193,11 @@ export function MobileNavigation() {
         )}
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            ref={sheetRef}
-            id="mobile-navigation"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site navigation"
-            variants={reduceMotion ? undefined : sheetVariants}
-            initial={reduceMotion ? { opacity: 0 } : "hidden"}
-            animate={reduceMotion ? { opacity: 1 } : "visible"}
-            exit={
-              reduceMotion ? { opacity: 0, transition: exitTransition } : "exit"
-            }
-            className="fixed inset-x-0 top-0 bottom-0 z-40 flex flex-col overflow-y-auto bg-background px-6 pt-24 pb-10"
-          >
-            <ul className="flex flex-col">
-              {navigation.map((item, index) => {
-                const active =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
-                return (
-                  <li key={item.href} className="border-b border-border">
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "flex min-h-16 items-center justify-between py-3 font-display text-3xl font-medium tracking-wide uppercase transition-colors duration-160 ease-out-strong",
-                        active ? "text-accent" : "text-foreground",
-                      )}
-                    >
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className="type-meta text-foreground-muted"
-                      >
-                        0{index + 1}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="mt-8 flex flex-col gap-5">
-              <Link
-                href={contactNavItem.href}
-                onClick={() => setOpen(false)}
-                className="inline-flex min-h-13 items-center justify-center rounded-full bg-control px-6 text-base font-semibold text-control-foreground transition-transform duration-160 ease-out-strong active:scale-[0.98]"
-              >
-                {contactNavItem.label}
-              </Link>
-              <div className="flex items-center justify-between">
-                {profile.availability.available && (
-                  <p className="type-meta flex items-center gap-2 text-foreground-muted">
-                    <span className="relative inline-flex size-2 rounded-full bg-success status-dot" />
-                    {profile.availability.label}
-                  </p>
-                )}
-                <ThemeToggle />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* `document` is absent during SSR. The panel is closed on first
+          paint either way, so both server and client render nothing here
+          and hydration stays in step. */}
+      {typeof document !== "undefined" &&
+        createPortal(panel, document.body)}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { ResumeDownload } from "@/components/resume/resume-download";
 import { ResumeHeader } from "@/components/resume/resume-header";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
-import { certifications, courses } from "@/data/experience";
+import { certifications, courses, memberships } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skillGroups } from "@/data/skills";
 import { createMetadata } from "@/lib/metadata";
@@ -109,17 +109,40 @@ export default function ResumePage() {
             <EducationList />
           </SideSection>
 
-          <SideSection title="Certifications">
-            <ul className="flex list-none flex-col gap-4">
-              {certifications.map((cert) => (
-                <li key={cert.name}>
-                  <p className="type-meta text-accent">{cert.year}</p>
-                  <p className="mt-1 text-sm font-medium">{cert.name}</p>
-                  <p className="text-sm text-foreground-muted">{cert.issuer}</p>
-                </li>
-              ))}
-            </ul>
-          </SideSection>
+          {certifications.length > 0 && (
+            <SideSection title="Certifications">
+              <ul className="flex list-none flex-col gap-4">
+                {certifications.map((cert) => (
+                  <li key={cert.name}>
+                    <p className="type-meta text-accent">{cert.year}</p>
+                    <p className="mt-1 text-sm font-medium">{cert.name}</p>
+                    {/* Issuer is omitted rather than guessed when it has
+                        not been confirmed on the certificate itself. */}
+                    {cert.issuer && (
+                      <p className="text-sm text-foreground-muted">
+                        {cert.issuer}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </SideSection>
+          )}
+
+          {memberships.length > 0 && (
+            <SideSection title="Memberships">
+              <ul className="flex list-none flex-col gap-3">
+                {memberships.map((membership) => (
+                  <li key={membership.name}>
+                    <p className="type-meta text-accent">{membership.period}</p>
+                    <p className="mt-1 text-sm font-medium">
+                      {membership.name}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </SideSection>
+          )}
 
           <SideSection title="Courses & workshops">
             <ul className="flex list-none flex-col gap-2">

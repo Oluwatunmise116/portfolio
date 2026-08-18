@@ -1,97 +1,129 @@
 /**
  * Single source of truth for personal information.
- * Everything in square brackets is a placeholder — replace it here and it
- * updates across the whole site.
+ *
+ * Every value here is owner-verified. Do not add professional
+ * designations, statistics, or claims that cannot be independently
+ * confirmed — an accurate portfolio is stronger than an impressive one.
  */
 export const profile = {
-  // TODO: replace with your full name (used in the header, footer, resume
-  // and metadata).
-  name: "Tunmise",
-  initials: "T",
-  title: "Embedded Systems & IoT Engineer",
-  credentials: "B.Eng Computer Engineering · GMNSE",
+  /** Full legal name — used on About, résumé, and metadata. */
+  name: "Oluwatunmise John Olabanji",
+  /** Short brand used in the header and hero. */
+  shortName: "Tunmise",
+  initials: "OO",
+  title: "Embedded Systems Engineer",
+  credentials: "B.Eng. Computer Engineering",
+  specialisation:
+    "Automotive Embedded Systems | IoT | Vehicle Diagnostics | Firmware | PCB & Hardware Integration",
   tagline:
-    "I build intelligent hardware and firmware for vehicles and connected devices.",
+    "I build embedded systems that connect vehicles, hardware, firmware, and the cloud.",
   taglineSupport:
-    "From PCB and firmware to diagnostics, connectivity, testing, and deployment.",
+    "From embedded firmware and PCB development to vehicle diagnostics, connectivity, testing, and deployment.",
   intro:
-    "Embedded Systems & IoT Engineer specialising in automotive diagnostics, firmware, PCB design, connected devices, and vehicle communication.",
-  eyebrow: "Embedded Systems · Firmware · Automotive · IoT",
+    "Embedded Systems Engineer focused on automotive embedded systems, IoT, vehicle diagnostics, firmware, PCB development, and connected hardware.",
+  eyebrow: "Embedded Systems | Automotive | Firmware | IoT",
 
   /** Split hero headline words: [NAME] / EMBEDDED [portrait] ENGINEER. */
   heroWords: { left: "Embedded", right: "Engineer" },
   /** One-word circular badge overlapping the portrait. */
   heroBadge: "Hi",
 
-  // TODO: confirm or replace contact details.
   email: "olabanjitunmise234@gmail.com",
   location: "Lagos, Nigeria",
-  timezone: "WAT · UTC+1",
+  timezone: "WAT | UTC+1",
+
+  /**
+   * Scheduling link shown on the contact page. `durationMinutes` matches
+   * the `/30min` event in the URL — keep the two in step if the event
+   * type changes. Set `url` to "" to hide the booking option entirely.
+   */
+  booking: {
+    url: "https://calendly.com/olabanjitunmise234/30min",
+    durationMinutes: 30,
+  },
 
   availability: {
     available: true,
-    label: "Available for selected projects",
+    label:
+      "Open to embedded systems, automotive, IoT, firmware, hardware, and technical collaboration opportunities",
+    /** Compact variant for tight spaces (hero strip, mobile menu). */
+    shortLabel: "Open to engineering opportunities",
   },
 
   /**
-   * TODO: replace the stand-in portrait.
-   * Overwrite public/images/profile/portrait.jpg with your own photo —
-   * nothing else in the codebase references the portrait directly.
-   * Any portrait-orientation photo works; it does not need to be 4:5.
-   *
-   * `hoverSrc` is optional: when provided, the hero cross-fades to it on
-   * hover (pointer devices only).
+   * The canonical portrait. Every image slot below falls back to this, so
+   * the site always renders even when a slot has no dedicated photo yet.
    */
   portrait: {
     src: "/images/profile/portrait.jpg",
-    hoverSrc: undefined as string | undefined,
-    alt: "Tunmise, embedded systems and IoT engineer",
-    width: 2419,
-    height: 3225,
+    alt: "Oluwatunmise John Olabanji, Embedded Systems Engineer",
+    width: 1027,
+    height: 1284,
 
     /**
-     * Where the subject sits in the frame, as a CSS object-position.
-     * Used for the large 4:5 crops (hero, About, About preview) so the
-     * subject stays centred when the photo is taller than the frame.
+     * Where the subject sits in the frame, as a CSS object-position, used
+     * by the large 4:5 crops. This source is already exactly 4:5, so the
+     * whole frame shows and this only matters if a ratio changes.
      */
-    focus: "58% 42%",
+    focus: "50% 30%",
 
     /**
-     * Small circular avatars (nav, contact) crop to 1:1 at 36–80px. A
-     * full-body photo centre-cropped into a 36px circle leaves the face a
-     * few pixels wide, so those circles zoom to the face instead.
-     * `avatarFocus` is the face centre; `avatarZoom` is the scale factor.
+     * Small circular avatars (nav 36px, contact 64/80px) crop to 1:1.
+     * A head-and-shoulders source needs only a light zoom; a full-body
+     * photo needs roughly 2.5+ or the face becomes a smudge at 36px.
      */
-    avatarFocus: "58% 47%",
-    avatarZoom: 2.6,
+    avatarFocus: "50% 20%",
+    avatarZoom: 1.25,
   },
 
-  /** Short professional summary used on the resume page. */
+  /** Professional summary used on the résumé page. */
   summary:
-    "Embedded systems engineer working across firmware, vehicle communication, and connected hardware. Comfortable owning a product from schematic review and board bring-up through firmware, testing, and deployment. [Replace with your own 2–3 sentence summary.]",
+    "Embedded Systems Engineer working across automotive systems, firmware, vehicle communication, IoT, PCB development, and connected hardware. Experienced in taking embedded systems from schematic review and prototype bring-up through firmware integration, debugging, testing, and real-world validation.",
 
   /** Opening statement on the About page. */
-  aboutStatement: "Engineer first. Integrator always.",
+  aboutStatement: "I build where hardware, firmware, vehicles, and connectivity meet.",
 
   shortAbout: [
-    "I'm an embedded systems engineer who enjoys working at the point where hardware, firmware, vehicles, and connectivity meet.",
-    "My work focuses on developing practical systems that can survive testing, deployment, unreliable networks, electrical noise, and real-world use.",
+    "I'm an embedded systems engineer focused on developing practical automotive and IoT systems across firmware, hardware, connectivity, diagnostics, and testing.",
+    "I enjoy solving the problems that appear between the schematic and the real world: noisy signals, unreliable links, protocol behaviour, hardware constraints, firmware bugs, and the validation work required to make a system dependable.",
   ],
 
   biography: [
-    "I build embedded systems at the intersection of hardware, firmware, automotive communication, and connectivity. My work includes vehicle diagnostics, CAN and OBD-II research, PCB development, cellular devices, OTA firmware, hardware testing, and field deployment.",
-    "I like the seam where hardware meets software — where a schematic decision shows up months later as a firmware constraint. Most of my work lives in vehicles and connected devices: CAN networks, diagnostics, telemetry, and the unglamorous reliability work that keeps devices alive in the field.",
+    "My work sits at the intersection of embedded systems, automotive technology, IoT, and vehicle diagnostics. I work with microcontrollers, communication protocols, connected hardware, sensors, cellular and GNSS systems, and the firmware that ties them together.",
+    "A major area of my interest is understanding how vehicles communicate. I work with CAN, CAN-FD, OBD-II, ISO-TP, UDS, K-Line, and ECU communication, alongside PCB development, firmware architecture, hardware debugging, OTA concepts, telemetry, and field testing. I enjoy engineering problems where the answer is not immediately obvious and must be found through measurement, logs, testing, and careful iteration.",
   ],
 
   /**
-   * Selected statistics for the About preview. These are owner-confirmed
-   * figures — do not change them without confirmation, and never publish
-   * an unverified claim here. The leading number counts up on scroll
-   * (see components/ui/count-up.tsx); any suffix is preserved verbatim.
+   * Longer About-page narrative.
    */
-  stats: [
-    { value: "5", label: "Years of experience" },
-    { value: "20+", label: "Completed engineering projects" },
-    { value: "10+", label: "Vehicle platforms tested" },
+  aboutNarrative: [
+    "I like building systems that make vehicles and connected devices smarter, more reliable, and easier to understand.",
+    "My work sits at the intersection of embedded systems, automotive technology, IoT, and vehicle diagnostics. I work across firmware development, PCB design and review, hardware integration, communication protocols, debugging, testing, and product validation.",
+    "I have hands-on experience with STM32, ESP32, Embedded C/C++, FreeRTOS, CAN, CAN-FD, OBD-II, ISO-TP, UDS, K-Line, UART, SPI, I2C, RS485, MQTT, GNSS, cellular connectivity, sensors, OTA concepts, and cloud-connected embedded systems.",
+    "What interests me most is not a technology by itself, but what can be built with it. I enjoy understanding how hardware behaves outside the lab, how vehicles communicate, how firmware responds to edge cases, and how multiple subsystems can be integrated into one dependable product.",
+    "Automotive diagnostics is one of my strongest areas of interest. I spend time analyzing CAN traffic, working with OBD-II and UDS, studying ECU communication, and understanding manufacturer-specific diagnostic behaviour. I also work on connected-device architecture, telemetry, firmware updates, sensor integration, PCB development, and hardware validation.",
+    "I enjoy the part of engineering where the answer is not immediately available: debugging, testing, reading communication logs, tracing signals, understanding unexpected hardware behaviour, and turning the result into a system that works reliably in the real world.",
+    "My broader experience includes embedded firmware and RTOS development, automotive CAN and ECU communication, OBD-II and UDS diagnostics, PCB and schematic development, IoT connectivity, cellular and GNSS integration, sensors and telemetry, hardware debugging, prototype development, and product validation.",
+    "I am particularly interested in automotive embedded systems, connected vehicles, vehicle diagnostics, IoT products, telematics, embedded hardware, and firmware engineering. My goal is to keep growing as an engineer while building technology that solves practical problems outside the laboratory.",
+  ],
+
+  /**
+   * Qualitative capability highlights shown where a statistics block used
+   * to sit. These deliberately replace numeric claims: no figure appears
+   * on this site unless it can be independently verified.
+   */
+  focusAreas: [
+    {
+      title: "Automotive & vehicle diagnostics",
+      detail: "CAN, CAN-FD, OBD-II, ISO-TP, UDS, K-Line, ECU communication.",
+    },
+    {
+      title: "Embedded firmware",
+      detail: "STM32 and ESP32, Embedded C/C++, RTOS, drivers, debugging.",
+    },
+    {
+      title: "Hardware & connectivity",
+      detail: "PCB development, sensors, cellular, GNSS, MQTT, telemetry.",
+    },
   ],
 } as const;

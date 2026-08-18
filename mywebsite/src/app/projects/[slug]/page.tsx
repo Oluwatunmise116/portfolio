@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -62,6 +62,11 @@ function BulletList({ items }: { items: string[] }) {
   );
 }
 
+/**
+ * Every narrative block below is conditional. A project publishes exactly
+ * the sections it has real content for — the page never shows an empty
+ * heading, and no section is padded out with invented material.
+ */
 export default async function ProjectDetailPage(
   props: PageProps<"/projects/[slug]">,
 ) {
@@ -88,8 +93,12 @@ export default async function ProjectDetailPage(
         <p className="type-meta flex flex-wrap items-center gap-3 text-foreground-muted">
           <span className="text-accent">{project.number}</span>
           <span>{project.category}</span>
-          <span aria-hidden="true">·</span>
-          <span>{project.year}</span>
+          {project.year && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{project.year}</span>
+            </>
+          )}
           <Badge tone="accent">{project.status}</Badge>
         </p>
         <h1 className="type-page-title mt-4">{project.title}</h1>
@@ -101,7 +110,7 @@ export default async function ProjectDetailPage(
       <div className="relative mt-10 aspect-video overflow-hidden rounded-2xl border border-border md:mt-14">
         <Image
           src={project.image}
-          alt={`Placeholder hero artwork for ${project.title}`}
+          alt=""
           fill
           priority
           sizes="(min-width: 1280px) 1216px, 100vw"
@@ -139,85 +148,132 @@ export default async function ProjectDetailPage(
                 </ul>
               </dd>
             </div>
-            <div>
-              <dt className="type-label text-foreground-muted">Protocols</dt>
-              <dd className="mt-2">
-                <ul className="flex flex-wrap gap-1.5">
-                  {project.protocols.map((protocol) => (
-                    <li key={protocol}>
-                      <Badge tone="outline">{protocol}</Badge>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
+            {project.protocols && project.protocols.length > 0 && (
+              <div>
+                <dt className="type-label text-foreground-muted">Protocols</dt>
+                <dd className="mt-2">
+                  <ul className="flex flex-wrap gap-1.5">
+                    {project.protocols.map((protocol) => (
+                      <li key={protocol}>
+                        <Badge tone="outline">{protocol}</Badge>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )}
+            {project.link && (
+              <div>
+                <dt className="type-label text-foreground-muted">Links</dt>
+                <dd className="mt-1">
+                  <a
+                    href={project.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-160 ease-out-strong hover:text-accent"
+                  >
+                    {project.link.label}
+                    <ArrowUpRight aria-hidden="true" className="size-4" />
+                  </a>
+                </dd>
+              </div>
+            )}
           </dl>
         </aside>
 
         {/* Narrative */}
         <div className="flex min-w-0 flex-col gap-10">
-          <section aria-label="Overview">
-            <p className="max-w-prose text-lg leading-relaxed">
-              {project.description}
-            </p>
-          </section>
+          {project.description && (
+            <section aria-label="Overview">
+              <p className="max-w-prose text-lg leading-relaxed">
+                {project.description}
+              </p>
+            </section>
+          )}
 
-          <DetailSection id="context" title="Context">
-            <p className="max-w-prose text-foreground-muted">
-              {project.context}
-            </p>
-          </DetailSection>
+          {project.context && (
+            <DetailSection id="context" title="Context">
+              <p className="max-w-prose text-foreground-muted">
+                {project.context}
+              </p>
+            </DetailSection>
+          )}
 
-          <DetailSection id="problem" title="Problem">
-            <p className="max-w-prose text-foreground-muted">
-              {project.problem}
-            </p>
-          </DetailSection>
+          {project.problem && (
+            <DetailSection id="problem" title="Problem">
+              <p className="max-w-prose text-foreground-muted">
+                {project.problem}
+              </p>
+            </DetailSection>
+          )}
 
-          <DetailSection id="constraints" title="Constraints">
-            <BulletList items={project.constraints} />
-          </DetailSection>
+          {project.constraints && project.constraints.length > 0 && (
+            <DetailSection id="constraints" title="Constraints">
+              <BulletList items={project.constraints} />
+            </DetailSection>
+          )}
 
-          <DetailSection id="responsibilities" title="Responsibilities">
-            <BulletList items={project.responsibilities} />
-          </DetailSection>
+          {project.responsibilities &&
+            project.responsibilities.length > 0 && (
+              <DetailSection id="responsibilities" title="Responsibilities">
+                <BulletList items={project.responsibilities} />
+              </DetailSection>
+            )}
 
-          <DetailSection id="hardware" title="Architecture">
-            <div className="flex flex-col gap-8">
-              <ArchitectureDiagram diagram={project.hardware} />
-              <ArchitectureDiagram diagram={project.firmware} />
-            </div>
-          </DetailSection>
+          {(project.hardware || project.firmware) && (
+            <DetailSection id="architecture" title="Architecture">
+              <div className="flex flex-col gap-8">
+                {project.hardware && (
+                  <ArchitectureDiagram diagram={project.hardware} />
+                )}
+                {project.firmware && (
+                  <ArchitectureDiagram diagram={project.firmware} />
+                )}
+              </div>
+            </DetailSection>
+          )}
 
-          <DetailSection id="process" title="Process">
-            <BulletList items={project.process} />
-          </DetailSection>
+          {project.process && project.process.length > 0 && (
+            <DetailSection id="process" title="Process">
+              <BulletList items={project.process} />
+            </DetailSection>
+          )}
 
-          <DetailSection id="testing" title="Testing">
-            <BulletList items={project.testing} />
-          </DetailSection>
+          {project.testing && project.testing.length > 0 && (
+            <DetailSection id="testing" title="Testing">
+              <BulletList items={project.testing} />
+            </DetailSection>
+          )}
 
-          <DetailSection id="challenges" title="Challenges">
-            <BulletList items={project.challenges} />
-          </DetailSection>
+          {project.challenges && project.challenges.length > 0 && (
+            <DetailSection id="challenges" title="Challenges">
+              <BulletList items={project.challenges} />
+            </DetailSection>
+          )}
 
-          <DetailSection id="results" title="Results">
-            <BulletList items={project.results} />
-          </DetailSection>
+          {project.results && project.results.length > 0 && (
+            <DetailSection id="results" title="Results">
+              <BulletList items={project.results} />
+            </DetailSection>
+          )}
 
-          <DetailSection id="lessons" title="Lessons learned">
-            <BulletList items={project.lessons} />
-          </DetailSection>
+          {project.lessons && project.lessons.length > 0 && (
+            <DetailSection id="lessons" title="Lessons learned">
+              <BulletList items={project.lessons} />
+            </DetailSection>
+          )}
         </div>
       </div>
 
-      <section
-        aria-label="Project gallery"
-        className="mt-16 border-t border-border pt-8"
-      >
-        <h2 className="type-label mb-6 text-foreground-muted">Gallery</h2>
-        <ProjectGallery project={project} />
-      </section>
+      {project.gallery && project.gallery.length > 0 && (
+        <section
+          aria-label="Project gallery"
+          className="mt-16 border-t border-border pt-8"
+        >
+          <h2 className="type-label mb-6 text-foreground-muted">Gallery</h2>
+          <ProjectGallery project={project} />
+        </section>
+      )}
 
       <div className="mt-16">
         <PrevNextNavigation
