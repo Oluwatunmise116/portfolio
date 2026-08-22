@@ -1,6 +1,8 @@
 # Animation improvement plans
 
-Produced by the `improve-animations` audit at commit `502f4c1`.
+Produced by the `improve-animations` audit at commit `502f4c1`; plans
+004-008 produced by a `find-animation-opportunities` sweep of the
+redesigned site at commit `9ed2e43`.
 
 Each plan is self-contained: exact file paths, current code, target values,
 and a feel check. They can be executed in any order — no plan depends on
@@ -11,6 +13,11 @@ another — but the order below is by leverage (impact ÷ effort).
 | [001](001-nav-pill-transform-not-layout.md) | Animate the nav pill with transform instead of padding/margin | HIGH | Performance | 1 file, ~4 lines | DONE |
 | [002](002-shorten-page-transition.md) | Cut the route transition to 200ms and drop its movement | MEDIUM | Purpose & frequency | 1 file, ~6 lines | DONE |
 | [003](003-tighten-filter-stagger.md) | Tighten the project-filter stagger so results land in under 260ms | MEDIUM | Cohesion (stagger) | 1 file, ~3 lines | DONE |
+| [004](004-card-press-feedback.md) | Add `:active` press feedback to project/article card links | MEDIUM | Purpose & frequency | 2 files, 1 line each | DONE |
+| [005](005-project-filter-crossfade.md) | Crossfade the project filter grid swap (View Transitions, scoped) | MEDIUM | Missed opportunity | 2 files | DONE |
+| [006](006-theme-toggle-icon-transition.md) | Crossfade the theme toggle's Sun/Moon icon | LOW | Cohesion | 1 file | DONE |
+| [007](007-mobile-nav-icon-transition.md) | Animate the mobile nav trigger's Menu/X swap | LOW | Cohesion | 1 file | DONE |
+| [008](008-contact-success-crossfade.md) | Crossfade the contact form into its success panel | LOW | Delight | 2 files | DONE |
 
 ## Recommended execution order
 
@@ -18,9 +25,18 @@ another — but the order below is by leverage (impact ÷ effort).
    the cheapest fix relative to its cost.
 2. **002** — touches every navigation on the site.
 3. **003** — localised to `/projects`.
+4. **004** — independent, touches two card components.
+5. **005** — independent; if executed alongside 008, keep the two
+   `view-transition-name` values distinct (`project-grid` vs
+   `contact-panel`).
+6. **006** and **007** — independent, same icon-swap pattern applied to two
+   different controls; safe to do together or separately.
+7. **008** — independent; see note under 005.
 
-002 and 003 both edit `src/app/globals.css` but different rules
-(`.page-enter` vs `.filter-enter`); they will not conflict.
+002, 003, 005, and 008 all touch `src/app/globals.css`, but each owns a
+different rule (`.page-enter`, `.filter-enter`,
+`::view-transition-*(project-grid)`, `::view-transition-*(contact-panel)`)
+— they do not conflict.
 
 ## Findings deliberately NOT planned
 
@@ -54,21 +70,46 @@ does not re-derive them:
 - `CountUp` writes frames directly to the DOM rather than through React
   state, so four on-screen counters do not trigger re-renders at 60fps.
 
-## Missed opportunities (additive — no plans written)
+## Missed opportunities — now planned
 
-Places that do not animate but could. These are additions rather than
-corrections, so they need a product decision before a plan is worth writing.
+The three items originally logged here are now plans 006, 005, and 008
+respectively (in that order). One correction from the original note: the
+theme-toggle entry originally suggested the View Transitions API for the
+*whole swap*; plan 006 instead animates only the 18px Sun/Moon icon inside
+the toggle button and leaves the page-wide colour swap instant, per an
+explicit product decision that theme switching itself must stay immediate.
 
-1. **Theme toggle is a hard cut.** Switching light/dark swaps every colour
-   on the page instantly. It is a rare action with delight budget available.
-   Note the trap: a global `transition: background-color` would fire on
-   every hover across the site and is the wrong fix — this needs the View
-   Transitions API or a class applied only for the duration of the swap.
-2. **Project filter has no exit.** Outgoing cards disappear instantly
-   (the `<ul key={active}>` remount destroys them) while incoming cards fade
-   in, so a filter change reads as a pop rather than a swap. A brief
-   crossfade would need the outgoing set kept alive for ~120ms.
-3. **Contact form → success is an instant swap.** `ContactSuccess` replaces
-   the form outright; only the checkmark draws itself. This is a rare,
-   high-emotion moment and currently gets none of the delight budget it is
-   allowed.
+## Additional findings from the redesign sweep — now planned
+
+1. **Project and article cards have no press feedback.** Every other
+   interactive element on the site (`buttonClasses`, filter pills, the
+   theme toggle) has an `active:scale-[...]`; the two card link types do
+   not, and cards are the primary browsing surface on mobile. → **004**.
+2. **The mobile nav trigger's Menu/X icon hard-cuts** while the panel it
+   opens is the best-animated surface on the site. → **007**.
+
+## Defect found during execution of 004/006/007
+
+Tailwind v4's `scale-*` and `rotate-*` utilities set the standalone CSS
+`scale`/`rotate` properties, not `transform`. Any element pairing
+`active:scale-[…]` (or `rotate-…`) with an *arbitrary* `transition-[…]`
+list that names `transform` — rather than `scale`/`rotate` — silently
+never animates that property; it snaps instantly. This predates plans
+004-008 and was previously invisible (the change is a fast, subtle
+98%-scale press) — caught only by inspecting `getComputedStyle(...).
+transitionProperty` while verifying 006/007's rotation.
+
+Fixed as part of this batch, one word swapped per file (`transform` →
+`scale`, or added `scale`/`rotate` to the list):
+`src/components/ui/button.tsx` (the shared recipe — every `<Button>`/
+`<LinkButton>` on the site), `src/components/blog/article-card.tsx`,
+`src/components/home/featured-projects.tsx`,
+`src/components/layout/back-to-top.tsx`,
+`src/components/layout/site-header.tsx` (Contact pill button),
+`src/components/layout/theme-toggle.tsx` (the button itself, separate
+from its icon fix in 006), `src/components/projects/project-filter.tsx`,
+and `src/components/layout/mobile-navigation.tsx` (the trigger's icon
+transition from 007, which had the same `transform`-vs-`rotate` gap).
+Elements already using the *bare* `transition-transform` utility were
+unaffected — Tailwind v4 special-cases that one utility to expand to
+`transform, translate, scale, rotate` together.

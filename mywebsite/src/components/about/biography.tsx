@@ -15,9 +15,7 @@ export function Biography() {
   return (
     <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-20">
       <div>
-        <h1 className="type-page-title max-w-3xl">
-          {profile.aboutStatement}
-        </h1>
+        <h1 className="type-page-title max-w-3xl">{profile.aboutStatement}</h1>
 
         <div className="mt-10 flex max-w-prose flex-col gap-5 text-lg leading-relaxed text-foreground-muted">
           {profile.aboutNarrative.map((paragraph) => (
@@ -59,12 +57,7 @@ export function Biography() {
             style={{ objectPosition: aboutPortrait.focus }}
           />
         </div>
-        <p className="type-meta mt-4 text-foreground-muted">
-          {profile.title}
-        </p>
-        <p className="type-meta mt-1 text-foreground-muted">
-          {profile.credentials}
-        </p>
+        <p className="type-meta mt-4 text-foreground-muted">{profile.title}</p>
       </div>
     </div>
   );

@@ -9,11 +9,16 @@
 /* ------------------------------------------------------------------ */
 
 :root {
-  /* Surfaces */
-  --background: #f8f8f6;
+  /* Surfaces — warm paper base with tonal (not bordered) separation.
+     background < surface-muted < surface < surface-elevated in perceived
+     weight; --surface-elevated pairs with --shadow-elevated for the one
+     or two things per page that should read as genuinely raised (the
+     hero portrait, a featured project). */
+  --background: #f6f4f0;
   --surface: #ffffff;
-  --surface-muted: #eeeeea;
-  --surface-hover: #f1f1ed;
+  --surface-muted: #eeece6;
+  --surface-hover: #f0ede6;
+  --surface-elevated: #fffefc;
 
   /* Ink */
   --foreground: #202020;
@@ -21,7 +26,12 @@
 
   /* Lines */
   --border: rgba(25, 25, 25, 0.13);
-  --border-strong: rgba(25, 25, 25, 0.24);
+  /* Reserved for boundaries a control needs to be identified by (form
+     fields, the secondary button) rather than decorative dividers.
+     0.48 is the lowest opacity that clears WCAG 1.4.11's 3:1 non-text
+     contrast floor against a white/--surface fill — the previous 0.24
+     read at ~1.7:1 and made input edges nearly invisible in bright light. */
+  --border-strong: rgba(25, 25, 25, 0.48);
 
   /* Electric-indigo accent.
      Darkened from the reference periwinkle so it clears WCAG AA both as
@@ -44,6 +54,9 @@
   /* Nav pill shadow — restrained */
   --shadow-pill: 0 1px 2px rgba(20, 20, 20, 0.05), 0 8px 24px -12px rgba(20, 20, 20, 0.18);
   --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px -18px rgba(20, 20, 20, 0.16);
+  /* Reserved for the handful of things per page that should read as
+     genuinely raised above --surface-elevated: deeper, softer, wider. */
+  --shadow-elevated: 0 2px 4px rgba(20, 20, 20, 0.05), 0 24px 48px -20px rgba(20, 20, 20, 0.22);
 
   /* Motion */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -71,16 +84,23 @@
 }
 
 .dark {
-  --background: #151515;
-  --surface: #1d1d1d;
-  --surface-muted: #242424;
-  --surface-hover: #262626;
+  /* Not an inverted light theme: four distinct steps instead of three,
+     each a touch cooler than the last, so depth reads from layering
+     rather than from glow or heavier borders. Never pure black —
+     --background carries a faint blue-black cast (#121316) that keeps
+     long sessions from feeling like a void. */
+  --background: #121316;
+  --surface: #1a1b1f;
+  --surface-muted: #212227;
+  --surface-hover: #24262b;
+  --surface-elevated: #26282f;
 
-  --foreground: #f5f5f2;
+  --foreground: #f2f1ee;
   --foreground-muted: #aaaaa5;
 
   --border: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.22);
+  /* Same 3:1 floor as light mode, measured against --surface (#1a1b1f). */
+  --border-strong: rgba(255, 255, 255, 0.35);
 
   --accent: #9a9ef5;
   --accent-hover: #b0b3f8;
@@ -97,6 +117,7 @@
 
   --shadow-pill: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -18px rgba(0, 0, 0, 0.55);
+  --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.45), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
 }
 
 /* Map tokens to Tailwind utilities (bg-background, text-accent, …) */
@@ -105,6 +126,7 @@
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
   --color-border: var(--border);
@@ -128,8 +150,29 @@
 
   --shadow-pill: var(--shadow-pill);
   --shadow-card: var(--shadow-card);
+  --shadow-elevated: var(--shadow-elevated);
 
   --breakpoint-2xl: 96rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Technical grid texture                                              */
+/* ------------------------------------------------------------------ */
+
+/* Faint blueprint grid, used once behind the hero. Built from --border
+   so it inherits the theme's own line colour rather than a new token,
+   and masked to a soft ellipse so it reads as depth, not a rectangle. */
+.bg-technical-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, black 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 65% 55% at 50% 38%,
+    black 0%,
+    transparent 72%
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -428,6 +471,28 @@ select option[value=""] {
   }
 }
 
+/* Project filter grid swap: named so only this region crossfades, not the
+   whole page (a page-wide view transition would double-animate the filter
+   pills and heading, which don't need it). Duration/easing match
+   --duration-fast / --ease-out-strong so the crossfade and the incoming
+   .filter-enter stagger read as one motion instead of two. */
+::view-transition-old(project-grid),
+::view-transition-new(project-grid) {
+  animation-duration: var(--duration-fast);
+  animation-timing-function: var(--ease-out-strong);
+}
+
+/* Contact form -> success swap. Its own name (not shared with
+   project-grid) so the two crossfades can't collide if both were somehow
+   mid-flight; --duration-slow (280ms) rather than a bespoke value because
+   this is the one place on the site where a modal/drawer-tier duration is
+   appropriate — a rare, one-time moment, not a repeated UI interaction. */
+::view-transition-old(contact-panel),
+::view-transition-new(contact-panel) {
+  animation-duration: var(--duration-slow);
+  animation-timing-function: var(--ease-out-strong);
+}
+
 /* Availability indicator.
    Deliberately static: this sits on screen continuously, and a permanent
    looping animation is visual noise the user cannot dismiss. The adjacent
@@ -498,6 +563,11 @@ select option[value=""] {
     opacity: 1;
     transform: none;
   }
+
+  ::view-transition-group(project-grid),
+  ::view-transition-group(contact-panel) {
+    animation: none !important;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -510,6 +580,7 @@ select option[value=""] {
     --background: #ffffff;
     --surface: #ffffff;
     --surface-muted: #ffffff;
+    --surface-elevated: #ffffff;
     --foreground: #111111;
     --foreground-muted: #444444;
     --border: rgba(0, 0, 0, 0.25);

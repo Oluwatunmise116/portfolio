@@ -121,7 +121,7 @@ export default async function ProjectDetailPage(
       <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)] lg:gap-16">
         {/* Fact sheet — sticky on desktop */}
         <aside className="h-fit lg:sticky lg:top-28">
-          <dl className="flex flex-col gap-5 rounded-2xl border border-border bg-surface p-6">
+          <dl className="flex flex-col gap-5 rounded-2xl border border-border bg-surface-elevated p-6 shadow-card">
             <div>
               <dt className="type-label text-foreground-muted">Role</dt>
               <dd className="mt-1 text-sm">{project.role}</dd>

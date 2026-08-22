@@ -49,7 +49,7 @@ export function HowIWork() {
             <Reveal
               key={principle.title}
               delay={Math.min(index * 60, 180)}
-              className="rounded-2xl border border-border bg-surface p-7 md:p-9"
+              className="rounded-2xl border border-border bg-surface-elevated p-7 shadow-card md:p-9"
             >
               <p aria-hidden="true" className="type-label text-accent">
                 0{index + 1}

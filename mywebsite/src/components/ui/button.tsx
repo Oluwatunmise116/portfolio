@@ -7,6 +7,10 @@ export type ButtonVariant = "primary" | "secondary" | "ghost";
 /**
  * Shared style recipe so <Button> and <LinkButton> stay identical.
  * Press feedback: scale(0.98) on :active — subtle, 160ms, transform-only.
+ *
+ * Note: Tailwind v4's `scale-*` utilities set the standalone CSS `scale`
+ * property, not `transform` — a `transition-[transform,...]` list silently
+ * does not animate it. The property list below names `scale` explicitly.
  */
 export function buttonClasses(
   variant: ButtonVariant = "primary",
@@ -14,7 +18,7 @@ export function buttonClasses(
 ): string {
   return cn(
     "inline-flex min-h-12 items-center justify-center gap-2 px-6 text-sm font-semibold",
-    "rounded-full transition-[transform,background-color,border-color,color] duration-160 ease-out-strong",
+    "rounded-full transition-[scale,background-color,border-color,color] duration-160 ease-out-strong",
     "active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
     variant === "primary" &&
       "bg-accent text-accent-foreground hover:bg-accent-hover",

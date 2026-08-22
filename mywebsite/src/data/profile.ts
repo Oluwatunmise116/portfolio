@@ -47,7 +47,7 @@ export const profile = {
     label:
       "Open to embedded systems, automotive, IoT, firmware, hardware, and technical collaboration opportunities",
     /** Compact variant for tight spaces (hero strip, mobile menu). */
-    shortLabel: "Open to engineering opportunities",
+    shortLabel: "Available",
   },
 
   /**
@@ -81,7 +81,8 @@ export const profile = {
     "Embedded Systems Engineer working across automotive systems, firmware, vehicle communication, IoT, PCB development, and connected hardware. Experienced in taking embedded systems from schematic review and prototype bring-up through firmware integration, debugging, testing, and real-world validation.",
 
   /** Opening statement on the About page. */
-  aboutStatement: "I build where hardware, firmware, vehicles, and connectivity meet.",
+  aboutStatement:
+    "I build where hardware, firmware, vehicles, and connectivity meet.",
 
   shortAbout: [
     "I'm an embedded systems engineer focused on developing practical automotive and IoT systems across firmware, hardware, connectivity, diagnostics, and testing.",

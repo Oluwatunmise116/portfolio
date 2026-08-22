@@ -25,7 +25,7 @@ export function AboutPreview() {
 
         <div className="mt-12 grid items-start gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
           <Reveal className="mx-auto w-full max-w-sm lg:mx-0">
-            <div className="relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-muted">
+            <div className="relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-muted shadow-card">
               <Image
                 src={previewPortrait.src}
                 alt={previewPortrait.alt}

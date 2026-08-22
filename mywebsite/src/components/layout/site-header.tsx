@@ -40,7 +40,7 @@ export function SiteHeader() {
           layout properties here forces layout on every frame of it. */}
       <div
         className={cn(
-          "pointer-events-auto mt-4 flex w-full max-w-fit items-center gap-1 rounded-full border border-border bg-surface/90 py-1.5 pr-1.5 pl-2 shadow-pill backdrop-blur-md transition-transform duration-220 ease-out-strong",
+          "pointer-events-auto mt-4 flex w-full max-w-fit items-center gap-1 rounded-full border border-border bg-surface-elevated/90 py-1.5 pr-1.5 pl-2 shadow-pill backdrop-blur-md transition-transform duration-220 ease-out-strong",
           scrolled ? "-translate-y-1.5 scale-[0.94]" : "translate-y-0 scale-100",
         )}
       >
@@ -94,7 +94,7 @@ export function SiteHeader() {
         <Link
           href={contactNavItem.href}
           className={cn(
-            "ml-1 hidden min-h-10 items-center rounded-full bg-control px-5 text-sm font-semibold text-control-foreground transition-[transform,opacity] duration-160 ease-out-strong hover:opacity-85 active:scale-[0.97] md:inline-flex",
+            "ml-1 hidden min-h-10 items-center rounded-full bg-control px-5 text-sm font-semibold text-control-foreground transition-[scale,opacity] duration-160 ease-out-strong hover:opacity-85 active:scale-[0.97] md:inline-flex",
             isActive(pathname, contactNavItem.href) && "opacity-85",
           )}
         >

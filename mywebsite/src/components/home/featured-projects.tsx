@@ -30,18 +30,45 @@ export function FeaturedProjects() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-16">
-          {featured.map((project, index) => (
-            <Reveal key={project.slug} delay={Math.min((index % 2) * 80, 160)}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
+        {/* Bento rhythm: the lead project runs full width in a wider,
+            cinematic crop; the rest fall into an even row beneath it.
+            One large treatment plus several small ones reads as curated
+            rather than every project competing at the same size.
+
+            At the tablet (md-only) breakpoint the secondary row is 2-up,
+            so an odd remainder would otherwise strand the last card alone
+            beside an empty cell. Spanning that last card full width there
+            turns it into a deliberate 1-2-1 rhythm instead of a gap; lg's
+            3-up row divides the current count evenly, so it never needs it. */}
+        <div className="mt-14 grid gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
+          {featured.map((project, index) => {
+            const isLead = index === 0;
+            const strandedOnTablet =
+              !isLead &&
+              index === featured.length - 1 &&
+              (featured.length - 1) % 2 === 1;
+            return (
+              <Reveal
+                key={project.slug}
+                delay={Math.min(index * 60, 180)}
+                className={
+                  isLead
+                    ? "md:col-span-2 lg:col-span-3"
+                    : strandedOnTablet
+                      ? "md:col-span-2 lg:col-span-1"
+                      : undefined
+                }
+              >
+                <ProjectCard project={project} wide={isLead} />
+              </Reveal>
+            );
+          })}
         </div>
 
         <Reveal className="mt-14 flex justify-center">
           <Link
             href="/projects"
-            className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-border-strong px-6 text-sm font-semibold transition-colors duration-160 ease-out-strong hover:bg-control hover:text-control-foreground active:scale-[0.98]"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full border border-border-strong px-6 text-sm font-semibold transition-[color,background-color,scale] duration-160 ease-out-strong hover:bg-control hover:text-control-foreground active:scale-[0.98]"
           >
             Browse all projects
             <ArrowRight

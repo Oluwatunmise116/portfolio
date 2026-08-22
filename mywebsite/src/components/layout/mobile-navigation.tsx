@@ -184,13 +184,22 @@ export function MobileNavigation() {
         aria-controls="mobile-navigation"
         aria-label={open ? "Close navigation menu" : "Open navigation menu"}
         onClick={() => (open ? close() : setOpen(true))}
-        className="inline-flex size-10 items-center justify-center rounded-full bg-control text-control-foreground transition-transform duration-160 ease-out-strong active:scale-[0.94]"
+        className="relative inline-flex size-10 items-center justify-center rounded-full bg-control text-control-foreground transition-transform duration-160 ease-out-strong active:scale-[0.94]"
       >
-        {open ? (
-          <X aria-hidden="true" className="size-5" />
-        ) : (
-          <Menu aria-hidden="true" className="size-5" />
-        )}
+        <Menu
+          aria-hidden="true"
+          className={cn(
+            "absolute inset-0 m-auto size-5 transition-[opacity,rotate] duration-140 ease-out-strong",
+            open ? "rotate-90 opacity-0" : "rotate-0 opacity-100",
+          )}
+        />
+        <X
+          aria-hidden="true"
+          className={cn(
+            "absolute inset-0 m-auto size-5 transition-[opacity,rotate] duration-140 ease-out-strong",
+            open ? "rotate-0 opacity-100" : "-rotate-90 opacity-0",
+          )}
+        />
       </button>
 
       {/* `document` is absent during SSR. The panel is closed on first

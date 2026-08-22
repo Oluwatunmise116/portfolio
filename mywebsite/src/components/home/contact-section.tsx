@@ -1,12 +1,12 @@
-import { ContactForm } from "@/components/contact/contact-form";
+import { BookACall } from "@/components/contact/book-a-call";
 import { Avatar } from "@/components/ui/avatar";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 
 /**
  * Home contact section: centered heading with a small circular portrait
- * accent, then the shared validated form. The same form component powers
- * the /contact page.
+ * accent, then the booking link. The same button powers the /contact
+ * page.
  */
 export function ContactSection() {
   return (
@@ -23,8 +23,8 @@ export function ContactSection() {
           </p>
         </Reveal>
 
-        <Reveal delay={100} className="mt-12">
-          <ContactForm />
+        <Reveal delay={100} className="mt-10 flex justify-center">
+          <BookACall />
         </Reveal>
       </Container>
     </section>

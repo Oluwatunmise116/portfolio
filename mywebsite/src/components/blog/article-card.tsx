@@ -56,7 +56,7 @@ export function ArticleCard({
         <Heading className="type-card-title mt-3">
           <Link
             href={`/blog/${article.slug}`}
-            className="transition-colors duration-160 ease-out-strong after:absolute after:inset-0 group-hover:text-accent"
+            className="inline-block transition-[color,scale] duration-160 ease-out-strong after:absolute after:inset-0 group-hover:text-accent active:scale-[0.99]"
           >
             {article.title}
           </Link>

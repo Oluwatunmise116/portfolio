@@ -27,6 +27,18 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
   const visible =
     active === "All" ? projects : projects.filter((p) => p.category === active);
 
+  // Crossfades the grid swap via the native View Transitions API, scoped
+  // to just the grid (see the `project-grid` view-transition-name below)
+  // so the filter pills and heading don't also animate. Falls back to the
+  // plain instant update in browsers without support.
+  const applyFilter = (filter: Filter) => {
+    if (typeof document !== "undefined" && "startViewTransition" in document) {
+      document.startViewTransition(() => setActive(filter));
+    } else {
+      setActive(filter);
+    }
+  };
+
   return (
     <div>
       <div
@@ -41,9 +53,9 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
               key={filter}
               type="button"
               aria-pressed={selected}
-              onClick={() => setActive(filter)}
+              onClick={() => applyFilter(filter)}
               className={cn(
-                "min-h-11 rounded-full border px-5 text-sm transition-[background-color,border-color,color] duration-160 ease-out-strong active:scale-[0.98]",
+                "min-h-11 rounded-full border px-5 text-sm transition-[background-color,border-color,color,scale] duration-160 ease-out-strong active:scale-[0.98]",
                 selected
                   ? "border-transparent bg-control font-semibold text-control-foreground"
                   : "border-border text-foreground-muted hover:border-border-strong hover:text-foreground",
@@ -59,34 +71,36 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
         {visible.length} project{visible.length === 1 ? "" : "s"} shown
       </p>
 
-      {visible.length > 0 ? (
-        <ul
-          key={active}
-          className="mt-10 grid list-none gap-x-8 gap-y-14 sm:grid-cols-2"
-        >
-          {visible.map((project, i) => (
-            <li
-              key={project.slug}
-              className="filter-enter"
-              style={{ "--enter-index": i } as React.CSSProperties}
-            >
-              <ProjectCard project={project} />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="mt-8">
-          <EmptyState
-            title="No projects in this category yet"
-            description="Work in this area is on the bench but not written up. Try another category, or check back soon."
-            action={
-              <Button variant="secondary" onClick={() => setActive("All")}>
-                Show all projects
-              </Button>
-            }
-          />
-        </div>
-      )}
+      <div className="[view-transition-name:project-grid]">
+        {visible.length > 0 ? (
+          <ul
+            key={active}
+            className="mt-10 grid list-none gap-x-8 gap-y-14 sm:grid-cols-2 xl:grid-cols-3"
+          >
+            {visible.map((project, i) => (
+              <li
+                key={project.slug}
+                className="filter-enter"
+                style={{ "--enter-index": i } as React.CSSProperties}
+              >
+                <ProjectCard project={project} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-8">
+            <EmptyState
+              title="No projects in this category yet"
+              description="Work in this area is on the bench but not written up. Try another category, or check back soon."
+              action={
+                <Button variant="secondary" onClick={() => applyFilter("All")}>
+                  Show all projects
+                </Button>
+              }
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

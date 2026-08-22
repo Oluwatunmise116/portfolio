@@ -1,13 +1,57 @@
-import { ArrowDown, FileDown } from "lucide-react";
+import { ArrowDown, ArrowRight, FileDown } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { LinkButton } from "@/components/ui/link-button";
 import { heroHoverPortrait, portraitFor } from "@/data/portraits";
 import { profile } from "@/data/profile";
 
 function rise(delay: number): CSSProperties {
   return { "--rise-delay": `${delay}ms` } as CSSProperties;
+}
+
+/** profile.specialisation is pipe-delimited; render it as the same
+ *  mono "/"-separated metadata line used on project cards, so the hero
+ *  reuses an established pattern instead of inventing a new one. */
+const specLine = profile.specialisation
+  .split("|")
+  .map((s) => s.trim())
+  .join("  /  ");
+
+/** Four-corner reticle frame around the portrait — a restrained nod to
+ *  measurement/targeting marks rather than a literal camera viewfinder.
+ *  Purely decorative, offset outside the image so it reads as a frame
+ *  around the photo rather than tracing its rounded corners. */
+function PortraitReticle() {
+  const corner = "M1 9V3a2 2 0 0 1 2-2h6";
+  return (
+    <>
+      {(
+        [
+          "top-0 left-0 -translate-x-3 -translate-y-3",
+          "top-0 right-0 translate-x-3 -translate-y-3 rotate-90",
+          "right-0 bottom-0 translate-x-3 translate-y-3 rotate-180",
+          "bottom-0 left-0 -translate-x-3 translate-y-3 -rotate-90",
+        ] as const
+      ).map((position) => (
+        <svg
+          key={position}
+          aria-hidden="true"
+          viewBox="0 0 12 12"
+          className={`absolute size-4 text-accent/70 ${position}`}
+        >
+          <path
+            d={corner}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ))}
+    </>
+  );
 }
 
 /**
@@ -48,7 +92,23 @@ export function Hero() {
     // entrance. `clip` contains that without creating a scroll container
     // (which `hidden` would, breaking sticky descendants).
     <section className="relative overflow-x-clip">
-      <div className="mx-auto flex min-h-svh w-full max-w-[90rem] flex-col justify-center px-5 pt-28 pb-10 sm:px-8 lg:px-12 lg:pt-32">
+      {/* Faint blueprint grid behind the composition — an engineering
+          detail, not decoration for its own sake, and masked to an
+          ellipse so it reads as depth rather than a rectangle. */}
+      <div
+        aria-hidden="true"
+        className="bg-technical-grid pointer-events-none absolute inset-0"
+      />
+      <div className="relative mx-auto flex min-h-svh w-full max-w-[90rem] flex-col justify-center px-5 pt-28 pb-10 sm:px-8 lg:px-12 lg:pt-32">
+        {/* Eyebrow — what this engineer builds, before anything else loads */}
+        <p
+          className="hero-rise type-meta mb-6 flex items-center justify-center gap-2.5 text-center text-foreground-muted lg:mb-8"
+          style={rise(240)}
+        >
+          <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-accent" />
+          {profile.eyebrow}
+        </p>
+
         <div className="grid grid-cols-1 items-center gap-x-6 gap-y-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-8">
           {/* Name — row 1 on mobile, above the left word on desktop */}
           <p
@@ -80,7 +140,7 @@ export function Hero() {
             className="hero-zoom relative z-10 col-start-1 row-start-3 mx-auto w-[min(68vw,17rem)] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:w-[clamp(13rem,18vw,17rem)]"
             style={rise(0)}
           >
-            <div className="group relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-muted shadow-card">
+            <div className="group relative aspect-4/5 overflow-hidden rounded-[2rem] border border-border bg-surface-elevated shadow-elevated">
               <Image
                 src={portrait.src}
                 alt={portrait.alt}
@@ -105,6 +165,11 @@ export function Hero() {
               )}
             </div>
 
+            {/* Reticle frame — a measurement/targeting mark around the
+                portrait rather than on it; a restrained engineering
+                detail that also acts as a visual anchor for the composition. */}
+            <PortraitReticle />
+
             {/* Circular accent badge, lower-left overlap */}
             <div
               aria-hidden="true"
@@ -117,18 +182,44 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Supporting description */}
-          <p
-            className="hero-rise col-start-1 row-start-5 mx-auto mt-1 max-w-xs text-center text-[0.95rem] leading-relaxed text-foreground-muted lg:col-start-3 lg:row-start-3 lg:mx-0 lg:pl-2 lg:text-left"
+          {/* Supporting statement: a stronger claim (tagline) first, the
+              specifics (support line + spec strip) trailing it — two
+              tiers of typographic weight instead of one flat paragraph. */}
+          <div
+            className="hero-rise col-start-1 row-start-5 mx-auto mt-1 max-w-sm text-center lg:col-start-3 lg:row-start-3 lg:mx-0 lg:max-w-none lg:text-left"
             style={rise(440)}
           >
-            {profile.intro}
-          </p>
+            <p className="text-lg leading-snug font-medium text-foreground sm:text-xl">
+              {profile.tagline}
+            </p>
+            <p className="mt-3 text-[0.95rem] leading-relaxed text-foreground-muted">
+              {profile.taglineSupport}
+            </p>
+            <p className="type-meta mt-5 border-t border-border pt-4 text-foreground-muted lg:max-w-xs">
+              {specLine}
+            </p>
+          </div>
         </div>
 
-        {/* Bottom strip: availability, résumé, theme */}
+        {/* CTA row: primary action first, résumé second — the hero should
+            point somewhere before it points everywhere. */}
         <div
-          className="hero-rise mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 lg:mt-16"
+          className="hero-rise mt-10 flex flex-wrap items-center justify-center gap-4 lg:mt-14"
+          style={rise(500)}
+        >
+          <LinkButton href="/projects" variant="primary">
+            See my work
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </LinkButton>
+          <LinkButton href="/resume" variant="secondary">
+            <FileDown aria-hidden="true" className="size-4" />
+            Résumé
+          </LinkButton>
+        </div>
+
+        {/* Meta strip: availability, scroll cue, theme */}
+        <div
+          className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
           style={rise(560)}
         >
           {profile.availability.available && (
@@ -137,13 +228,6 @@ export function Hero() {
               {profile.availability.shortLabel}
             </p>
           )}
-          <a
-            href="/resume"
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground-muted underline decoration-border-strong underline-offset-4 transition-colors duration-160 ease-out-strong hover:text-accent hover:decoration-accent"
-          >
-            <FileDown aria-hidden="true" className="size-4" />
-            View résumé
-          </a>
           <span className="type-meta hidden items-center gap-2 text-foreground-muted sm:inline-flex">
             <ArrowDown aria-hidden="true" className="size-3.5" />
             Scroll

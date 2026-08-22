@@ -87,7 +87,7 @@ export default async function ArticlePreviewPage(
         />
       </div>
 
-      <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-border bg-surface p-10 text-center">
+      <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-border bg-surface-elevated p-10 text-center shadow-card">
         <p className="max-w-md text-foreground-muted">
           The full article is published on Medium — the canonical home for all
           of my writing.
