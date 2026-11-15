@@ -6,7 +6,13 @@ import { ResumeDownload } from "@/components/resume/resume-download";
 import { ResumeHeader } from "@/components/resume/resume-header";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
-import { certifications, courses, memberships } from "@/data/experience";
+import {
+  certifications,
+  courses,
+  keyProjects,
+  memberships,
+  volunteering,
+} from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skillGroups } from "@/data/skills";
 import { createMetadata } from "@/lib/metadata";
@@ -14,7 +20,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "Resume",
   description:
-    "Professional experience, selected projects, education, certifications, and technical skills — with a downloadable PDF.",
+    "Professional experience, key projects, education, certifications, memberships, and technical skills, in a print-ready layout.",
   path: "/resume",
 });
 
@@ -50,9 +56,39 @@ export default function ResumePage() {
             <ExperienceList />
           </section>
 
-          <section aria-label="Selected projects">
+          <section aria-label="Key projects">
             <h2 className="type-label mb-6 text-foreground-muted">
-              Selected projects
+              Key projects
+            </h2>
+            <ul className="flex list-none flex-col gap-8">
+              {keyProjects.map((project) => (
+                <li key={project.title}>
+                  <h3 className="type-card-title">{project.title}</h3>
+                  <p className="type-meta mt-1 text-accent">
+                    {project.stack.join(", ")}
+                  </p>
+                  <ul className="mt-3 flex list-none flex-col gap-2">
+                    {project.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex gap-3 text-sm text-foreground-muted"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-2.5 h-px w-4 shrink-0 bg-accent"
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section aria-label="Personal and academic projects">
+            <h2 className="type-label mb-6 text-foreground-muted">
+              Personal and academic projects
             </h2>
             <ul className="flex list-none flex-col gap-5">
               {selected.map((project) => (
@@ -76,6 +112,39 @@ export default function ResumePage() {
                   <p className="type-meta text-foreground-muted">
                     {project.year}
                   </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section aria-label="Volunteering and leadership">
+            <h2 className="type-label mb-6 text-foreground-muted">
+              Volunteering and leadership
+            </h2>
+            <ul className="flex list-none flex-col gap-8">
+              {volunteering.map((entry) => (
+                <li key={entry.role + entry.organisation}>
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="type-card-title">{entry.role}</h3>
+                    <p className="type-meta text-accent">{entry.period}</p>
+                  </div>
+                  <p className="mt-1 text-sm font-medium text-foreground-muted">
+                    {entry.organisation}
+                  </p>
+                  <ul className="mt-3 flex list-none flex-col gap-2">
+                    {entry.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex gap-3 text-sm text-foreground-muted"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-2.5 h-px w-4 shrink-0 bg-accent"
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 </li>
               ))}
             </ul>

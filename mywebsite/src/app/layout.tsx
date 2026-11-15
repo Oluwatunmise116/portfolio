@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import { CustomCursor } from "@/components/layout/custom-cursor";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import {
-  SITE_DESCRIPTION,
-  SITE_TITLE_SUFFIX,
-  SITE_URL,
-} from "@/lib/constants";
-import { manrope, oswald, plexMono } from "@/lib/fonts";
+import { SmoothScroll } from "@/components/layout/smooth-scroll";
+import { ThemeDock } from "@/components/layout/theme-toggle";
+import { SITE_DESCRIPTION, SITE_TITLE_SUFFIX, SITE_URL } from "@/lib/constants";
+import { antonio, inter, plexMono } from "@/lib/fonts";
 
 import "./globals.css";
 
@@ -23,8 +22,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8f8f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#151515" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1b" },
   ],
 };
 
@@ -41,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body
-        className={`${oswald.variable} ${manrope.variable} ${plexMono.variable} flex min-h-svh flex-col antialiased`}
+        className={`${antonio.variable} ${inter.variable} ${plexMono.variable} flex min-h-svh flex-col antialiased`}
       >
         <a
           href="#main-content"
@@ -49,11 +48,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to main content
         </a>
+        <SmoothScroll />
         <SiteHeader />
         <main id="main-content" className="flex-1">
           {children}
         </main>
         <SiteFooter />
+        <ThemeDock />
+        <CustomCursor />
       </body>
     </html>
   );

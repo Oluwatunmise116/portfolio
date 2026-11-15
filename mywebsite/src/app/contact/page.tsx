@@ -1,5 +1,4 @@
 import { BookACall } from "@/components/contact/book-a-call";
-import { Avatar } from "@/components/ui/avatar";
 import { BrandIcon } from "@/components/ui/brand-icon";
 import { footerConfig } from "@/data/footer";
 import { profile } from "@/data/profile";
@@ -22,15 +21,9 @@ export default function ContactPage() {
   return (
     <div className="mx-auto w-full max-w-2xl px-5 pt-32 pb-16 sm:px-8 md:pt-40 md:pb-24">
       <div className="flex flex-col items-center text-center">
-        <Avatar
-          size={72}
-          className="hero-rise"
-          style={{ "--rise-delay": "0ms" } as React.CSSProperties}
-        />
-
         <h1
-          className="type-page-title hero-rise mt-6"
-          style={{ "--rise-delay": "60ms" } as React.CSSProperties}
+          className="type-page-title hero-rise"
+          style={{ "--rise-delay": "0ms" } as React.CSSProperties}
         >
           Let&rsquo;s build something reliable
         </h1>

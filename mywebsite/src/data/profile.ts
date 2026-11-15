@@ -78,7 +78,7 @@ export const profile = {
 
   /** Professional summary used on the résumé page. */
   summary:
-    "Embedded Systems Engineer working across automotive systems, firmware, vehicle communication, IoT, PCB development, and connected hardware. Experienced in taking embedded systems from schematic review and prototype bring-up through firmware integration, debugging, testing, and real-world validation.",
+    "Embedded systems engineer with five years of industry experience building firmware and hardware for connected vehicles, generators and IoT devices. Most of my work sits where firmware meets the vehicle network: reading CAN, OBD-II, UDS and J1939 traffic, working out manufacturer-specific diagnostic data that isn't publicly documented, and getting that data off the machine and into the cloud over cellular. I have taken a telematics device from bare-board bring-up to a product-level unit, and I'm comfortable across ESP32 and STM32, FreeRTOS, cellular modems, OTA updates and PCB design. Interested in research and development opportunities in automotive electronics, IoT and embedded product development.",
 
   /** Opening statement on the About page. */
   aboutStatement:

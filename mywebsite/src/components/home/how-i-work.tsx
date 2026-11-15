@@ -20,7 +20,7 @@ const principles = [
   {
     title: "Design for failure paths",
     detail:
-      "Brown-outs, lost links, corrupted flash — the field always finds the edge case. The recovery path is designed before the feature.",
+      "Brown-outs, lost links, corrupted flash: the field always finds the edge case. The recovery path is designed before the feature.",
   },
   {
     title: "Make debugging observable",
@@ -51,10 +51,7 @@ export function HowIWork() {
               delay={Math.min(index * 60, 180)}
               className="rounded-2xl border border-border bg-surface-elevated p-7 shadow-card md:p-9"
             >
-              <p aria-hidden="true" className="type-label text-accent">
-                0{index + 1}
-              </p>
-              <h3 className="type-card-title mt-3">{principle.title}</h3>
+              <h3 className="type-card-title">{principle.title}</h3>
               <p className="mt-3 leading-relaxed text-foreground-muted">
                 {principle.detail}
               </p>

@@ -5,119 +5,139 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ------------------------------------------------------------------ */
-/* Design tokens — Portavia-inspired editorial system                  */
+/* Design tokens                                                       */
 /* ------------------------------------------------------------------ */
 
 :root {
-  /* Surfaces — warm paper base with tonal (not bordered) separation.
-     background < surface-muted < surface < surface-elevated in perceived
-     weight; --surface-elevated pairs with --shadow-elevated for the one
-     or two things per page that should read as genuinely raised (the
-     hero portrait, a featured project). */
-  --background: #f6f4f0;
-  --surface: #ffffff;
-  --surface-muted: #eeece6;
-  --surface-hover: #f0ede6;
-  --surface-elevated: #fffefc;
+  /* Surfaces — a clean white page with tonal (not bordered) separation.
+     background < surface < surface-muted in perceived weight;
+     --surface-elevated pairs with --shadow-elevated for the one or two
+     things per page that should read as genuinely raised (the hero
+     portrait, a featured project). */
+  --background: #ffffff;
+  --surface: #f5f5f5;
+  --surface-muted: #ebebeb;
+  --surface-hover: #e6e6e6;
+  --surface-elevated: #ffffff;
+  /* The floating navigation pill: 90% opaque so page content reads
+     faintly through the backdrop blur. */
+  --nav: rgba(255, 255, 255, 0.9);
 
   /* Ink */
-  --foreground: #202020;
-  --foreground-muted: #686868;
+  --foreground: #303030;
+  /* Darker than a typical "muted" grey on purpose: this is used for body
+     copy on white, and anything lighter than ~#767676 fails WCAG AA. */
+  --foreground-muted: #666666;
 
   /* Lines */
-  --border: rgba(25, 25, 25, 0.13);
+  --border: #dadada;
   /* Reserved for boundaries a control needs to be identified by (form
      fields, the secondary button) rather than decorative dividers.
-     0.48 is the lowest opacity that clears WCAG 1.4.11's 3:1 non-text
-     contrast floor against a white/--surface fill — the previous 0.24
-     read at ~1.7:1 and made input edges nearly invisible in bright light. */
-  --border-strong: rgba(25, 25, 25, 0.48);
+     Clears WCAG 1.4.11's 3:1 non-text contrast floor against white. */
+  --border-strong: rgba(48, 48, 48, 0.5);
 
   /* Electric-indigo accent.
-     Darkened from the reference periwinkle so it clears WCAG AA both as
-     text on --background (5.2:1) and as a fill behind white text
-     (5.4:1). Lightening it will reintroduce contrast failures. */
+     Slightly darker than a pure periwinkle so it clears WCAG AA both as
+     text on --background and as a fill behind white text. Lightening it
+     will reintroduce contrast failures. */
   --accent: #5459de;
   --accent-hover: #474cd0;
   --accent-soft: #e8e9ff;
   --accent-foreground: #ffffff;
 
   /* Filled dark controls (Contact pill button, etc.) */
-  --control: #202020;
-  --control-foreground: #f8f8f6;
+  --control: #303030;
+  --control-foreground: #ffffff;
 
   /* Status */
   --success: #15803d;
   --error: #b91c1c;
-  --focus-ring: #6267e8;
+  --focus-ring: #5e67e6;
 
   /* Nav pill shadow — restrained */
-  --shadow-pill: 0 1px 2px rgba(20, 20, 20, 0.05), 0 8px 24px -12px rgba(20, 20, 20, 0.18);
-  --shadow-card: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px -18px rgba(20, 20, 20, 0.16);
+  --shadow-pill:
+    0 1px 2px rgba(20, 20, 20, 0.05), 0 8px 24px -12px rgba(20, 20, 20, 0.18);
+  --shadow-card:
+    0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px -18px rgba(20, 20, 20, 0.16);
   /* Reserved for the handful of things per page that should read as
      genuinely raised above --surface-elevated: deeper, softer, wider. */
-  --shadow-elevated: 0 2px 4px rgba(20, 20, 20, 0.05), 0 24px 48px -20px rgba(20, 20, 20, 0.22);
+  --shadow-elevated:
+    0 2px 4px rgba(20, 20, 20, 0.05), 0 24px 48px -20px rgba(20, 20, 20, 0.22);
 
   /* Motion */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
   /* Approximates a zero-bounce spring: fast start, long smooth settle, no
-     overshoot. Used only for the big one-shot hero entrance. */
+     overshoot. Used for the hero entrance and the hover roll/fill. */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 160ms;
   --duration-base: 220ms;
   --duration-slow: 280ms;
+  /* Hover roll (nav labels) and corner fill (outline buttons). */
+  --duration-hover: 400ms;
   /* Hero entrance only — deliberately long; every repeated interaction
-     stays in the 160–280ms band above. */
+     stays well below this. */
   --duration-entrance: 1000ms;
 
   /* Fluid type scale */
-  /* Sized so a hero word never overflows its grid column. "EMBEDDED" in
-     Oswald 600 measures ~4.14em wide; the side columns are ~36% of the
-     container. Verified at 1024/1280/1440/1600/1920 — raising these
-     values without re-measuring will clip the headline. */
-  --text-hero: clamp(3.2rem, 7.6vw, 7.25rem);
-  --text-hero-mobile: clamp(3.2rem, 18vw, 5.5rem);
-  --text-page-title: clamp(2.75rem, 1.6rem + 4.5vw, 5.5rem);
-  --text-section-title: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
-  --text-card-title: clamp(1.25rem, 1.1rem + 0.5vw, 1.625rem);
+  /* The hero word must never overflow its grid column. "EMBEDDED" in
+     Antonio 700 measures ~3.5em wide; each side column is roughly a third
+     of the container. The 8rem cap is what keeps it inside the column once
+     the container stops growing (measured: 458px word in a 470px column
+     at 1920). Re-measure at 1024/1280/1440/1920 before raising. */
+  --text-hero: clamp(3.75rem, 8.2vw, 8rem);
+  --text-hero-mobile: clamp(3.75rem, 21vw, 6.5rem);
+  --text-page-title: clamp(3.25rem, 1.6rem + 4.6vw, 6rem);
+  --text-section-title: clamp(2.5rem, 1.7rem + 2.9vw, 3.75rem);
+  --text-card-title: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+
+  /* Hero portrait card. Shared by the in-flow mobile portrait, the empty
+     spacer that holds its place in the desktop grid, and the travelling
+     card itself, so all three stay the same size. */
+  --portrait-width: clamp(15rem, 23.6vw, 21.25rem);
+  /* The desktop hero is at least this tall; the travelling card's sticky
+     frame uses the same value so both centre on the same point. */
+  --hero-min-height: 46rem;
 }
 
 .dark {
-  /* Not an inverted light theme: four distinct steps instead of three,
-     each a touch cooler than the last, so depth reads from layering
-     rather than from glow or heavier borders. Never pure black —
-     --background carries a faint blue-black cast (#121316) that keeps
-     long sessions from feeling like a void. */
-  --background: #121316;
-  --surface: #1a1b1f;
-  --surface-muted: #212227;
-  --surface-hover: #24262b;
-  --surface-elevated: #26282f;
+  /* Neutral near-black, never pure black. The navigation pill is the one
+     surface that sits *darker* than the page, so it reads as floating
+     above it without needing a heavy shadow. */
+  --background: #1a1a1b;
+  --surface: #212122;
+  --surface-muted: #2b2b2c;
+  --surface-hover: #333334;
+  --surface-elevated: #262627;
+  --nav: rgba(15, 15, 15, 0.9);
 
-  --foreground: #f2f1ee;
-  --foreground-muted: #aaaaa5;
+  --foreground: #ffffff;
+  --foreground-muted: #b5b5b5;
 
-  --border: rgba(255, 255, 255, 0.12);
-  /* Same 3:1 floor as light mode, measured against --surface (#1a1b1f). */
-  --border-strong: rgba(255, 255, 255, 0.35);
+  --border: rgba(255, 255, 255, 0.16);
+  /* Same 3:1 floor as light mode, measured against --surface. */
+  --border-strong: rgba(255, 255, 255, 0.4);
 
-  --accent: #9a9ef5;
-  --accent-hover: #b0b3f8;
-  --accent-soft: rgba(98, 103, 232, 0.24);
-  /* Dark ink on the light accent — white would fail contrast here. */
-  --accent-foreground: #151515;
+  /* Cyan accent in the dark theme. 6.2:1 as text on --background, and
+     dark ink (not white) on top of it as a fill. */
+  --accent: #00aac4;
+  --accent-hover: #1fc0d9;
+  --accent-soft: rgba(0, 170, 196, 0.18);
+  --accent-foreground: #0f0f0f;
 
-  --control: #f5f5f2;
-  --control-foreground: #151515;
+  --control: #ffffff;
+  --control-foreground: #1a1a1b;
 
-  --success: #4ade80;
+  --success: #0bde66;
   --error: #f87171;
-  --focus-ring: #8f93f4;
+  --focus-ring: #00aac4;
 
-  --shadow-pill: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -18px rgba(0, 0, 0, 0.55);
-  --shadow-elevated: 0 2px 4px rgba(0, 0, 0, 0.45), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+  --shadow-pill:
+    0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -18px rgba(0, 0, 0, 0.55);
+  --shadow-elevated:
+    0 2px 4px rgba(0, 0, 0, 0.45), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
 }
 
 /* Map tokens to Tailwind utilities (bg-background, text-accent, …) */
@@ -127,6 +147,7 @@
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
   --color-surface-elevated: var(--surface-elevated);
+  --color-nav: var(--nav);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
   --color-border: var(--border);
@@ -141,12 +162,13 @@
   --color-error: var(--error);
   --color-focus-ring: var(--focus-ring);
 
-  --font-display: var(--font-oswald);
-  --font-sans: var(--font-manrope);
+  --font-display: var(--font-antonio);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-plex-mono);
 
   --ease-out-strong: var(--ease-out-strong);
   --ease-in-out-strong: var(--ease-in-out-strong);
+  --ease-spring: var(--ease-spring);
 
   --shadow-pill: var(--shadow-pill);
   --shadow-card: var(--shadow-card);
@@ -167,9 +189,14 @@
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 65% 55% at 50% 38%, black 0%, transparent 72%);
+  opacity: 0.55;
+  mask-image: radial-gradient(
+    ellipse 65% 55% at 50% 45%,
+    black 0%,
+    transparent 72%
+  );
   -webkit-mask-image: radial-gradient(
-    ellipse 65% 55% at 50% 38%,
+    ellipse 65% 55% at 50% 45%,
     black 0%,
     transparent 72%
   );
@@ -194,8 +221,33 @@ html {
   color-scheme: dark;
 }
 
+/* ---- Smooth scrolling (Lenis) ------------------------------------- */
+/* smooth-scroll.tsx adds these classes to <html> while it is driving
+   the scroll position. Native `scroll-behavior: smooth` has to be off
+   then, or the two smoothing passes fight each other. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 /* NOTE: hand-written rules must reference the next/font variables
-   (--font-oswald / --font-manrope / --font-plex-mono) directly. The
+   (--font-antonio / --font-inter / --font-plex-mono) directly. The
    `@theme inline` block above maps them onto Tailwind utilities, but
    `inline` means --font-display/--font-sans/--font-mono are NOT emitted
    as usable custom properties — referencing them here would silently
@@ -204,9 +256,9 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -259,54 +311,57 @@ select option[value=""] {
 
 /* Oversized split hero word — desktop */
 .type-hero {
-  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: var(--text-hero);
-  font-weight: 600;
-  line-height: 0.86;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .type-hero {
     font-size: var(--text-hero-mobile);
   }
 }
 
 .type-page-title {
-  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: var(--text-page-title);
-  font-weight: 600;
-  line-height: 0.94;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
 .type-section-title {
-  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: var(--text-section-title);
-  font-weight: 600;
-  line-height: 1;
+  font-weight: 700;
+  line-height: 1.1;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
 .type-card-title {
-  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: var(--text-card-title);
-  font-weight: 500;
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.2;
   letter-spacing: 0;
   text-transform: uppercase;
 }
 
+/* Small uppercase label. Antonio is very narrow, so it is set larger and
+   more openly tracked than a typical 11px eyebrow to stay readable. */
 .type-label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-family: var(--font-antonio), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -318,16 +373,103 @@ select option[value=""] {
   font-variant-numeric: tabular-nums;
 }
 
-/* Oversized numbered index used in the services section */
+/* Oversized numbered index used in numbered lists */
 .type-index {
-  font-family: var(--font-oswald), system-ui, sans-serif;
+  font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1;
   color: var(--foreground-muted);
   /* 0.75 is the lightest this can go and still clear the 3:1 large-text
      contrast threshold in both themes. */
   opacity: 0.75;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hover: rolling label                                                */
+/* ------------------------------------------------------------------ */
+
+/* The label is the front face of a shallow box; a second copy in the
+   accent colour is its bottom face. Hovering the parent link rolls the
+   box a quarter turn, so the text appears to tip over into the accent
+   copy. The parent needs the `roll-trigger` class.
+
+   Markup:
+     <a class="roll-trigger">
+       <span class="roll"><span class="roll-inner">
+         <span class="roll-face">Label</span>
+         <span class="roll-face roll-face-alt" aria-hidden="true">Label</span>
+       </span></span>
+     </a> */
+.roll {
+  display: inline-block;
+  height: 1.5em;
+  line-height: 1.5em;
+  perspective: 1200px;
+}
+
+.roll-inner {
+  position: relative;
+  display: block;
+  height: 100%;
+  transform: translateZ(-0.75em);
+  transform-style: preserve-3d;
+  transition: transform var(--duration-hover) var(--ease-spring);
+}
+
+.roll-face {
+  display: block;
+  height: 100%;
+  transform: translateZ(0.75em);
+  backface-visibility: hidden;
+  white-space: nowrap;
+}
+
+.roll-face-alt {
+  position: absolute;
+  inset: 0;
+  color: var(--accent);
+  transform: rotateX(-90deg) translateZ(0.75em);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .roll-trigger:hover .roll-inner {
+    transform: translateZ(-0.75em) rotateX(90deg);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Hover: corner fill                                                  */
+/* ------------------------------------------------------------------ */
+
+/* Outline buttons fill from the bottom-left corner: a circle parked just
+   outside that corner grows until it covers the button. `--fill` is the
+   colour it floods with. The circle is sized from the button's own width
+   (150%), so it always reaches the far corner whatever the label length. */
+.btn-fill {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 150%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: var(--fill, var(--accent));
+  transform: translate(-50%, 50%) scale(0);
+  transition: transform var(--duration-hover) var(--ease-spring);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-fill:hover::before {
+    transform: translate(-50%, 50%) scale(2.1);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -391,24 +533,26 @@ select option[value=""] {
   }
 }
 
-/* Portrait settles in behind the converging words. */
-.hero-zoom {
-  opacity: 0;
-  transform: scale(0.94);
-  animation: hero-zoom var(--duration-entrance) var(--ease-spring) forwards;
+/* Portrait card flips up into place: it starts face-down and collapsed,
+   then rotates a half turn about its horizontal axis while growing to
+   full size. `backwards` (not `both`) so that once it lands the element
+   has no transform left on it — a lingering one would flatten the 3D
+   context the scroll-driven card turn depends on. */
+.hero-flip {
+  animation: hero-flip var(--duration-entrance) var(--ease-spring) backwards;
   animation-delay: var(--rise-delay, 0ms);
 }
 
-@keyframes hero-zoom {
+@keyframes hero-flip {
+  from {
+    transform: perspective(1200px) rotateX(-180deg) scale(0);
+  }
   to {
-    opacity: 1;
-    transform: scale(1);
+    transform: perspective(1200px) rotateX(0deg) scale(1);
   }
 }
 
-/* Circular badge pops in last. Starts at 0.6, not 0 — nothing in the
-   real world appears from nothing, and a true scale(0) reads as a glitch
-   at this size. */
+/* Circular badge pops in last. */
 .hero-pop {
   opacity: 0;
   transform: scale(0.6);
@@ -420,6 +564,113 @@ select option[value=""] {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* ---- Greeting badge ----------------------------------------------- */
+/* The badge alternates between the greeting word and a waving hand: the
+   two sit stacked in a one-item-tall window and the stack slides. Slow
+   enough (8s) and small enough that it reads as a living detail rather
+   than a distraction. */
+.badge-swap {
+  display: flex;
+  flex-direction: column;
+  height: 200%;
+  animation: badge-swap 8s var(--ease-in-out-strong) 2s infinite;
+}
+
+.badge-swap > * {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes badge-swap {
+  0%,
+  42% {
+    transform: translateY(0);
+  }
+  50%,
+  92% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.badge-wave {
+  transform-origin: 70% 80%;
+  animation: badge-wave 8s ease-in-out 2s infinite;
+}
+
+@keyframes badge-wave {
+  0%,
+  52%,
+  88%,
+  100% {
+    transform: rotate(0deg);
+  }
+  58%,
+  70% {
+    transform: rotate(16deg);
+  }
+  64%,
+  76% {
+    transform: rotate(-10deg);
+  }
+  82% {
+    transform: rotate(8deg);
+  }
+}
+
+/* ---- Travelling portrait card -------------------------------------- */
+/* On desktop the hero portrait is not part of the hero's flow: it lives
+   in a layer spanning the hero, services and about sections, and sticks
+   to the centre of the viewport while those sections scroll past
+   (portrait-stage.tsx turns and shifts it as they do).
+
+   The frame is as tall as the hero's minimum height, so the card starts
+   exactly where the hero grid leaves a gap for it. On a viewport shorter
+   than that minimum the negative `top` lets the frame slide up by half
+   the difference before it sticks, keeping the card centred. */
+.portrait-frame {
+  position: sticky;
+  top: min(0px, calc((100svh - var(--hero-min-height)) / 2));
+  display: grid;
+  height: max(100svh, var(--hero-min-height));
+  place-items: center;
+}
+
+/* Both faces of the card. Each hides when turned away, so the back photo
+   only shows once the card has rotated past edge-on. */
+.portrait-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.portrait-face-back {
+  transform: rotateY(180deg);
+}
+
+/* Without scroll-linked motion the card must stay in the hero instead of
+   following the reader down the page and covering the sections below. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  .portrait-frame {
+    position: static;
+  }
+}
+
+/* ---- Stacking project panels -------------------------------------- */
+/* Each panel sticks below the navigation while the next one slides up
+   over it (project-stack.tsx scales the covered panel back). */
+@media (min-width: 768px) {
+  .stack-panel {
+    position: sticky;
+    top: 5.5rem;
   }
 }
 
@@ -444,7 +695,7 @@ select option[value=""] {
   .reveal,
   .hero-rise,
   .hero-slide,
-  .hero-zoom,
+  .hero-flip,
   .hero-pop {
     opacity: 1;
     transform: none;
@@ -554,7 +805,7 @@ select option[value=""] {
   /* Keep entrance content visible instead of frozen at opacity: 0 */
   .hero-rise,
   .hero-slide,
-  .hero-zoom,
+  .hero-flip,
   .hero-pop,
   .filter-enter,
   .page-enter,
@@ -562,6 +813,12 @@ select option[value=""] {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+
+  /* The greeting badge holds on its word instead of cycling. */
+  .badge-swap,
+  .badge-wave {
+    animation: none !important;
   }
 
   ::view-transition-group(project-grid),

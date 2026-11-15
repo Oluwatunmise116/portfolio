@@ -1,14 +1,21 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type ThemeToggleProps = {
+  className?: string;
+};
 
 /**
- * Two-state theme switch. The OS preference is the default (applied by the
- * inline script in layout.tsx); toggling stores an explicit choice.
- * Icon visibility is CSS-driven (dark: variants), so there is no hydration
- * mismatch and no flash.
+ * Two-state theme switch, drawn as a small sliding toggle. The OS
+ * preference is the default (applied by the inline script in layout.tsx);
+ * toggling stores an explicit choice.
+ *
+ * The knob position is CSS-driven (`dark:` variants), so there is no
+ * hydration mismatch and no flash. The visible track is only 40×20, so
+ * the button itself is padded out to a 44px touch target around it.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ className }: ThemeToggleProps) {
   const toggle = () => {
     const root = document.documentElement;
     const dark = !root.classList.contains("dark");
@@ -25,16 +32,29 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="Switch between light and dark theme"
-      className="relative inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground-muted transition-[color,scale] duration-160 ease-out-strong hover:text-foreground active:scale-[0.94]"
+      className={cn(
+        "group inline-flex min-h-11 min-w-11 items-center justify-center rounded-full",
+        className,
+      )}
     >
-      <Sun
-        aria-hidden="true"
-        className="absolute inset-0 m-auto size-[18px] rotate-90 opacity-0 transition-[opacity,rotate] duration-180 ease-out-strong dark:rotate-0 dark:opacity-100"
-      />
-      <Moon
-        aria-hidden="true"
-        className="absolute inset-0 m-auto size-[18px] rotate-0 opacity-100 transition-[opacity,rotate] duration-180 ease-out-strong dark:-rotate-90 dark:opacity-0"
-      />
+      <span className="relative block h-5 w-10 rounded-full bg-accent transition-[scale] duration-160 ease-out-strong group-active:scale-[0.94]">
+        <span className="absolute top-[3px] left-[3px] size-3.5 rounded-full bg-background transition-transform duration-400 ease-spring dark:translate-x-5" />
+      </span>
     </button>
+  );
+}
+
+/**
+ * The switch pinned to the bottom centre of every page, so the theme can
+ * be changed from anywhere without scrolling back to the top.
+ *
+ * Desktop only: on a phone it would float over the text being read, and
+ * the mobile menu already carries its own switch.
+ */
+export function ThemeDock() {
+  return (
+    <div className="print-hidden pointer-events-none fixed inset-x-0 bottom-3 z-40 hidden justify-center md:flex">
+      <ThemeToggle className="pointer-events-auto" />
+    </div>
   );
 }
