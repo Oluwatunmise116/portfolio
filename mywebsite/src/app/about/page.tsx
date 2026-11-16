@@ -14,7 +14,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "About",
   description:
-    "Engineer first, integrator always — background, career timeline, skills, tools, and the engineering principles behind the work.",
+    "Engineer first, integrator always: background, career timeline, skills, tools, and the engineering principles behind the work.",
   path: "/about",
 });
 
@@ -49,7 +49,7 @@ export default function AboutPage() {
 
       <aside className="mt-24 flex flex-col items-center gap-4 border-t border-border pt-14 text-center md:mt-32">
         <p className="max-w-md text-lg text-foreground-muted">
-          The longer version lives on the résumé page — or just say hello.
+          The longer version lives on the résumé page, or just say hello.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <LinkButton href="/resume" variant="secondary">

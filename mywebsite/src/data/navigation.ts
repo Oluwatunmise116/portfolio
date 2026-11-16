@@ -4,7 +4,7 @@ export type NavItem = {
 };
 
 /**
- * Main pill navigation. Resume is deliberately not a main item — it is
+ * Main pill navigation. Resume is deliberately not a main item, it is
  * reachable from the hero, the About page, and the footer.
  * Contact renders as the filled button at the right edge of the pill.
  */

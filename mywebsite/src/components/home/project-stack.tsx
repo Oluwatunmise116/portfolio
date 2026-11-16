@@ -12,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-/** The few project fields a panel shows — not the whole Project record. */
+/** The few project fields a panel shows, not the whole Project record. */
 export type StackProject = {
   slug: string;
   title: string;

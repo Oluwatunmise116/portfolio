@@ -64,7 +64,7 @@ function BulletList({ items }: { items: string[] }) {
 
 /**
  * Every narrative block below is conditional. A project publishes exactly
- * the sections it has real content for — the page never shows an empty
+ * the sections it has real content for, the page never shows an empty
  * heading, and no section is padded out with invented material.
  */
 export default async function ProjectDetailPage(
@@ -91,8 +91,7 @@ export default async function ProjectDetailPage(
 
       <header className="mt-6 max-w-3xl">
         <p className="type-meta flex flex-wrap items-center gap-3 text-foreground-muted">
-          <span className="text-accent">{project.number}</span>
-          <span>{project.category}</span>
+          <span className="text-accent">{project.category}</span>
           {project.year && (
             <>
               <span aria-hidden="true">·</span>
@@ -119,7 +118,7 @@ export default async function ProjectDetailPage(
       </div>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,5fr)] lg:gap-16">
-        {/* Fact sheet — sticky on desktop */}
+        {/* Fact sheet, sticky on desktop */}
         <aside className="h-fit lg:sticky lg:top-28">
           <dl className="flex flex-col gap-5 rounded-2xl border border-border bg-surface-elevated p-6 shadow-card">
             <div>

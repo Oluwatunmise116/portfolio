@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
  *
  * lucide-react (this project's icon library) dropped brand icons, so these
  * are inlined rather than adding a dependency for eight glyphs. They are
- * filled marks — the convention for logos — while lucide's stroke icons
+ * filled marks, the convention for logos, while lucide's stroke icons
  * continue to handle UI affordances.
  *
  * Every icon is `aria-hidden`: the accessible name lives on the wrapping

@@ -5,7 +5,7 @@ import { portraitFor, type PortraitSlot } from "@/data/portraits";
 import { cn } from "@/lib/utils";
 
 type AvatarProps = {
-  /** Rendered pixel size of the circle — also used as the `sizes` hint. */
+  /** Rendered pixel size of the circle, also used as the `sizes` hint. */
   size: number;
   /**
    * Which image to draw. Defaults to the shared `avatar` photo; the header
@@ -21,7 +21,7 @@ type AvatarProps = {
  *
  * A 1:1 centre-crop of a full-body photo leaves the face only a few pixels
  * across, so this zooms to the face using `avatarFocus`/`avatarZoom` from
- * profile.ts. Both are data, not layout — swapping the photo means editing
+ * profile.ts. Both are data, not layout, swapping the photo means editing
  * those two values, not this component.
  *
  * Decorative by default: the portrait is always accompanied by the name or

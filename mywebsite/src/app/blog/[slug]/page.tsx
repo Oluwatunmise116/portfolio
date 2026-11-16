@@ -37,7 +37,7 @@ export async function generateMetadata(props: PageProps<"/blog/[slug]">) {
 /**
  * Article preview page (Strategy A): metadata, cover, and the original
  * site excerpt, with a prominent "Continue reading on Medium" action.
- * Full article bodies are never copied here — Medium is canonical.
+ * Full article bodies are never copied here, Medium is canonical.
  */
 export default async function ArticlePreviewPage(
   props: PageProps<"/blog/[slug]">,
@@ -72,7 +72,7 @@ export default async function ArticlePreviewPage(
           {article.excerpt}
         </p>
         <p className="type-meta mt-6 text-foreground-muted">
-          By {profile.name} — {profile.title} · Published on Medium
+          By {profile.name}, {profile.title} · Published on Medium
         </p>
       </header>
 
@@ -89,7 +89,7 @@ export default async function ArticlePreviewPage(
 
       <div className="mt-12 flex flex-col items-center gap-4 rounded-2xl border border-border bg-surface-elevated p-10 text-center shadow-card">
         <p className="max-w-md text-foreground-muted">
-          The full article is published on Medium — the canonical home for all
+          The full article is published on Medium, the canonical home for all
           of my writing.
         </p>
         <a

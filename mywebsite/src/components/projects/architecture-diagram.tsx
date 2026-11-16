@@ -1,7 +1,7 @@
 import type { ArchitectureDiagram as DiagramData } from "@/types/project";
 
 /**
- * HTML/CSS block diagram — readable at every size, themable, and printable,
+ * HTML/CSS block diagram, readable at every size, themable, and printable,
  * unlike an embedded raster of a schematic. Blocks flow vertically on
  * mobile and horizontally on wider screens with connector lines between.
  */
@@ -24,10 +24,7 @@ export function ArchitectureDiagram({ diagram }: { diagram: DiagramData }) {
               />
             )}
             <div className="flex-1 rounded-sm border border-border bg-surface p-4">
-              <p className="type-meta text-accent">
-                {String(i + 1).padStart(2, "0")}
-              </p>
-              <p className="mt-1 text-sm font-medium">{block.label}</p>
+              <p className="text-sm font-medium">{block.label}</p>
               <p className="mt-1 text-xs text-foreground-muted">
                 {block.detail}
               </p>

@@ -5,13 +5,13 @@ import { MEDIUM_PROFILE_URL } from "@/data/social-links";
 export { MEDIUM_PROFILE_URL };
 
 /**
- * Published Medium articles — the Medium URL is the canonical source for
+ * Published Medium articles, the Medium URL is the canonical source for
  * every post. Excerpts below are short original summaries written for this
  * site, not copied article text. Reading times are only present where
  * confirmed; do not invent them.
  *
  * Covers are the real Medium artwork (public/images/blog/*.webp) at 16:9,
- * which is why the cards and hero use a 16:9 frame — a tighter crop clips
+ * which is why the cards and hero use a 16:9 frame, a tighter crop clips
  * the titles baked into the artwork.
  */
 export const articles: Article[] = [
@@ -69,7 +69,7 @@ export const articles: Article[] = [
     slug: "major-systems-inside-your-car",
     title: "Major Systems Inside Your Car: The Real Team Behind Every Drive",
     excerpt:
-      "Powertrain, chassis, body, and infotainment — the electronic control units that cooperate on every drive, and how the work is divided between them.",
+      "Powertrain, chassis, body, and infotainment: the electronic control units that cooperate on every drive, and how the work is divided between them.",
     category: "Vehicle Systems",
     date: "2026-06-18",
     cover: "/images/blog/major-systems-inside-your-car.webp",

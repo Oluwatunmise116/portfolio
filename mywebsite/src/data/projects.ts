@@ -5,7 +5,7 @@ import type { Project } from "@/types/project";
  *
  * Every project here is personal, academic, or otherwise publicly
  * shareable. Employer-owned products and confidential system details are
- * deliberately absent — the underlying expertise is communicated through
+ * deliberately absent, the underlying expertise is communicated through
  * the About page, Skills, Services, FAQ, and writing instead.
  *
  * Narrative fields (context, problem, testing, results, …) are optional in

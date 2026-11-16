@@ -12,7 +12,7 @@ type Filter = "All" | ProjectCategory;
 
 /**
  * Client-side category filtering. The grid is keyed by the active filter so
- * a change replays a short CSS entrance (see .filter-enter) — interruption
+ * a change replays a short CSS entrance (see .filter-enter), interruption
  * simply restarts the small fade, no layout thrash.
  */
 export function ProjectFilter({ projects }: { projects: Project[] }) {

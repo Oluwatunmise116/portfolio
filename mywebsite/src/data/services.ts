@@ -1,5 +1,5 @@
 /**
- * "What I can build" — the four numbered capability groups shown on the
+ * "What I can build", the four numbered capability groups shown on the
  * home page. Generic capability wording only: no employer products,
  * client names, or proprietary system descriptions.
  */

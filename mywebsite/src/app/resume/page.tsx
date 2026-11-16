@@ -20,7 +20,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "Resume",
   description:
-    "Professional experience, key projects, education, certifications, memberships, and technical skills, in a print-ready layout.",
+    "Professional experience, key projects, education, certifications, memberships, and technical skills, with a downloadable PDF.",
   path: "/resume",
 });
 

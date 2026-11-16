@@ -10,7 +10,7 @@ import { profile } from "@/data/profile";
 export type PortraitImage = {
   src: string;
   alt: string;
-  /** Real pixel dimensions — keeps Next.js from causing layout shift. */
+  /** Real pixel dimensions, keeps Next.js from causing layout shift. */
   width: number;
   height: number;
   focus?: string;
@@ -26,7 +26,7 @@ export type PortraitImage = {
  * - `heroHover`     optional; hero cross-fades to it on hover
  * - `about`         large 4:5, /about page
  * - `aboutPreview`  large 4:5, "About me" section on the home page
- * - `avatar`        1:1 circles — mobile menu (44px), home contact
+ * - `avatar`        1:1 circles, mobile menu (44px), home contact
  *                   (64px), contact page (80px)
  * - `navLogo`       the 36px brand mark in the header pill
  */
@@ -51,12 +51,12 @@ export type PortraitSlot =
  * A slot set to `undefined` (or omitted) falls back to profile.portrait,
  * so nothing breaks while photos are still being added.
  *
- * Portrait orientation reads best in the 4:5 slots, but any ratio works —
+ * Portrait orientation reads best in the 4:5 slots, but any ratio works,
  * `object-cover` handles the difference and `focus` decides what survives
  * the crop.
  */
 export const portraits: Partial<Record<PortraitSlot, PortraitImage>> = {
-  // Home hero — the headline portrait.
+  // Home hero, the headline portrait.
   hero: {
     src: "/images/profile/portrait.jpg",
     alt: "Oluwatunmise John Olabanji, Embedded Systems Engineer",
@@ -75,7 +75,7 @@ export const portraits: Partial<Record<PortraitSlot, PortraitImage>> = {
   //   focus: "50% 30%",
   // },
 
-  // /about page — a close portrait, distinct from the hero's half-body
+  // /about page, a close portrait, distinct from the hero's half-body
   // shot. Exactly 4:5, so the frame shows whole and `focus` is a no-op
   // unless the container ratio changes.
   about: {
@@ -105,7 +105,7 @@ export const portraits: Partial<Record<PortraitSlot, PortraitImage>> = {
    * the favicon at src/app/icon.png. Re-export both if the master changes.
    *
    * Served as WebP rather than the PNG because the optimiser can hand the
-   * 36px circle a ~1 KB variant, and never as SVG — Next.js passes SVG
+   * 36px circle a ~1 KB variant, and never as SVG, Next.js passes SVG
    * through unoptimised, so a photo-bearing SVG would download in full on
    * every page.
    */
@@ -119,7 +119,7 @@ export const portraits: Partial<Record<PortraitSlot, PortraitImage>> = {
     zoom: 1,
   },
 
-  // Circular avatars. Use the tightest head-and-shoulders shot available —
+  // Circular avatars. Use the tightest head-and-shoulders shot available,
   // it has to stay recognisable at 36px.
   avatar: {
     src: "/images/profile/portrait.jpg",

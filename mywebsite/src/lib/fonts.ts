@@ -7,7 +7,7 @@ import { Antonio, IBM_Plex_Mono, Inter } from "next/font/google";
  *                and list headings, 700 for titles)
  * - Inter      → body copy and UI
  * - Plex Mono  → technical metadata only (protocol names, dates, CAN IDs,
- *                firmware versions — never body paragraphs)
+ *                firmware versions, never body paragraphs)
  *
  * Antonio and Inter are both variable fonts, so no weight list is needed.
  */

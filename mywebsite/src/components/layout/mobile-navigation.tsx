@@ -16,11 +16,11 @@ import { cn } from "@/lib/utils";
 
 /**
  * Mobile navigation: a floating rounded panel, matching the design
- * reference — not a full-bleed sheet.
+ * reference, not a full-bleed sheet.
  *
  * The panel is rendered through a PORTAL to <body> on purpose. The header
  * pill carries both `backdrop-blur` and a `transform`, and either one makes
- * that pill the containing block for `position: fixed` descendants — which
+ * that pill the containing block for `position: fixed` descendants, which
  * silently collapsed this panel to the size of the pill. Portalling out
  * keeps the panel anchored to the viewport no matter what styles the
  * header grows later.

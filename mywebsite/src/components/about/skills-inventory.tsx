@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { skillGroups } from "@/data/skills";
 
-/** Skills grouped by discipline — edit everything in src/data/skills.ts. */
+/** Skills grouped by discipline, edit everything in src/data/skills.ts. */
 export function SkillsInventory() {
   return (
     <div className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">

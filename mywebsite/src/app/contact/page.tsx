@@ -13,8 +13,8 @@ export const metadata = createMetadata({
 
 /**
  * Single-column contact page: the pitch, the booking link, and social
- * profiles. Booking is the only contact route offered here — there is no
- * form — so the column is centred and capped rather than sitting in a
+ * profiles. Booking is the only contact route offered here, there is no
+ * form, so the column is centred and capped rather than sitting in a
  * two-column grid with an empty half.
  */
 export default function ContactPage() {

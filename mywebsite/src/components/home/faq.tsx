@@ -47,15 +47,7 @@ export function Faq() {
                     onClick={() => setOpenIndex(open ? null : index)}
                     className="flex min-h-16 w-full items-center justify-between gap-6 py-5 text-left text-base font-semibold transition-colors duration-160 ease-out-strong hover:text-accent sm:text-lg"
                   >
-                    <span>
-                      <span
-                        aria-hidden="true"
-                        className="type-meta mr-4 text-foreground-muted"
-                      >
-                        0{index + 1}
-                      </span>
-                      {item.question}
-                    </span>
+                    <span>{item.question}</span>
                     <Plus
                       aria-hidden="true"
                       className={cn(

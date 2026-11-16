@@ -1,10 +1,11 @@
-import { ArrowDown, ArrowRight, FileDown, Hand } from "lucide-react";
+import { ArrowRight, FileDown, Hand } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { LinkButton } from "@/components/ui/link-button";
 import { heroHoverPortrait, portraitFor } from "@/data/portraits";
 import { profile } from "@/data/profile";
+import { RESUME_PDF_PATH } from "@/lib/constants";
 
 function rise(delay: number): CSSProperties {
   return { "--rise-delay": `${delay}ms` } as CSSProperties;
@@ -19,9 +20,9 @@ const specLine = profile.specialisation
   .join("  /  ");
 
 /**
- * Decoration that sits around the hero portrait: a four-corner reticle —
+ * Decoration that sits around the hero portrait: a four-corner reticle,
  * a restrained nod to measurement/targeting marks, offset outside the
- * photo so it frames it rather than tracing its rounded corners — and the
+ * photo so it frames it rather than tracing its rounded corners, and the
  * circular greeting badge overlapping the lower-left corner.
  *
  * Shared by the in-flow mobile portrait and the desktop travelling card
@@ -59,16 +60,16 @@ export function PortraitTrim() {
       {/* Greeting badge: alternates between the word and a waving hand. */}
       <div
         aria-hidden="true"
-        className="hero-pop absolute -bottom-6 -left-6 size-20 overflow-hidden rounded-full bg-accent text-accent-foreground shadow-card sm:size-24 lg:-bottom-8 lg:-left-12 lg:size-28"
+        className="hero-pop absolute -bottom-4 -left-4 size-14 overflow-hidden rounded-full bg-accent text-accent-foreground shadow-card sm:size-16 lg:-bottom-5 lg:-left-7 lg:size-[4.5rem]"
         style={rise(700)}
       >
         <div className="badge-swap">
-          <span className="text-2xl font-light sm:text-3xl lg:text-4xl">
+          <span className="text-lg font-light sm:text-xl lg:text-2xl">
             {profile.heroBadge}
           </span>
           <span>
             <Hand
-              className="badge-wave size-8 sm:size-10 lg:size-12"
+              className="badge-wave size-5 sm:size-6 lg:size-7"
               strokeWidth={1.5}
             />
           </span>
@@ -121,7 +122,7 @@ export function Hero() {
     // entrance. `clip` contains that without creating a scroll container
     // (which `hidden` would, breaking sticky descendants).
     <section className="relative overflow-x-clip">
-      {/* Faint blueprint grid behind the composition — an engineering
+      {/* Faint blueprint grid behind the composition, an engineering
           detail, not decoration for its own sake, and masked to an
           ellipse so it reads as depth rather than a rectangle. */}
       <div
@@ -129,7 +130,7 @@ export function Hero() {
         className="bg-technical-grid pointer-events-none absolute inset-0"
       />
       <div className="relative mx-auto flex min-h-svh w-full max-w-[90rem] flex-col justify-center px-5 pt-28 pb-24 sm:px-8 lg:h-svh lg:min-h-(--hero-min-height) lg:px-12 lg:py-0">
-        {/* Eyebrow — what this engineer builds, before anything else loads */}
+        {/* Eyebrow, what this engineer builds, before anything else loads */}
         <p
           className="hero-rise type-label mb-6 flex items-center justify-center gap-2.5 text-center text-foreground-muted lg:absolute lg:inset-x-12 lg:top-28 lg:mb-0"
           style={rise(240)}
@@ -142,7 +143,7 @@ export function Hero() {
         </p>
 
         <div className="grid grid-cols-1 items-center gap-x-6 gap-y-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-x-8 lg:gap-y-3">
-          {/* Name — row 1 on mobile, above the left word on desktop */}
+          {/* Name, row 1 on mobile, above the left word on desktop */}
           <p
             className="hero-slide col-start-1 row-start-1 text-center font-display text-2xl uppercase lg:self-end lg:text-left lg:text-[2rem]"
             style={slide(300, 1)}
@@ -206,7 +207,7 @@ export function Hero() {
           </div>
 
           {/* Supporting statement: a stronger claim (tagline) first, the
-              specifics (support line + spec strip) trailing it — two
+              specifics (support line + spec strip) trailing it, two
               tiers of typographic weight instead of one flat paragraph. */}
           <div
             className="hero-slide col-start-1 row-start-5 mx-auto mt-1 max-w-sm text-center lg:col-start-3 lg:row-start-3 lg:mt-0 lg:mr-0 lg:max-w-88 lg:self-start lg:text-right"
@@ -224,33 +225,26 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Actions and status. One strip pinned to the bottom of the hero
-            on desktop: primary action first, résumé second — the hero
-            should point somewhere before it points everywhere. */}
+        {/* Actions. Pinned to the bottom of the hero on desktop: primary
+            action first, résumé second, so the hero points somewhere
+            before it points everywhere. The résumé button downloads the
+            PDF when one is published and opens the résumé page otherwise. */}
         <div
-          className="hero-rise mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-5 lg:absolute lg:inset-x-12 lg:bottom-20 lg:mt-0"
+          className="hero-rise mt-10 flex flex-wrap items-center justify-center gap-4 lg:absolute lg:inset-x-12 lg:bottom-20 lg:mt-0"
           style={rise(500)}
         >
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <LinkButton href="/projects" variant="primary">
-              See my work
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </LinkButton>
-            <LinkButton href="/resume" variant="secondary">
-              <FileDown aria-hidden="true" className="size-4" />
-              Résumé
-            </LinkButton>
-          </div>
-          {profile.availability.available && (
-            <p className="type-meta flex items-center gap-2 text-foreground-muted">
-              <span className="status-dot relative inline-flex size-2 rounded-full bg-success" />
-              {profile.availability.shortLabel}
-            </p>
-          )}
-          <span className="type-meta hidden items-center gap-2 text-foreground-muted sm:inline-flex">
-            <ArrowDown aria-hidden="true" className="size-3.5" />
-            Scroll
-          </span>
+          <LinkButton href="/projects" variant="primary">
+            See my work
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </LinkButton>
+          <LinkButton
+            href={RESUME_PDF_PATH ?? "/resume"}
+            variant="secondary"
+            download={RESUME_PDF_PATH !== null}
+          >
+            <FileDown aria-hidden="true" className="size-4" />
+            Résumé
+          </LinkButton>
         </div>
       </div>
     </section>

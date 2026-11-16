@@ -2,7 +2,7 @@
  * Site-wide constants.
  *
  * TODO: set NEXT_PUBLIC_SITE_URL in .env to the production domain before
- * deploying — canonical URLs, Open Graph URLs, the sitemap and robots.txt
+ * deploying, canonical URLs, Open Graph URLs, the sitemap and robots.txt
  * are all derived from it. The localhost fallback is intentional: it keeps
  * development working without publishing a placeholder domain.
  */
@@ -16,3 +16,13 @@ export const SITE_TITLE_SUFFIX =
 
 export const SITE_DESCRIPTION =
   "Embedded Systems Engineer specializing in automotive embedded systems, vehicle diagnostics, firmware, PCB development, IoT, CAN/OBD-II, connected devices, and hardware integration.";
+
+/**
+ * Path to the downloadable CV, served from public/resume/.
+ *
+ * To publish a newer CV, replace the file in public/resume/ (keep the
+ * name, or update this path). Set this to null to hide every download
+ * button; the hero button then opens the résumé page instead.
+ */
+export const RESUME_PDF_PATH: string | null =
+  "/resume/Oluwatunmise-John-Olabanji-CV.pdf";

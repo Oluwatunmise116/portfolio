@@ -23,7 +23,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
     try {
       window.localStorage.setItem("theme", dark ? "dark" : "light");
     } catch {
-      // Storage unavailable (private mode) — the toggle still works for the session.
+      // Storage unavailable (private mode), the toggle still works for the session.
     }
   };
 

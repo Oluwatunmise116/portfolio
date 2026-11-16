@@ -10,7 +10,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata = createMetadata({
   title: "Blog",
   description:
-    "Automotive insights and engineering notes — CAN bus, OBD-II, ISO standards, vehicle systems, and embedded engineering, published on Medium.",
+    "Automotive insights and engineering notes: CAN bus, OBD-II, ISO standards, vehicle systems, and embedded engineering, published on Medium.",
   path: "/blog",
 });
 
@@ -20,7 +20,7 @@ export default function BlogPage() {
       <PageHero
         eyebrow="Automotive insights & engineering notes"
         title="Blog"
-        lead="Field notes on how vehicles communicate — CAN bus, OBD-II, diagnostics standards, and the systems behind every drive. Articles are published on Medium."
+        lead="Field notes on how vehicles communicate: CAN bus, OBD-II, diagnostics standards, and the systems behind every drive. Articles are published on Medium."
       />
 
       <Container className="pb-16 md:pb-24">
@@ -40,7 +40,7 @@ export default function BlogPage() {
 
         <aside className="mt-24 flex flex-col items-center gap-4 border-t border-border pt-14 text-center">
           <p className="max-w-md text-lg text-foreground-muted">
-            New articles land on Medium first — follow there to catch the next
+            New articles land on Medium first. Follow there to catch the next
             one.
           </p>
           <a

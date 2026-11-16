@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { articles, MEDIUM_PROFILE_URL } from "@/data/articles";
 
-/** Home "Automotive Insights & Engineering Notes" — three latest posts. */
+/** Home "Automotive Insights & Engineering Notes", three latest posts. */
 export function LatestArticles() {
   const latest = articles.slice(0, 3);
 

@@ -46,7 +46,7 @@ export const fadeRise: Variants = {
 /**
  * Mobile navigation panel.
  *
- * Scales open from its trigger rather than fading in place — the panel is
+ * Scales open from its trigger rather than fading in place, the panel is
  * spawned by the hamburger in the top-right of the header pill, so the
  * component sets `transform-origin: top right` to match. A popover that
  * grows from the control that opened it reads as connected to it; one

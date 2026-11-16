@@ -6,13 +6,13 @@ export default function NotFound() {
   return (
     <div className="relative overflow-hidden">
       <div className="relative mx-auto flex min-h-[70svh] w-full max-w-320 flex-col items-center justify-center px-5 pt-32 pb-24 text-center">
-        <p className="type-meta text-accent">ERR 404 — NO ROUTE</p>
+        <p className="type-meta text-accent">ERR 404: NO ROUTE</p>
         <h1 className="type-page-title mt-4">
           This route seems to be disconnected.
         </h1>
         <p className="mt-4 max-w-md text-foreground-muted">
           The address may have been mistyped, or the page has been rewired to a
-          new location. The bus is still up — head back to the start.
+          new location. The bus is still up, so head back to the start.
         </p>
         <svg
           aria-hidden="true"

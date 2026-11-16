@@ -8,10 +8,10 @@ import { footerConfig, hasAttribution, hasPhone } from "@/data/footer";
 /**
  * Site footer.
  *
- * Two content rows, no dividers between them — separation comes from
+ * Two content rows, no dividers between them, separation comes from
  * spacing alone:
- *   row 1 — email · telephone · social links
- *   row 2 — copyright · attribution
+ *   row 1, email · telephone · social links
+ *   row 2, copyright · attribution
  *
  * Everything renders from `src/data/footer.ts`. Groups with no configured
  * value (telephone, creator attribution, Behance/Dribbble) are omitted
@@ -26,7 +26,7 @@ export function SiteFooter() {
   return (
     <footer className="print-hidden border-t border-border bg-surface">
       <Container className="py-14 md:py-20">
-        {/* Row 1 — email · telephone · socials */}
+        {/* Row 1, email · telephone · socials */}
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-10">
           <div>
             <p className="text-sm text-foreground-muted">Email:</p>
@@ -71,7 +71,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        {/* Row 2 — copyright · attribution */}
+        {/* Row 2, copyright · attribution */}
         <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between md:mt-16">
           <p className="type-meta text-foreground-muted">
             © {year} {footerConfig.copyrightOwner}. All rights reserved.

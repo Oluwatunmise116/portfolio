@@ -12,7 +12,7 @@ type CursorState = "idle" | "active" | "hidden";
 
 /**
  * A small accent dot that trails the pointer and swells over anything
- * clickable. The real cursor stays visible — this is an accompaniment,
+ * clickable. The real cursor stays visible, this is an accompaniment,
  * not a replacement, so nothing about pointing gets harder.
  *
  * Mounted only for a hover-capable fine pointer with motion allowed;

@@ -4,7 +4,7 @@ export type FaqItem = {
 };
 
 /**
- * Home-page FAQ accordion. Broad automotive/IoT language only — no
+ * Home-page FAQ accordion. Broad automotive/IoT language only, no
  * employer product names or confidential system details.
  */
 export const faqItems: FaqItem[] = [

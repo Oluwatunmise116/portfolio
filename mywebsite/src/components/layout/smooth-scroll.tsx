@@ -7,8 +7,8 @@ import { useEffect, useRef } from "react";
 /**
  * Inertial page scrolling for mouse and trackpad.
  *
- * Renders nothing. It is skipped entirely — leaving plain native
- * scrolling — on touch devices, where the platform's own momentum already
+ * Renders nothing. It is skipped entirely, leaving plain native
+ * scrolling, on touch devices, where the platform's own momentum already
  * does this better, and for anyone who has asked for reduced motion.
  *
  * `lerp: 0.1` is the amount the page catches up to the wheel target each

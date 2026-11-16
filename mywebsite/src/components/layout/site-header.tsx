@@ -68,7 +68,7 @@ export function SiteHeader() {
         {/* Avatar / wordmark */}
         <Link
           href="/"
-          aria-label={`${profile.shortName} — home`}
+          aria-label={`${profile.shortName}, home`}
           className="mr-1 flex shrink-0 items-center gap-2 rounded-full"
         >
           <Avatar size={36} slot="navLogo" />

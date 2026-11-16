@@ -57,8 +57,8 @@ const SIZES = "(min-width: 1024px) 24vw, 68vw";
  * slides to the right, tilts, and turns over to show a second photo; as
  * the about section follows, it turns back to its front and settles
  * beside the biography. Each section marks where the card should land
- * with an empty `[data-portrait-land]` element, so the layout — not a
- * hard-coded offset — decides how far it travels.
+ * with an empty `[data-portrait-land]` element, so the layout, not a
+ * hard-coded offset, decides how far it travels.
  *
  * Below the `lg` breakpoint, with reduced motion, or without JavaScript
  * the layer is inert: the hero shows its own in-flow portrait and the

@@ -22,7 +22,7 @@ export type Article = {
   /** ISO date, yyyy-mm-dd (Medium publication date). */
   date: string;
   /**
-   * Known reading time, e.g. "11 min read". Omitted when not confirmed —
+   * Known reading time, e.g. "11 min read". Omitted when not confirmed,
    * never fabricated.
    */
   readingTime?: string;

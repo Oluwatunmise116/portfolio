@@ -24,7 +24,7 @@ export type FooterSocial = {
 
 /**
  * Ordered social list. `Behance` and `Dribbble` are intentionally present
- * but resolve to no URL — they are design-portfolio platforms the owner
+ * but resolve to no URL, they are design-portfolio platforms the owner
  * does not use. They stay configured so adding one later is a single edit
  * to social-links.ts, and they are hidden until then.
  */
@@ -84,7 +84,7 @@ export const footerConfig = {
 
   /**
    * TODO: no telephone number has been supplied, so the "Call Today"
-   * group is hidden. To enable it, fill both fields — `display` is what
+   * group is hidden. To enable it, fill both fields, `display` is what
    * the visitor reads, `href` must be a normalised tel: value with no
    * spaces, brackets, or punctuation beyond a leading "+".
    * e.g. { display: "+234 801 234 5678", href: "+2348012345678" }

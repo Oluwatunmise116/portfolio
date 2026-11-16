@@ -17,7 +17,7 @@ type PageMetadataInput = {
   type?: "website" | "article";
   publishedTime?: string;
   /**
-   * Override the canonical URL — used by blog previews whose canonical
+   * Override the canonical URL, used by blog previews whose canonical
    * source is the Medium article, not the internal route.
    */
   canonical?: string;

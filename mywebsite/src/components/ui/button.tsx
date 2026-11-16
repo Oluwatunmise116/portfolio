@@ -6,7 +6,7 @@ export type ButtonVariant = "primary" | "secondary" | "ghost";
 
 /**
  * Shared style recipe so <Button> and <LinkButton> stay identical.
- * Press feedback: scale(0.98) on :active — subtle, 160ms, transform-only.
+ * Press feedback: scale(0.98) on :active, subtle, 160ms, transform-only.
  *
  * - primary    filled accent pill
  * - secondary  outlined pill with a condensed uppercase label; on hover
@@ -15,7 +15,7 @@ export type ButtonVariant = "primary" | "secondary" | "ghost";
  * - ghost      text only
  *
  * Note: Tailwind v4's `scale-*` utilities set the standalone CSS `scale`
- * property, not `transform` — a `transition-[transform,...]` list silently
+ * property, not `transform`, a `transition-[transform,...]` list silently
  * does not animate it. The property list below names `scale` explicitly.
  */
 export function buttonClasses(

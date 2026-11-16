@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { services, servicesIntro } from "@/data/services";
 
 /**
- * "What I can build" — heading, intro and the numbered capability groups
+ * "What I can build", heading, intro and the numbered capability groups
  * as an accordion.
  *
  * On desktop the content keeps to the left of a two-column grid. The

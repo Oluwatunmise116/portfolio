@@ -11,7 +11,7 @@ type BadgeProps = {
 /**
  * Small monospace tag used for technologies, categories, and statuses.
  *
- * Rectangular with a small radius rather than a full pill — reads closer
+ * Rectangular with a small radius rather than a full pill, reads closer
  * to a spec-sheet label than a marketing chip, which fits the site's
  * engineering register. The accent tone carries a leading tick mark
  * instead of extra colour weight, so an "active" tag stays legible

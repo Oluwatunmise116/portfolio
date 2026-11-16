@@ -11,7 +11,7 @@ type SelectProps = ComponentPropsWithRef<"select">;
  *
  * Deliberately still a real `<select>`: the browser's own dropdown brings
  * correct keyboard behaviour, type-ahead, screen-reader semantics, and the
- * native wheel picker on mobile — all of which a hand-built listbox would
+ * native wheel picker on mobile, all of which a hand-built listbox would
  * have to re-implement and would likely do worse. The option list is
  * themed via `color-scheme` and the `select option` rules in globals.css.
  */

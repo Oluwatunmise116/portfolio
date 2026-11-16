@@ -3,10 +3,10 @@
  *
  * Every value here is owner-verified. Do not add professional
  * designations, statistics, or claims that cannot be independently
- * confirmed — an accurate portfolio is stronger than an impressive one.
+ * confirmed, an accurate portfolio is stronger than an impressive one.
  */
 export const profile = {
-  /** Full legal name — used on About, résumé, and metadata. */
+  /** Full legal name, used on About, résumé, and metadata. */
   name: "Oluwatunmise John Olabanji",
   /** Short brand used in the header and hero. */
   shortName: "Tunmise",
@@ -34,7 +34,7 @@ export const profile = {
 
   /**
    * Scheduling link shown on the contact page. `durationMinutes` matches
-   * the `/30min` event in the URL — keep the two in step if the event
+   * the `/30min` event in the URL, keep the two in step if the event
    * type changes. Set `url` to "" to hide the booking option entirely.
    */
   booking: {

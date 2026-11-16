@@ -9,7 +9,7 @@
 /* ------------------------------------------------------------------ */
 
 :root {
-  /* Surfaces — a clean white page with tonal (not bordered) separation.
+  /* Surfaces, a clean white page with tonal (not bordered) separation.
      background < surface < surface-muted in perceived weight;
      --surface-elevated pairs with --shadow-elevated for the one or two
      things per page that should read as genuinely raised (the hero
@@ -54,7 +54,7 @@
   --error: #b91c1c;
   --focus-ring: #5e67e6;
 
-  /* Nav pill shadow — restrained */
+  /* Nav pill shadow, restrained */
   --shadow-pill:
     0 1px 2px rgba(20, 20, 20, 0.05), 0 8px 24px -12px rgba(20, 20, 20, 0.18);
   --shadow-card:
@@ -75,7 +75,7 @@
   --duration-slow: 280ms;
   /* Hover roll (nav labels) and corner fill (outline buttons). */
   --duration-hover: 400ms;
-  /* Hero entrance only — deliberately long; every repeated interaction
+  /* Hero entrance only, deliberately long; every repeated interaction
      stays well below this. */
   --duration-entrance: 1000ms;
 
@@ -250,7 +250,7 @@ html.lenis body {
    (--font-antonio / --font-inter / --font-plex-mono) directly. The
    `@theme inline` block above maps them onto Tailwind utilities, but
    `inline` means --font-display/--font-sans/--font-mono are NOT emitted
-   as usable custom properties — referencing them here would silently
+   as usable custom properties, referencing them here would silently
    fall back to the system font stack. */
 
 body {
@@ -283,7 +283,7 @@ body {
    platform: Chrome and Firefox on Windows/Linux honour these colours,
    while macOS and iOS draw the list entirely themselves and ignore them.
    `color-scheme` above is what covers those platforms, so the two work
-   together — this sets the palette where it is allowed, and color-scheme
+   together, this sets the palette where it is allowed, and color-scheme
    picks the right native one where it is not. */
 select option {
   background-color: var(--surface);
@@ -309,7 +309,7 @@ select option[value=""] {
 /* Typography helpers                                                  */
 /* ------------------------------------------------------------------ */
 
-/* Oversized split hero word — desktop */
+/* Oversized split hero word, desktop */
 .type-hero {
   font-family: var(--font-antonio), system-ui, sans-serif;
   font-size: var(--text-hero);
@@ -477,7 +477,7 @@ select option[value=""] {
 /* ------------------------------------------------------------------ */
 
 /* Route-level transition: template.tsx remounts per navigation.
-   Deliberately short and opacity-only — this runs on every navigation, so
+   Deliberately short and opacity-only, this runs on every navigation, so
    it must smooth the change without adding felt latency. */
 .page-enter {
   animation: page-enter 200ms var(--ease-out-strong) both;
@@ -536,7 +536,7 @@ select option[value=""] {
 /* Portrait card flips up into place: it starts face-down and collapsed,
    then rotates a half turn about its horizontal axis while growing to
    full size. `backwards` (not `both`) so that once it lands the element
-   has no transform left on it — a lingering one would flatten the 3D
+   has no transform left on it, a lingering one would flatten the 3D
    context the scroll-driven card turn depends on. */
 .hero-flip {
   animation: hero-flip var(--duration-entrance) var(--ease-spring) backwards;
@@ -737,7 +737,7 @@ select option[value=""] {
    project-grid) so the two crossfades can't collide if both were somehow
    mid-flight; --duration-slow (280ms) rather than a bespoke value because
    this is the one place on the site where a modal/drawer-tier duration is
-   appropriate — a rare, one-time moment, not a repeated UI interaction. */
+   appropriate, a rare, one-time moment, not a repeated UI interaction. */
 ::view-transition-old(contact-panel),
 ::view-transition-new(contact-panel) {
   animation-duration: var(--duration-slow);
@@ -770,7 +770,7 @@ select option[value=""] {
 }
 
 /* Optional second portrait: cross-fades in on hover, but only on devices
-   with a real pointer — touch devices always show the primary portrait. */
+   with a real pointer, touch devices always show the primary portrait. */
 .portrait-hover {
   opacity: 0;
 }
@@ -828,7 +828,7 @@ select option[value=""] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Print — used by the Resume page                                     */
+/* Print, used by the Resume page                                     */
 /* ------------------------------------------------------------------ */
 
 @media print {

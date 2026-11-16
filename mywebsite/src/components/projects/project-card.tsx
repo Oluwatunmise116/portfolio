@@ -23,7 +23,7 @@ type ProjectCardProps = {
 /**
  * Image-heavy project card. Hover (pointer devices only): image scales
  * slightly and a cursor-following "View" label appears. Touch devices and
- * reduced-motion users get the always-visible arrow affordance instead —
+ * reduced-motion users get the always-visible arrow affordance instead,
  * no information is hover-only.
  */
 export function ProjectCard({
@@ -50,7 +50,7 @@ export function ProjectCard({
     };
   }, []);
 
-  // Position is written directly to the DOM node — no re-render per move.
+  // Position is written directly to the DOM node, no re-render per move.
   const onPointerMove = (event: React.PointerEvent) => {
     if (!cursorEnabled || !cardRef.current || !labelRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -90,18 +90,6 @@ export function ProjectCard({
             }
             className="object-cover transition-transform duration-280 ease-out-strong group-hover:scale-[1.05]"
           />
-          {/* Editorial index plate — reuses the site's "01" numbering
-              motif so a project reads as a catalogued entry, not a
-              generic card. Solid, not translucent: a backdrop-blur chip's
-              contrast depends on whatever happens to sit behind it in an
-              arbitrary project photo, which is exactly the kind of thing
-              that can't be verified once for every image in the set. */}
-          <span
-            aria-hidden="true"
-            className="type-meta absolute top-4 left-4 rounded-[0.3rem] border border-border bg-surface px-2 py-1 text-foreground shadow-card"
-          >
-            {project.number}
-          </span>
         </div>
 
         <div className="mt-5 flex items-start justify-between gap-4">

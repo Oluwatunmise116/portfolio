@@ -24,7 +24,7 @@ export function ArticleCard({
 }: ArticleCardProps) {
   return (
     <article className={cn("group relative flex h-full flex-col", className)}>
-      {/* 16:9 matches the source artwork exactly — the covers have their
+      {/* 16:9 matches the source artwork exactly, the covers have their
           titles baked in, so any tighter crop clips them. */}
       <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface-muted">
         <Image
